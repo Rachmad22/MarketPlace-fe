@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from '@/styles/pages/Login.module.scss'
 import LoginForm from "@/components/molecules/loginForm";
+import Link from "next/link";
 
 
 const Login = () => {
@@ -33,7 +34,7 @@ const Login = () => {
                 <div>
                   <LoginForm />
                 </div>
-                <a href="/forgot" style={{color: "#DB3022"}}><p style={{fontSize: "14px", textAlign: "end", marginRight: "42px", paddingTop: "9px"}}>Forgot password?</p></a>
+                <Link href="/forgot" style={{color: "#DB3022"}}><p style={{fontSize: "14px", textAlign: "end", marginRight: "42px", paddingTop: "9px"}}>Forgot password?</p></Link>
               </div>
               <div>
                 <div className="d-flex justify-content-center mt-3">
@@ -41,7 +42,7 @@ const Login = () => {
                     Login
                   </button>
                 </div>
-                  <p style={{fontSize: "15px", marginTop: "14px", textAlign: "center"}}>Don&apos;t have a Blanja account?<a href="/auth/register" style={{color: "#DB3022"}}>Register</a></p>
+                  <p style={{fontSize: "15px", marginTop: "14px", textAlign: "center"}}>Don&apos;t have a Blanja account?<Link href="/auth/register" style={{color: "#DB3022"}}>Register</Link></p>
               </div>
             </div>
           </div>

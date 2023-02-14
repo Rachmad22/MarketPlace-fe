@@ -4,6 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from '@/styles/pages/Register.module.scss'
 import SellerRegister from "@/components/molecules/registerForm";
+import Link from "next/link";
 
 
 const Register = () => {
@@ -38,7 +39,7 @@ const Register = () => {
                     Register
                   </button>
                 </div>
-                <p style={{fontSize: "15px", marginTop: "14px", textAlign: "center"}}>Already have a Blanja account? <a href="/auth/login" style={{color: "#DB3022"}}>Login</a></p>
+                <p style={{fontSize: "15px", marginTop: "14px", textAlign: "center"}}>Already have a Blanja account? <Link href="/auth/login" style={{color: "#DB3022"}}>Login</Link></p>
               </div>
             </div>
           </div>
