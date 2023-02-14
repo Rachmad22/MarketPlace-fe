@@ -1,6 +1,4 @@
 .main{
-  overflow: hidden;
-
   .registerLogo{
     display: block;
     margin-left: auto;
@@ -18,18 +16,23 @@
     margin-bottom: 10px;
   }
 
-  .customerButton {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
+  .activeButton {
+    background: #DB3022;
+    color: white
   }
 
-  .sellerButton {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    --bs-btn-color: #9B9B9B;
-    background-color: white !important;
-    border-color: #9B9B9B !important;
-  }
+  // .customerButton {
+  //   border-bottom-right-radius: 0;
+  //   border-top-right-radius: 0;
+  // }
+
+  // .sellerButton {
+  //   border-bottom-left-radius: 0;
+  //   border-top-left-radius: 0;
+  //   --bs-btn-color: #9B9B9B;
+  //   background-color: white !important;
+  //   border-color: #9B9B9B !important;
+  // }
 
   .sellerButton:hover {
     background-color: #DB3022 !important;
