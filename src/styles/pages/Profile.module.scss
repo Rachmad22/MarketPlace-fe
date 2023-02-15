@@ -1,5 +1,5 @@
-.bg {
 
+.bg {
   background-color: rgba(245, 245, 245, 1);
 
   .box {
@@ -36,6 +36,12 @@
           span:hover {
             color: black;
           }
+
+          .icon{
+            width: 100px;
+            height: 100px;
+            background-color: black;
+          }
         }
 
       }
@@ -46,6 +52,7 @@
 
   .card {
     margin-top: 80px;
+    margin-left: 30px;
     background-color: rgba(255, 255, 255, 1);
     padding: 30px 30px 100px 30px;
 
@@ -61,6 +68,9 @@
     .submit {
       width: 100px;
       height: 36px;
+    }
+    .submit:hover{
+      background-color: rgba(219, 48, 34, 1);
     }
 
     .border {
@@ -84,6 +94,13 @@
 
   }
 
+}
+
+.cardOrder{
+  margin-top: 80px;
+  margin-left: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 30px 30px 400px 30px;
 }
 
 .font {
