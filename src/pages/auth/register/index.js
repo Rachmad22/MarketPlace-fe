@@ -5,8 +5,6 @@ import Image from "next/image";
 import styles from "@/styles/pages/Register.module.scss";
 import Link from "next/link";
 import RegisterForm from "@/components/molecules/registerForm";
-import Navbar from "@/components/organism/Navbar";
-import Footer from "@/components/organism/Footer";
 
 const Register = () => {
   const [form, setForm] = useState(true);
@@ -16,8 +14,6 @@ const Register = () => {
       <Head>
         <title>Register | Blanja</title>
       </Head>
-
-      <Navbar />
 
       <main className={styles.main}>
         <div className="container">
@@ -83,7 +79,6 @@ const Register = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
