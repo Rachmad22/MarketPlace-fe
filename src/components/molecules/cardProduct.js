@@ -1,5 +1,5 @@
 import styles from "@/styles/components/CardProduct.module.scss";
-import rating from "public/images/Rating.svg";
+import rating from "public/images/rating.svg";
 import jacket from "public/images/jacket.png";
 
 const CardProduct = () => {
