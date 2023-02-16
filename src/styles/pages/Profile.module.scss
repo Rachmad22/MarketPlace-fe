@@ -29,7 +29,7 @@
           span {
             font-style: normal;
             font-weight: 600;
-            font-size: 17px;
+            font-size: 19px;
             line-height: 24px;
           }
 
@@ -76,11 +76,8 @@
     .border {
       border-left: 1px;
       color: rgba(212, 212, 212, 1);
-
-
       .edit:hover {
         background-color: rgba(219, 48, 34, 1);
-        ;
       }
     }
 
@@ -117,3 +114,10 @@
   color: rgba(219, 48, 34, 1);
   border-bottom: 5px solid rgba(219, 48, 34, 1);
 }
+
+.btn:hover {
+  background-color: rgba(219, 48, 34, 1);
+}
+
+
+

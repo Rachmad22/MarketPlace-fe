@@ -15,6 +15,7 @@ const App = ({ Component, pageProps }) => {
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossOrigin="anonymous"
       />
+      <Script src="https://cdn.lordicon.com/ritcuqlt.js"/>
 
       <Component {...pageProps} />
     </>
@@ -22,3 +23,5 @@ const App = ({ Component, pageProps }) => {
 }
 
 export default App;
+
+

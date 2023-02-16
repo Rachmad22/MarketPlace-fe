@@ -41,18 +41,19 @@ export default function MyProfile(props) {
                 <div className="row mt-5 text-left">
                   <div className="col-12 mb-4">
                     <Link href="#account" className={style.list}>
-                      <MdOutlineAccountCircle style={{ width: "25px", height: "25px" }} />
+                      <MdOutlineAccountCircle style={{ width: "25px", height: "25px", color:"blue"}} />
                       <span> My Account</span>
                     </Link>
                   </div>
                   <div className="col-12 mb-4">
                     <Link href="#address" className={style.list}>
-                      <HiOutlineLocationMarker style={{ width: "25px", height: "25px" }} /><span> Shipping Address</span>
+                      <HiOutlineLocationMarker style={{ width: "25px", height: "25px", color: "orange"}} />
+                      <span> Shipping Address</span>
                     </Link>
                   </div>
                   <div className="col-12">
                     <Link href="#order" className={style.list}>
-                      <RxClipboard style={{ width: "25px", height: "25px" }} /><span> My Order</span>
+                      <RxClipboard style={{ width: "25px", height: "25px", color:"black" }} /><span> My Order</span>
                     </Link>
                   </div>
                 </div>
