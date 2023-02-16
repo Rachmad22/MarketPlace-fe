@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/pages/Register.module.scss";
 import Link from "next/link";
-import RegisterForm from "@/components/molecules/registerForm";
+import RegisterForm from "@/components/molecules/RegisterForm";
 
 const Register = () => {
   const [form, setForm] = useState(true);
@@ -20,11 +20,13 @@ const Register = () => {
           <div className="d-flex justify-content-center mt-4">
             <div>
               <div>
-                <Image
-                  src={blanjaLogo}
-                  alt="Logo"
-                  className={styles.registerLogo}
-                />
+                <Link href="/">
+                  <Image
+                    src={blanjaLogo}
+                    alt="Logo"
+                    className={styles.registerLogo}
+                  />
+                </Link>
                 <h4 className={styles.pleaseRegister}>
                   Please register with your account
                 </h4>

@@ -1,12 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import blanjaLogo from "public/images/blanja-logo.svg";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/pages/Login.module.scss";
-import LoginForm from "@/components/molecules/loginForm";
+import LoginForm from "@/components/molecules/LoginForm";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { getCookie, setCookie } from "cookies-next";
 
 const Login = () => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const [success, setSuccess] = React.useState(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    let isLogin = getCookie("profile") && getCookie("token");
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+
+      const connect = await axios.post("/api/login", {
+        email,
+        password,
+      });
+
+      setIsLoading(false);
+      setError(null);
+
+      setCookie("isLogin", "true");
+      setCookie("profile", JSON.stringify(connect?.data?.data));
+      setCookie("token", connect?.data?.token);
+      setSuccess("Login successful");
+
+      setTimeout(() => {
+        router.replace("/");
+      }, 1700);
+    } catch (error) {
+      setIsLoading(false);
+      setError(
+        error?.response?.data?.messages ?? "Something wrong in our server"
+      );
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -21,15 +63,34 @@ const Login = () => {
           >
             <div>
               <div>
-                <Image
-                  src={blanjaLogo}
-                  alt="Logo"
-                  className={styles.registerLogo}
-                />
-                <h4 className={styles.pleaseRegister}>
+                <Link href="/">
+                  <Image
+                    src={blanjaLogo}
+                    alt="Logo"
+                    className={styles.registerLogo}
+                  />
+                </Link>
+                <h4
+                  className={`styles.pleaseRegister ${
+                    error || success ? "mb-3" : ""
+                  }`}
+                >
                   Please login with your account
                 </h4>
               </div>
+
+              {success ? (
+                <div className="alert alert-success mb-3" role="alert">
+                  {success}
+                </div>
+              ) : null}
+
+              {error ? (
+                <div className="alert alert-danger mb-3" role="alert">
+                  {error}
+                </div>
+              ) : null}
+
               <div>
                 <div>
                   <LoginForm />
