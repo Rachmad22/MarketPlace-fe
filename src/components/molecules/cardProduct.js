@@ -3,7 +3,7 @@ import styles from "@/styles/components/CardProduct.module.scss";
 import rating from "public/images/Rating.svg";
 import jacket from "public/images/jacket.png";
 
-export default function cardProduct() {
+export default function CardProduct() {
   return (
     <>
       <div class="container">
