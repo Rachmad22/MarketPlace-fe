@@ -5,7 +5,7 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import category from "public/images/category.svg";
 import Image from "next/image";
 
-var $ = require("jquery");
+let $ = require("jquery");
 if (typeof window !== "undefined") {
   window.$ = window.jQuery = require("jquery");
 }
