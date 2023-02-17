@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "@/styles/components/CardProduct.module.scss";
 import rating from "public/images/rating.svg";
 import jacket from "public/images/jacket.png";
