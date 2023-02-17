@@ -10,7 +10,7 @@ const LoginForm = () => {
           className={`form-control ${styles.form}`}
           id="email-input"
           placeholder="Email"
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "40px" }}
         />
       </div>
       <div className={styles.allForm}>

@@ -59,7 +59,7 @@ const Login = () => {
         <div className="container">
           <div
             className="d-flex justify-content-center align-items-center"
-            style={{ height: "100vh" }}
+            style={{ height: "100vh", marginTop: "4%" }}
           >
             <div>
               <div>
@@ -70,24 +70,32 @@ const Login = () => {
                     className={styles.registerLogo}
                   />
                 </Link>
-                <h4
-                  className={`styles.pleaseRegister ${
-                    error || success ? "mb-3" : ""
-                  }`}
-                >
+                <h4 className={`${styles.pleaseRegister} mb-4`}>
                   Please login with your account
                 </h4>
               </div>
 
               {success ? (
-                <div className="alert alert-success mb-3" role="alert">
-                  {success}
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="alert alert-success d-flex justify-content-center"
+                    role="alert"
+                    style={{ width: "75%" }}
+                  >
+                    {success}
+                  </div>
                 </div>
               ) : null}
 
               {error ? (
-                <div className="alert alert-danger mb-3" role="alert">
-                  {error}
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="alert alert-danger d-flex justify-content-center"
+                    role="alert"
+                    style={{ width: "75%" }}
+                  >
+                    {error}
+                  </div>
                 </div>
               ) : null}
 
@@ -125,7 +133,7 @@ const Login = () => {
                     textAlign: "center",
                   }}
                 >
-                  Don&apos;t have a Blanja account?
+                  Don&apos;t have a Blanja account?{" "}
                   <Link href="/auth/register" style={{ color: "#DB3022" }}>
                     Register
                   </Link>

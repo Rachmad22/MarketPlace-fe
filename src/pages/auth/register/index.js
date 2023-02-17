@@ -17,7 +17,10 @@ const Register = () => {
 
       <main className={styles.main}>
         <div className="container">
-          <div className="d-flex justify-content-center mt-4">
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: "2.5rem" }}
+          >
             <div>
               <div>
                 <Link href="/">
