@@ -1,0 +1,12 @@
+@import "./variabels";
+
+a {
+  // color: inherit !important;
+  text-decoration: none !important;
+  // color: $primary !important;
+}
+
+.btn-primary {
+  background-color: $primary !important;
+  border-color: $primary !important;
+}
