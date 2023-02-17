@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '@/styles/components/LoginForm.module.scss'
+import styles from "@/styles/components/LoginForm.module.scss";
 
 const LoginForm = () => {
   return (
@@ -10,7 +10,7 @@ const LoginForm = () => {
           className={`form-control ${styles.form}`}
           id="email-input"
           placeholder="Email"
-          style={{marginTop: "20px"}}
+          style={{ marginTop: "20px" }}
         />
       </div>
       <div className={styles.allForm}>
@@ -19,7 +19,7 @@ const LoginForm = () => {
           className={`form-control ${styles.form}`}
           id="password-input"
           placeholder="Password"
-          style={{marginTop: "20px"}}
+          style={{ marginTop: "20px" }}
         />
       </div>
     </div>
