@@ -1,0 +1,194 @@
+.content{
+    margin-top: 10px;
+    margin-bottom: 50px;
+
+    .bot{
+        margin-top: 20px;
+
+        .all{
+            background: #FFFFFF;
+            box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
+            border-radius: 4px;
+            height: 60px;
+
+            .label{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                color: #222222;
+
+                span{
+                    color: 
+                    #9B9B9B;
+                }
+            }
+
+            p{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                color: #DB3022;
+                margin-top: 10px;
+                margin-left: 20px;
+            }
+        }
+
+        .item{
+            background: #FFFFFF;
+            box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
+            border-radius: 4px;
+            height: 120px;
+            margin-top: 20px;
+
+            .form{
+                margin-top: 50px;
+            }
+
+            .but{
+                background: #FFFFFF;
+                box-shadow: 0px 0px 4px rgba(142, 142, 142, 0.25);
+                border-radius: 25px;
+                width: 30px;
+            }
+
+            .goods{
+                p{
+                    font-family: 'Metropolis';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 12px;
+                    color: #9B9B9B;
+                }
+            }
+
+            .num{
+                margin-left: -30px;
+
+                p{
+                    font-family: 'Metropolis';
+                    font-style: normal;
+                    color: #222222;
+                }
+            }
+
+            .plus{
+                margin-left: -50px;
+            }
+
+            .price{
+                margin-left: 50px;
+
+                p{
+                    font-family: 'Metropolis';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 16px;
+                    color: #222222;
+                }
+            }
+        }
+
+        .detail{
+            background: #FFFFFF;
+            box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
+            border-radius: 4px;
+            height: 180px;
+            width: 370px;
+
+            h6{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 16px;
+                color: #222222;
+                margin-top: 20px;
+            }
+
+            .total{
+                margin-top: 30px;
+
+                .text{
+                    font-family: 'Metropolis';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 16px;
+                    color: #9B9B9B;
+                }
+
+                .cost{
+                    font-family: 'Metropolis';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 18px;
+                    color: #222222;
+                }
+            }
+
+            .buy{
+                margin-top: 20px;
+                width: 300px;
+                background: #DB3022;
+                border-radius: 25px;
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 20px;
+                color: #FFFFFF;
+            }
+        }
+    }
+}
+
+// .card {
+//     margin-top: 10px;
+//     margin-left: 30px;
+//     background-color: rgba(255, 255, 255, 1);
+//     padding: 30px 30px 100px 30px;
+
+
+//     .in {
+//       width: 348px;
+//     }
+
+//     .check:checked {
+//       background-color: rgba(219, 48, 34, 1);
+//     }
+
+//     .submit {
+//       width: 100px;
+//       height: 36px;
+//     }
+
+//     .submit:hover {
+//       background-color: rgba(219, 48, 34, 1);
+//     }
+
+//     .border {
+//       border-left: 1px;
+//       color: rgba(212, 212, 212, 1);
+
+//       .edit:hover {
+//         background-color: rgba(219, 48, 34, 1);
+//       }
+//     }
+
+//     .dashed {
+//       border: 3px dashed #9B9B9B;
+//       border-radius: 8px;
+//       border-spacing: 10px;
+//       width: 100%;
+//       height: 86px;
+
+//     }
+
+//   }
