@@ -1,42 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 import blanjaLogo from "public/images/blanja-logo.svg";
 import Head from "next/head";
 import Image from "next/image";
-import styles from '@/styles/pages/Register.module.scss'
-
+import styles from "@/styles/pages/Register.module.scss";
+import Link from "next/link";
+import RegisterForm from "@/components/molecules/registerForm";
 
 const Register = () => {
+  const [form, setForm] = useState(true);
+
   return (
     <div>
       <Head>
         <title>Register | Blanja</title>
       </Head>
 
-      <main>
+      <main className={styles.main}>
         <div className="container">
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-4">
             <div>
               <div>
-                <Image className="d-flex justify-content-center" src={blanjaLogo} alt="Logo" />
-                <h2>Please sign up with your account</h2>
+                <Image
+                  src={blanjaLogo}
+                  alt="Logo"
+                  className={styles.registerLogo}
+                />
+                <h4 className={styles.pleaseRegister}>
+                  Please register with your account
+                </h4>
               </div>
-              <div>
-                <button type="button" className="btn btn-primary">
+              <div className={styles.button}>
+                <button
+                  type="button"
+                  className={`btn ${form ? styles.activeButton : ""}`}
+                  onClick={() => {
+                    setForm(true);
+                  }}
+                >
                   Customer
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button
+                  type="button"
+                  className={`btn ${!form ? styles.activeButton : ""}`}
+                  onClick={() => {
+                    setForm(false);
+                  }}
+                >
                   Seller
                 </button>
               </div>
               <div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    id="password-input"
-                    placeholder="Type your name..."
-                  />
+                <RegisterForm form={form} />
+              </div>
+              <div>
+                <div className="d-flex justify-content-center mt-4">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ width: "75%", border: "40px" }}
+                  >
+                    Register
+                  </button>
                 </div>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    marginTop: "14px",
+                    textAlign: "center",
+                  }}
+                >
+                  Already have a Blanja account?{" "}
+                  <Link href="/auth/login" style={{ color: "#DB3022" }}>
+                    Login
+                  </Link>
+                </p>
               </div>
             </div>
           </div>

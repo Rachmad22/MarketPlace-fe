@@ -1,0 +1,40 @@
+.main{
+  .registerLogo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pleaseRegister{
+    padding-top: 35px;
+  }
+
+  .button {
+    display: flex;
+    justify-content: center; 
+    margin-top: 35px;
+    margin-bottom: 10px;
+  }
+
+  .activeButton {
+    background: #DB3022;
+    color: white
+  }
+
+  // .customerButton {
+  //   border-bottom-right-radius: 0;
+  //   border-top-right-radius: 0;
+  // }
+
+  // .sellerButton {
+  //   border-bottom-left-radius: 0;
+  //   border-top-left-radius: 0;
+  //   --bs-btn-color: #9B9B9B;
+  //   background-color: white !important;
+  //   border-color: #9B9B9B !important;
+  // }
+
+  .sellerButton:hover {
+    background-color: #DB3022 !important;
+  }
+}
