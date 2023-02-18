@@ -1,12 +1,8 @@
 import React from "react";
 import style from "@/styles/pages/Profile.module.scss"
-import { MdOutlineModeEdit, MdOutlineAccountCircle } from "react-icons/md"
-import { RxClipboard } from "react-icons/rx"
-import { HiOutlineLocationMarker } from "react-icons/hi"
 import Link from 'next/link';
 import axios from "axios";
 import Head from "next/head";
-
 
 export default function MyProfile(props) {
 
@@ -30,7 +26,7 @@ export default function MyProfile(props) {
          <div className="m-2">
           <h5>{profile.data[0].name}</h5>
           <Link href="#" className="text-secondary">
-           <MdOutlineModeEdit /> Ubah Profile
+           <p class='bx bx-edit-alt'> Ubah Profile</p>
           </Link>
          </div>
         </div>
@@ -41,19 +37,17 @@ export default function MyProfile(props) {
         <div className="row mt-5 text-left">
          <div className="col-12 mb-4">
           <Link href="#account" className={style.list}>
-           <MdOutlineAccountCircle style={{ width: "25px", height: "25px", color: "blue" }} />
-           <span> My Account</span>
+           <span class='bx bxs-user-account'> My Account</span>
           </Link>
          </div>
          <div className="col-12 mb-4">
-          <Link href="#address" className={style.list}>
-           <HiOutlineLocationMarker style={{ width: "25px", height: "25px", color: "orange" }} />
-           <span> Shipping Address</span>
+          <Link href="#address" className={`d-flex align-items-center ${style.list}`}>
+           <span class='bx bxs-map'> Shipping Address</span>
           </Link>
          </div>
          <div className="col-12">
           <Link href="#order" className={style.list}>
-           <RxClipboard style={{ width: "25px", height: "25px", color: "black" }} /><span> My Order</span>
+           <span class='bx bx-clipboard'> My Order</span>
           </Link>
          </div>
         </div>
@@ -230,7 +224,7 @@ export default function MyProfile(props) {
           </div>
          </div>
 
-         <div className="card mt-5">
+         <div className={`card mt-5 ${style.address}`}>
           <div className="container m-2">
            <h5>Andreas Jane</h5>
            <p>Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
@@ -279,7 +273,7 @@ export default function MyProfile(props) {
 
 
 export async function getStaticProps(context) {
- const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/1`)
+ const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/6`)
  const convertData = profile.data
 
  // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)

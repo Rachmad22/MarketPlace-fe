@@ -8,6 +8,7 @@ const App = ({ Component, pageProps }) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
       </Head>
 
       <Script
@@ -15,7 +16,6 @@ const App = ({ Component, pageProps }) => {
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossOrigin="anonymous"
       />
-      <Script src="https://cdn.lordicon.com/ritcuqlt.js"/>
 
       <Component {...pageProps} />
     </>

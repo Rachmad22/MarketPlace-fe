@@ -39,36 +39,17 @@ export default function Seller(props) {
          <div className="col-12 mb-4">
 
           <Link href="#store" className={style.list}>
-           <lord-icon
-            src="https://cdn.lordicon.com/hjbsbdhw.json"
-            trigger="loop-on-hover"
-            delay="1000"
-            colors="primary:#3a3347,secondary:#c74b16,tertiary:#794628,quaternary:#b4b4b4"
-            style={{ width: "40px", height: "40px" }}>
-           </lord-icon>
-           <span>Store</span>
+           <span class='bx bxs-store'>  Store</span>
           </Link>
          </div>
          <div className="col-12 mb-4">
           <Link href="#myProduct" className={style.list}>
-           <lord-icon
-            src="https://cdn.lordicon.com/gzcbkoye.json"
-            trigger="loop-on-hover"
-            delay="1000"
-            style={{ width: "40px", height: "40px" }}>
-           </lord-icon>
-           <span>My Products</span>
+           <span class='bx bxs-package'>  My Products</span>
           </Link>
          </div>
          <div className="col-12">
           <Link href="#sale" className={style.list}>
-           <lord-icon
-            src="https://cdn.lordicon.com/ggihhudh.json"
-            trigger="loop-on-hover"
-            delay="1000"
-            style={{ width: "40px", height: "40px" }}>
-           </lord-icon>
-           <span>Sale</span>
+           <span class='bx bx-cart-add'>  Sale</span>
           </Link>
          </div>
         </div>
@@ -346,7 +327,7 @@ export default function Seller(props) {
 
 
 export async function getStaticProps(context) {
- const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/1`)
+ const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/6`)
  const convertData = profile.data
 
  // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)
