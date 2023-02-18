@@ -1,3 +1,5 @@
+// Sidebar
+
 .bg {
   background-color: rgba(245, 245, 245, 1);
 
@@ -7,13 +9,13 @@
 
     .sidebar {
       background-color: white;
-      width: 100vw;
+      width: 100%;
       padding: 20px;
       box-sizing: border-box;
       flex-direction: column;
 
       .content {
-        position: fixed;
+        // position: fixed;
         margin: 10px 48px 20px 100px;
 
         .picture {
@@ -68,8 +70,11 @@
 
   }
 
+  //End Sidebar 
+
+  // main content
   .card {
-    margin-top: 80px;
+    margin-top: 10px;
     margin-left: 30px;
     background-color: rgba(255, 255, 255, 1);
     padding: 30px 30px 100px 30px;
@@ -143,3 +148,5 @@
 .btn:hover {
   background-color: rgba(219, 48, 34, 1);
 }
+
+// end main content

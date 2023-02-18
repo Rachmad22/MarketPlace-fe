@@ -4,6 +4,8 @@ import { MdOutlineModeEdit } from "react-icons/md"
 import axios from "axios";
 import Link from 'next/link';
 import Head from "next/head";
+import Navbar from "@/components/organism/Navbar";
+import Footer from "@/components/organism/Footer";
 
 export default function Seller(props) {
 
@@ -14,7 +16,10 @@ export default function Seller(props) {
    <Head>
     <title>Profile Seller | Blanja</title>
    </Head>
+   <Navbar />
    <div className={`row ${style.bg}`}>
+
+    {/* Sidebar */}
     <div className={`col-4 ${style.box}`}>
      <div className={`sidebar m-0 ${style.sidebar}`}>
       <div className={style.content}>
@@ -57,8 +62,12 @@ export default function Seller(props) {
       </div>
      </div>
     </div>
+    {/* End Sidebar */}
 
-    <div className="col-7">
+    {/* main content */}
+    <div className="col-7 m-5">
+
+     {/* Store */}
      <section id="store">
       <div className="card mb-5" style={{ marginTop: "80px" }}>
        <div className="container">
@@ -143,7 +152,7 @@ export default function Seller(props) {
       </div>
      </section>
 
-
+     {/* My Products */}
      <section id="myProduct">
       <div className="card mb-5">
        <div className="container">
@@ -200,6 +209,7 @@ export default function Seller(props) {
       </div>
      </section>
 
+     {/* Add Product */}
      <section id="sale">
       <div className="card mb-4">
        <div className="container">
@@ -319,6 +329,9 @@ export default function Seller(props) {
     </div>
 
    </div>
+   {/* End main content */}
+
+   <Footer />
   </>
  )
 }

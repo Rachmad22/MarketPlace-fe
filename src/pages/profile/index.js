@@ -3,17 +3,67 @@ import style from "@/styles/pages/Profile.module.scss"
 import Link from 'next/link';
 import axios from "axios";
 import Head from "next/head";
+import Navbar from "@/components/organism/Navbar";
+import Footer from "@/components/organism/Footer";
 
 export default function MyProfile(props) {
 
  const profile = props
+
+
+ const [email, setEmail] = React.useState("");
+ const [photo, setPhoto] = React.useState("");
+ const [phone_number, setPhone_number] = React.useState("");
+ const [name, setName] = React.useState("");
+ const [date_of_birth, setDate_of_birth] = React.useState("");
+ const [gender, setGender] = React.useState()
+
+ const [isLoading, setIsLoading] = React.useState(false);
+ const [error, setError] = React.useState(null);
+
+
+ const handleEdit = async () => {
+  try {
+   setIsLoading(true);
+   
+   const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo2LCJuYW1lIjoicmVzdHUiLCJlbWFpbCI6InJlc3R1QGdtYWlsLmNvbSIsInBob25lX251bWJlciI6IjA4OTY4Nzg3OCIsInN0b3JlX25hbWUiOiJhbHZpYW5kbyBzdG9yZSIsInJvbGUiOmZhbHNlLCJwaG90byI6bnVsbCwiZGF0ZV9vZl9iaXJ0aCI6bnVsbCwiZ2VuZGVyIjp0cnVlLCJjcmVhdGVkX2F0IjoiMjAyMy0wMi0xN1QwOTo1ODowMy4wMjFaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDItMTdUMDk6NTg6MDMuMDIxWiJ9LCJpYXQiOjE2NzY3NDA1MTAsImV4cCI6MTY3Njc0NDExMH0.9yov5fIhRwcrEcNb1FGDvp4BY1kyzFdgpF4-pBXwu5Y"
+
+  //  const config = {
+  //   headers: {
+  //     "Content-Type": "multipart/form-data",
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // };
+// console.log(name)
+   await axios.patch(`/api/edit`, {
+    name,
+    email,
+    phone_number,
+    photo,
+    date_of_birth,
+    gender,
+   });
+   setIsLoading(false);
+   setError(null);
+
+  } catch (error) {
+   setIsLoading(false);
+   setError(
+    // error?.response?.data?.message ?? error?.response?.data?.message?.email?.message ?? error?.response?.data?.message?.name?.message ?? error?.response?.data?.message?.phone_number?.message ?? error?.response?.data?.message?.photo?.message ?? "Something wrong in our server"
+    );
+    console.log(error.response)
+  }
+ };
 
  return (
   <>
    <Head>
     <title>Profile | Blanja</title>
    </Head>
+   <Navbar />
    <div className={`row ${style.bg}`}>
+
+    {/* Sidebar */}
     <div className={`col-4 ${style.box}`}>
      <div className={`sidebar m-0 ${style.sidebar}`}>
       <div className={style.content}>
@@ -55,10 +105,14 @@ export default function MyProfile(props) {
       </div>
      </div>
     </div>
+    {/* End Sidebar */}
 
-    <div className="col-7">
+    {/* main content */}
+    <div className="col-7 m-5">
+
+     {/* Account */}
      <section id="account">
-      <div className={`card ${style.card}`}>
+      <div className={`card mb-5 ${style.card}`}>
        <div className="card-header">
         <h3>My Profile</h3>
         <p className="text-secondary">Manage your profile information</p>
@@ -74,7 +128,7 @@ export default function MyProfile(props) {
               <label for="exampleInputName" class="form-label">Name</label>
              </div>
              <div className="col-9">
-              <input type="text" class={`form-control ${style.in}`} id="exampleInputName" placeholder={profile.data[0].name} />
+              <input type="text" class={`form-control ${style.in}`} id="exampleInputName" placeholder={profile.data[0].name} onChange={(event) => setName(event.target.value)} />
              </div>
             </div>
            </div>
@@ -84,7 +138,7 @@ export default function MyProfile(props) {
               <label for="exampleInputEmail1" class="form-label">Email</label>
              </div>
              <div className="col-9">
-              <input type="email" class={`form-control ${style.in}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={profile.data[0].email} />
+              <input type="email" class={`form-control ${style.in}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={profile.data[0].email} onChange={(event) => setEmail(event.target.value)} />
              </div>
             </div>
            </div>
@@ -104,6 +158,7 @@ export default function MyProfile(props) {
                class={`form-control phone ${style.in}`}
                id="exampleFormControlInput1"
                placeholder={profile.data[0].phone_number}
+               onChange={(event) => setPhone_number(event.target.value)}
               />
              </div>
             </div>
@@ -116,7 +171,7 @@ export default function MyProfile(props) {
             <div className="col-4">
 
              <div class="form-check">
-              <input class={`form-check-input ${style.check}`} type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+              <input class={`form-check-input ${style.check}`} type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="true" onChange={(event) => setGender(event.target.value)} />
               <label class="form-check-label" for="flexRadioDefault1">
                Male
               </label>
@@ -124,7 +179,7 @@ export default function MyProfile(props) {
             </div>
             <div className="col-4">
              <div class="form-check">
-              <input class={`form-check-input ${style.check}`} type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
+              <input class={`form-check-input ${style.check}`} type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="false" onChange={(event) => setGender(event.target.value)} />
               <label class="form-check-label" for="flexRadioDefault2">
                Female
               </label>
@@ -140,7 +195,7 @@ export default function MyProfile(props) {
              <div
               className="dropdown-date-city"
              >
-              <input type="date" class="btn btn-light date" />
+              <input type="date" class="btn btn-light date" onChange={(event) => setDate_of_birth(event.target.value)} />
 
              </div>
 
@@ -149,7 +204,7 @@ export default function MyProfile(props) {
            <div className="row mb-3">
             <div className="col-3"></div>
             <div className="col-9">
-             <button type="submit" class={`btn btn-primary rounded-5 ${style.submit}`}>Save</button>
+             <button type="submit" class={`btn btn-primary rounded-5 mt-4 ${style.submit}`} onClick={handleEdit} disabled={isLoading}>{isLoading ? "Loading..." : "Save"}</button>
             </div>
            </div>
           </form>
@@ -165,6 +220,7 @@ export default function MyProfile(props) {
       </div>
      </section>
 
+     {/* Shipping Address */}
      <section id="address">
       <div className={`card mb-5 ${style.card}`}>
        <div className="card-header">
@@ -236,6 +292,7 @@ export default function MyProfile(props) {
       </div>
      </section>
 
+     {/* Order */}
      <section id="order">
       <div className={`card mb-5 ${style.cardOrder}`}>
        <div className="card-header">
@@ -267,6 +324,8 @@ export default function MyProfile(props) {
      </section>
     </div>
    </div>
+   {/* End main content */}
+   <Footer />
   </>
  );
 };
@@ -276,7 +335,8 @@ export async function getStaticProps(context) {
  const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/6`)
  const convertData = profile.data
 
- // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)
+ // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/6`)
+ // convertEdit = editProfile.data
 
  return {
   props: convertData, // will be passed to the page component as props
