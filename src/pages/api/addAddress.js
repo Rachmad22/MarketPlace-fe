@@ -9,17 +9,16 @@ export default function handler(req, res) {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const { name, email, phone_number, photo, date_of_birth, gender } = req.body;
-console.log(req.body)
+        const { address_alias, recipient_name, street, city, postal_code, recipient_phone_number, } = req.body;
+// console.log(street)
         axios
-            .patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/23`, {
-                name,
-                email,
-                phone_number,
-                photo,
-                date_of_birth,
-                gender,
-                password: "restU123"
+            .post(`${process.env.NEXT_PUBLIC_API_URL}/addresses`, {
+                address_alias,
+                recipient_name,
+                street,
+                city,
+                postal_code,
+                recipient_phone_number,
             },config)
             .then((response) => {
                 // console.log(response)
