@@ -46,7 +46,7 @@ export default function Seller() {
        <div className="header">
         <div className="list-item d-flex align-items-center mt-5">
          <Link href="#">
-          <img src={profile?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile?-icon-male-avatar.jpg`} alt="profile?" className={style.picture} />
+          <img src={profile?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile?" className={style.picture} />
          </Link>
 
          <div className="m-2">
