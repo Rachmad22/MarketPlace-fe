@@ -216,7 +216,7 @@ export default function Seller() {
 
            <div className="card-body" style={{ height: "300px" }}>
             <div className="d-flex justify-content-center align-content-center">
-             <img src="/images/profile?/notfound.svg" />
+             <img src="/images/profile/notfound.svg" />
             </div>
            </div>
           </div>
@@ -305,15 +305,15 @@ export default function Seller() {
         <div className="card-body mb-3">
          <div className="row gap-3 d-flex justify-content-center">
 
-          <img src="/images/profile?/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
+          <img src="/images/profile/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
 
-          <img src="/images/profile?/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
+          <img src="/images/profile/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
 
-          <img src="/images/profile?/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
+          <img src="/images/profile/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
 
-          <img src="/images/profile?/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
+          <img src="/images/profile/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
 
-          <img src="/images/profile?/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
+          <img src="/images/profile/box.svg" alt="default" className="bg-secondary" style={{ height: "120px", width: "120px" }} />
 
          </div>
         </div>
@@ -333,7 +333,7 @@ export default function Seller() {
         <div className="card-body">
          <div className="card">
           <div className="card-header bg-transparent">
-           <img src="/images/profile?/option.svg" alt="option" />
+           <img src="/images/profile/option.svg" alt="option" />
           </div>
           <div className="card-body" style={{ height: "230px" }}>
           </div>
