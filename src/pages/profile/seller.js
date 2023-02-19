@@ -216,7 +216,7 @@ export default function Seller() {
 
            <div className="card-body" style={{ height: "300px" }}>
             <div className="d-flex justify-content-center align-content-center">
-             <img src="/images/profile/notfound.svg" />
+             <img src="/images/profile/notFound.svg" />
             </div>
            </div>
           </div>
