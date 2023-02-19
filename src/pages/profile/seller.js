@@ -160,7 +160,7 @@ export default function Seller() {
 
            <div className="col-3 text-center">
             <div className={style.border}>
-             <img src={profile?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile?-icon-male-avatar.jpg`} alt="profile?" className="rounded-circle mt-4" style={{ width: "100px", height: "100px" }} />
+             <img src={profile?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile?" className="rounded-circle mt-4" style={{ width: "100px", height: "100px" }} />
              <button className={`btn btn-light rounded-5 mt-3 ${style.btn}`}>Select Image</button>
             </div>
            </div>
