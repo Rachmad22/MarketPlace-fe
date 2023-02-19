@@ -23,7 +23,6 @@ const Login = () => {
   const data = useSelector((state) => state.login);
   const loginSubmit = () => {
     setIsLoading(true);
-    console.log(data)
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
       .then((res) => {

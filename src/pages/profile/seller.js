@@ -6,27 +6,10 @@ import Link from 'next/link';
 import Head from "next/head";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
-import { useSelector } from "react-redux";
 
 export default function Seller(props) {
- const [profile, setProfile] = React.useState(null)
 
- const selector = useSelector((state) => state.profile)
- const userId = selector.profile.payload.id
- const token = selector.token.payload
-
- React.useEffect(() => {
-  const config = {
-   headers: {
-    "Content-Type": "multipart/form-data",
-    Authorization: `Bearer ${token}`,
-   },
-  };
-
-  axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, config)
-   .then((res) => setProfile(res.data?.data?.[0]))
-   .catch((err) => console.log(err))
- }, [])
+ const profile = props
 
  return (
   <>
@@ -43,11 +26,11 @@ export default function Seller(props) {
        <div className="header">
         <div className="list-item d-flex align-items-center mt-5">
          <Link href="#">
-          <img src={profile?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className={style.picture} />
+          <img src={profile.data[0].photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className={style.picture} />
          </Link>
 
          <div className="m-2">
-          <h5>{profile?.name}</h5>
+          <h5>{profile.data[0].name}</h5>
           <Link href="#" className="text-secondary">
            <MdOutlineModeEdit /> Ubah Profile
           </Link>
@@ -157,7 +140,7 @@ export default function Seller(props) {
 
            <div className="col-3 text-center">
             <div className={style.border}>
-             <img src={profile?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className="rounded-circle mt-4" style={{ width: "100px", height: "100px" }} />
+             <img src={profile.data[0].photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className="rounded-circle mt-4" style={{ width: "100px", height: "100px" }} />
              <button className={`btn btn-light rounded-5 mt-3 ${style.btn}`}>Select Image</button>
             </div>
            </div>
@@ -356,14 +339,14 @@ export default function Seller(props) {
 
 
 
-// export async function getStaticProps(context) {
-//     const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/6`)
-//     const convertData = profile.data
+export async function getStaticProps(context) {
+ const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/6`)
+ const convertData = profile.data
 
-//     // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)
+ // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)
 
-//     console.log(convertData)
-//     return {
-//         props: convertData, // will be passed to the page component as props
-//     }
-// }
+ console.log(convertData)
+ return {
+  props: convertData, // will be passed to the page component as props
+ }
+}
