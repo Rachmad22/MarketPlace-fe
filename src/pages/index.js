@@ -5,9 +5,16 @@ import Link from "next/link";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import CardProduct from "@/components/molecules/CardProduct";
-import { useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
-const Home = () => {
+const Home = (props) => {
+  const {
+    categories: { data },
+  } = props;
+
+  console.log(data[0]?.category_image);
+
   const [view, setView] = useState(false);
 
   return (
@@ -38,39 +45,37 @@ const Home = () => {
           <p className="mb-4" style={{ color: "#9B9B9B" }}>
             What are you currently looking for
           </p>
-          <div className="row">
-            <div className="col-2 mb-4">
-              <img src="/images/cap-category.png" style={{ width: "100%" }} />
-            </div>
-            <div className="col-2 mb-4">
-              <img
-                src="/images/tshirt-category.png"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div className="col-2 mb-4">
-              <img
-                src="/images/jacket-category.png"
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div className="col-2 mb-4">
-              <div>
-                <img
-                  src="/images/green-background.png"
-                  className={styles.categoryBackground}
-                />
-                <img
-                  src="/images/yeezy-shoes.png"
-                  className={styles.categoryImage}
-                />
-                <h3 className={styles.categoryName}>Shoes</h3>
-              </div>
-            </div>
-            <div className="col-2 mb-4">
-              <img src="/images/pants-category.png" style={{ width: "100%" }} />
-            </div>
-            <div className={`col-2 mb-4 ${view ? "d-none" : ""}`}>
+          <div className="row mb-4">
+            {data?.map((item, key) => {
+              return (
+                <React.Fragment key={key}>
+                  <div className="col-2 mb-4">
+                    <div>
+                      <Link
+                        href={`/category/${item?.category_name
+                          .split(" ")
+                          .join("-")
+                          .toLowerCase()}`}
+                      >
+                        {/* <img
+                        src="/images/green-bakcground.png"
+                        className={styles.categoryBackground}
+                      /> */}
+                        <img
+                          src={item?.category_image}
+                          className={styles.categoryImage}
+                        />
+                        <h3 className={styles.categoryName}>
+                          {item?.category_name}
+                        </h3>
+                      </Link>
+                    </div>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+
+            {/* <div className={`col-2 mb-4 ${view ? "d-none" : ""}`}>
               <div className="d-flex justify-content-center">
                 <button
                   type="button"
@@ -99,7 +104,7 @@ const Home = () => {
                   />
                 </div>
               </>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
         <div className="container">
@@ -108,7 +113,7 @@ const Home = () => {
           <p className="mb-4" style={{ color: "#9B9B9B" }}>
             Find clothes that are trending recently
           </p>
-          <div className="row" style={{ gap: "3.5rem !important" }}>
+          <div className="row" style={{ gap: "3.5rem" }}>
             <div style={{ flex: "0 0 auto", width: "15.5%" }}>
               <CardProduct />
             </div>
@@ -120,7 +125,7 @@ const Home = () => {
           <p className="mb-4" style={{ color: "#9B9B9B" }}>
             You&apos;ve never seen it before
           </p>
-          <div className="row" style={{ gap: "3.5rem !important" }}>
+          <div className="row" style={{ gap: "3.5rem" }}>
             <div style={{ flex: "0 0 auto", width: "15.5%" }}>
               <CardProduct />
             </div>
@@ -130,6 +135,23 @@ const Home = () => {
       <Footer />
     </div>
   );
+};
+
+export const getStaticProps = async (context) => {
+  const categories = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/categories`
+  );
+
+  const convert = categories?.data;
+
+  console.log(convert?.data[0]?.category_image);
+
+  return {
+    props: {
+      categories: convert,
+    },
+  };
+  revalidate: 3600;
 };
 
 export default Home;

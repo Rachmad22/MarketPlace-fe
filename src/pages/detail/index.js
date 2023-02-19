@@ -4,9 +4,14 @@ import Head from "next/head";
 import React, { useState } from "react";
 import styles from "@/styles/pages/Detail.module.scss";
 import Link from "next/link";
+import CardProduct from "@/components/molecules/CardProduct";
 
 const DetailProduct = () => {
   const [quantity, setQuantity] = useState(0);
+  const [sizeSelected, setSizeSelected] = useState(false);
+  const [colorSelected, setColorSelected] = useState(null);
+
+  // const [imageSelected, setImageSelected] = useState(null);
 
   const decreaseQuantity = () => {
     const minus = quantity - 1;
@@ -44,17 +49,44 @@ const DetailProduct = () => {
           </div>
           <div className="mt-5 d-flex">
             <div>
-              <img
-                src="/images/tshirt-detail.jpg"
-                style={{
-                  width: "350px",
-                  height: "350px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                }}
-              />
+              <div>
+                <img
+                  className={styles.bigPhoto}
+                  src="/images/tshirt-detail.jpg"
+                />
+              </div>
+              <div className="row mt-2" style={{ gap: "0.89rem" }}>
+                <div className="col-2">
+                  <img
+                    className={styles.smallPhoto}
+                    src="/images/tshirt-detail.jpg"
+                    // onClick={selectImage("img1")}
+                  />
+                </div>
+                <div className="col-2">
+                  <img
+                    className={styles.smallPhoto}
+                    src="/images/beach-tshirt.jpg"
+                    // onClick={setImageSelected("/images/beach-tshirt.jpg")}
+                  />
+                </div>
+                <div className="col-2">
+                  <img
+                    className={styles.smallPhoto}
+                    src="/images/art-tshirt.jpg"
+                    // onClick={setImageSelected("/images/art-tshirt.jpg")}
+                  />
+                </div>
+
+                <div className="col-2">
+                  <img
+                    className={styles.smallPhoto}
+                    src="/images/tshirt-detail.jpg"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="ms-5">
+            <div>
               <h3>Tshirt Robotic</h3>
               <p style={{ marginBottom: "15px", color: "#9B9B9B" }}>
                 Zalora Cloth
@@ -66,13 +98,108 @@ const DetailProduct = () => {
               <p style={{ marginBottom: "5px" }}>Price</p>
               <h3>$ 20.0</h3>
               <p style={{ marginTop: "20px", marginBottom: "5px" }}>Color</p>
-              <div className="d-flex">
+              <div className="d-flex mb-3">
+                <div className="d-flex">
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "red" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "red" }}
+                    onClick={() => {
+                      setColorSelected("red");
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "green" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "green" }}
+                    onClick={() => {
+                      setColorSelected("green");
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "blue" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "blue" }}
+                    onClick={() => {
+                      setColorSelected("blue");
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "black" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "black" }}
+                    onClick={() => {
+                      setColorSelected("black");
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "yellow" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "yellow" }}
+                    onClick={() => {
+                      setColorSelected("yellow");
+                    }}
+                  ></span>
+                </div>
+              </div>
+              <div className="d-flex mb-5">
                 <div>
                   <p className="me-5">Size</p>
+                  <div>
+                    <button
+                      className={`btn btn-light ${
+                        sizeSelected === "S" ? "btn-primary text-light" : ""
+                      }`}
+                      style={{ marginRight: "10px" }}
+                      onClick={() => {
+                        setSizeSelected("S");
+                      }}
+                    >
+                      S
+                    </button>
+                    <button
+                      className={`btn btn-light ${
+                        sizeSelected === "M" ? "btn-primary text-light" : ""
+                      }`}
+                      style={{ marginRight: "10px" }}
+                      onClick={() => {
+                        setSizeSelected("M");
+                      }}
+                    >
+                      M
+                    </button>
+                    <button
+                      className={`btn btn-light ${
+                        sizeSelected === "L" ? "btn-primary text-light" : ""
+                      }`}
+                      style={{ marginRight: "10px" }}
+                      onClick={() => {
+                        setSizeSelected("L");
+                      }}
+                    >
+                      L
+                    </button>
+                    <button
+                      className={`btn btn-light ${
+                        sizeSelected === "XL" ? "btn-primary text-light" : ""
+                      }`}
+                      style={{ marginRight: "10px" }}
+                      onClick={() => {
+                        setSizeSelected("XL");
+                      }}
+                    >
+                      XL
+                    </button>
+                  </div>
                 </div>
                 <div className="ms-5">
                   <p>Quantity</p>
-                  <div className="d-flex">
+                  <div className="d-flex" style={{ marginTop: "-15px" }}>
                     <button
                       type="button"
                       className="btn"
@@ -117,6 +244,201 @@ const DetailProduct = () => {
                     Buy now
                   </button>
                 </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-5">
+            <h2>Product Information</h2>
+            <div className="mt-4">
+              <h4>Condition</h4>
+              <p
+                style={{ fontSize: "22px", color: "#DB3022", fontWeight: 500 }}
+              >
+                New
+              </p>
+            </div>
+            <div className="mt-4">
+              <h4>Description</h4>
+              <p style={{ width: "95%", color: "#9B9B9B" }}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                <br /> <br /> Donec non magna rutrum, pellentesque augue eu,
+                sagittis velit. Phasellus quis laoreet dolor. Fusce nec pharetra
+                quam. Interdum et malesuada fames ac ante ipsum primis in
+                faucibus. Praesent sed enim vel turpis blandit imperdiet ac ac
+                felis. Etiam tincidunt tristique placerat. Pellentesque a
+                consequat mauris, vel suscipit ipsum. Donec ac mauris vitae diam
+                commodo vehicula. Donec quam elit, sollicitudin eu nisl at,
+                ornare suscipit magna. <br /> <br /> Donec non magna rutrum,
+                pellentesque augue eu, sagittis velit. Phasellus quis laoreet
+                dolor. Fusce nec pharetra quam. Interdum et malesuada fames ac
+                ante ipsum primis in faucibus. Praesent sed enim vel turpis
+                blandit imperdiet ac ac felis. <br /> <br /> In ultricies rutrum
+                tempus. Mauris vel molestie orci.
+              </p>
+            </div>
+            <div className="mt-4">
+              <h4>Product Review</h4>
+              <div className="d-flex mt-5">
+                <div>
+                  <div className="d-flex">
+                    <h1 style={{ fontSize: "77px" }}>5.0</h1>
+                    <p
+                      style={{
+                        paddingTop: "52px",
+                        paddingLeft: "6px",
+                        fontSize: "20px",
+                      }}
+                    >
+                      /10
+                    </p>
+                  </div>
+                  <img src="/images/five-star.png" style={{ width: "150px" }} />
+                </div>
+                <div>
+                  <div className="d-flex">
+                    <img
+                      src="/images/one-star.png"
+                      style={{
+                        width: "17px",
+                        height: "17px",
+                        marginLeft: "38px",
+                      }}
+                    />
+                    <p className="ms-2" style={{ marginTop: "-3px" }}>
+                      5
+                    </p>
+                    <img
+                      src="/images/line-review.png"
+                      style={{
+                        width: "129px",
+                        height: "7px",
+                        marginLeft: "15px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <p className="ms-3" style={{ marginTop: "-4px" }}>
+                      8
+                    </p>
+                  </div>
+                  <div className="d-flex">
+                    <img
+                      src="/images/one-star.png"
+                      style={{
+                        width: "17px",
+                        height: "17px",
+                        marginLeft: "38px",
+                      }}
+                    />
+                    <p className="ms-2" style={{ marginTop: "-3px" }}>
+                      4
+                    </p>
+                    <img
+                      className="invisible"
+                      src="/images/line-review.png"
+                      style={{
+                        width: "129px",
+                        height: "7px",
+                        marginLeft: "15px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <p className="ms-3" style={{ marginTop: "-4px" }}>
+                      0
+                    </p>
+                  </div>
+                  <div className="d-flex">
+                    <img
+                      src="/images/one-star.png"
+                      style={{
+                        width: "17px",
+                        height: "17px",
+                        marginLeft: "38px",
+                      }}
+                    />
+                    <p className="ms-2" style={{ marginTop: "-3px" }}>
+                      3
+                    </p>
+                    <img
+                      className="invisible"
+                      src="/images/line-review.png"
+                      style={{
+                        width: "129px",
+                        height: "7px",
+                        marginLeft: "15px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <p className="ms-3" style={{ marginTop: "-4px" }}>
+                      0
+                    </p>
+                  </div>
+                  <div className="d-flex">
+                    <img
+                      src="/images/one-star.png"
+                      style={{
+                        width: "17px",
+                        height: "17px",
+                        marginLeft: "38px",
+                      }}
+                    />
+                    <p className="ms-2" style={{ marginTop: "-3px" }}>
+                      2
+                    </p>
+                    <img
+                      className="invisible"
+                      src="/images/line-review.png"
+                      style={{
+                        width: "129px",
+                        height: "7px",
+                        marginLeft: "15px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <p className="ms-3" style={{ marginTop: "-4px" }}>
+                      0
+                    </p>
+                  </div>
+                  <div className="d-flex">
+                    <img
+                      src="/images/one-star.png"
+                      style={{
+                        width: "17px",
+                        height: "17px",
+                        marginLeft: "38px",
+                      }}
+                    />
+                    <p className="ms-2" style={{ marginTop: "-3px" }}>
+                      1
+                    </p>
+                    <img
+                      className="invisible"
+                      src="/images/line-review.png"
+                      style={{
+                        width: "129px",
+                        height: "7px",
+                        marginLeft: "15px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <p className="ms-3" style={{ marginTop: "-4px" }}>
+                      0
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr className="mt-5" />
+            <div>
+              <div className="mt-5">
+                <h2>You can also like this</h2>
+                <p style={{ color: "#9B9B9B" }}>
+                  You&apos;ve never seen it before!
+                </p>
+              </div>
+              <div className="row" style={{ gap: "3.5rem" }}>
+                <div style={{ flex: "0 0 auto", width: "15.5%" }}>
+                  <CardProduct />
+                </div>
               </div>
             </div>
           </div>

@@ -25,3 +25,35 @@
   color: black;
   border-radius: 24px;
 } 
+
+.bigPhoto {
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.smallPhoto {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.sizeSelected {
+  background-color: #aeaeae;
+  border: inset 1px #5F2EEA;
+}
+
+.colorSelection{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.activeColor {
+  border-style: solid;
+  border-color: #DB3022;
+  border-width: 4px;
+}
