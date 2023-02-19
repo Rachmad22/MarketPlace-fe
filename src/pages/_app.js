@@ -2,8 +2,13 @@ import "@/styles/globals.scss";
 import "bootstrap/dist/css/bootstrap.css";
 import Head from "next/head";
 import Script from "next/script";
+import store from "@/stores";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const App = ({ Component, pageProps }) => {
+  let persistor = persistStore(store);
   return (
     <>
       <Head>
@@ -16,11 +21,14 @@ const App = ({ Component, pageProps }) => {
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossOrigin="anonymous"
       />
-
-      <Component {...pageProps} />
+      <Script src="https://cdn.lordicon.com/ritcuqlt.js" />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Component {...pageProps} />
+        </PersistGate>
+      </Provider>
     </>
-  )
-}
+  );
+};
 
 export default App;
-

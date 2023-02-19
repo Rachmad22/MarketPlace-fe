@@ -2,15 +2,18 @@ import React from "react";
 import blanja from "public/images/blanja-logo.svg";
 import sort from "public/images/sort.svg";
 import styles from "@/styles/components/Navbar.module.scss";
+import Link from "next/link";
 
-export default function Navbar() {
+const Navbar = () => {
   return (
     <>
       <div className={styles.main}>
         <div className="container text-center">
           <div className="row align-items-center">
             <div className="col">
-              <img src={blanja.src} className={styles.blanja} />
+              <Link href="/">
+                <img src={blanja.src} className={styles.blanja} />
+              </Link>
             </div>
             <div className="col-6">
               <div className="row">
@@ -176,12 +179,18 @@ export default function Navbar() {
               </div>
             </div>
             <div className="col">
-              <button className={`btn ${styles.login}`}>Sign Up</button>
-              <button className={`btn ${styles.login}`}>Login</button>
+              <Link href="/auth/register">
+                <button className={`btn ${styles.login}`}>Register</button>
+              </Link>
+              <Link href="/auth/login">
+                <button className={`btn ${styles.login}`}>Login</button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Navbar;

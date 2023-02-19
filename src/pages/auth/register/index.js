@@ -4,10 +4,41 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/pages/Register.module.scss";
 import Link from "next/link";
-import RegisterForm from "@/components/molecules/registerForm";
+import RegisterForm from "@/components/molecules/RegisterForm";
+import { useDispatch, useSelector } from "react-redux";
+import * as registerReducer from "@/stores/reducer/register";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Register = () => {
+  const dispatch = useDispatch();
   const [form, setForm] = useState(true);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const data = useSelector((state) => state.register);
+
+  const router = useRouter();
+
+  const submitRegister = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data)
+      .then((res) => {
+        setSuccess(res?.data?.message);
+        setIsError(false);
+        setIsSuccess(true);
+
+        setTimeout(() => {
+          router.replace("/auth/login");
+        }, 1700);
+      })
+      .catch((err) => {
+        setError(err?.response?.data?.message);
+        setIsError(true);
+        setIsSuccess(false);
+      });
+  };
 
   return (
     <div>
@@ -17,14 +48,19 @@ const Register = () => {
 
       <main className={styles.main}>
         <div className="container">
-          <div className="d-flex justify-content-center mt-4">
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: "2.5rem" }}
+          >
             <div>
               <div>
-                <Image
-                  src={blanjaLogo}
-                  alt="Logo"
-                  className={styles.registerLogo}
-                />
+                <Link href="/">
+                  <Image
+                    src={blanjaLogo}
+                    alt="Logo"
+                    className={styles.registerLogo}
+                  />
+                </Link>
                 <h4 className={styles.pleaseRegister}>
                   Please register with your account
                 </h4>
@@ -35,6 +71,8 @@ const Register = () => {
                   className={`btn ${form ? styles.activeButton : ""}`}
                   onClick={() => {
                     setForm(true);
+                    dispatch(registerReducer.setRegisterRole(true));
+                    dispatch(registerReducer.setRegisterStore(null));
                   }}
                 >
                   Customer
@@ -44,11 +82,36 @@ const Register = () => {
                   className={`btn ${!form ? styles.activeButton : ""}`}
                   onClick={() => {
                     setForm(false);
+                    dispatch(registerReducer.setRegisterRole(false));
                   }}
                 >
                   Seller
                 </button>
               </div>
+
+              {isSuccess === true ? (
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="alert alert-success d-flex justify-content-center"
+                    role="alert"
+                    style={{ width: "75%" }}
+                  >
+                    {success}
+                  </div>
+                </div>
+              ) : null}
+
+              {isError === true ? (
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="alert alert-danger d-flex justify-content-center"
+                    role="alert"
+                    style={{ width: "75%" }}
+                  >
+                    {error}
+                  </div>
+                </div>
+              ) : null}
               <div>
                 <RegisterForm form={form} />
               </div>
@@ -58,6 +121,9 @@ const Register = () => {
                     type="submit"
                     className="btn btn-primary"
                     style={{ width: "75%", border: "40px" }}
+                    onClick={() => {
+                      submitRegister();
+                    }}
                   >
                     Register
                   </button>

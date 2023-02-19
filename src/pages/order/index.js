@@ -4,7 +4,7 @@ import Footer from "@/components/organism/Footer";
 import styles from "@/styles/pages/order/MyBag.module.scss";
 import jacket from "public/images/jacket.png";
 
-export default function MyBag() {
+const MyBag = () => {
   return (
     <>
       <Navbar />
@@ -156,4 +156,6 @@ export default function MyBag() {
       <Footer />
     </>
   );
-}
+};
+
+export default MyBag;

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "@/styles/components/Footer.module.scss";
 import blanja from "public/images/blanja-logo.svg";
 
-export default function Footer() {
+const Footer = () => {
   return (
     <>
       <div className={styles.main}>
@@ -40,11 +40,13 @@ export default function Footer() {
               <h3>Khaidar Ali</h3>
             </div>
             <div class="col-3">
-              <h3>Rahmad Nur H</h3>
+              <h3>Rachmad Nur H</h3>
             </div>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Footer;
