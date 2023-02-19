@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import blanjaLogo from "public/images/blanja-logo.svg";
 import Head from "next/head";
 import Image from "next/image";
@@ -6,49 +6,47 @@ import styles from "@/styles/pages/Login.module.scss";
 import LoginForm from "@/components/molecules/LoginForm";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getCookie, setCookie } from "cookies-next";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import * as profileReducer from "@/stores/reducer/profile";
 
 const Login = () => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  const [success, setSuccess] = React.useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [success, setSuccess] = useState(null);
 
+  const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    let isLogin = getCookie("profile") && getCookie("token");
-  }, []);
+  const data = useSelector((state) => state.login);
+  const loginSubmit = () => {
+    setIsLoading(true);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
+      .then((res) => {
+        setIsLoading(false);
+        setSuccess(res?.data?.message);
+        setIsError(false);
+        setIsSuccess(true);
 
-  const handleSubmit = async () => {
-    try {
-      setIsLoading(true);
+        console.log(res);
 
-      const connect = await axios.post("/api/login", {
-        email,
-        password,
+        dispatch(profileReducer.setProfile(res?.data?.data));
+        dispatch(profileReducer.setToken(res?.data?.token));
+
+        setTimeout(() => {
+          router.replace("/");
+        }, 1700);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err?.response?.data?.message);
+        setIsSuccess(false);
+        setIsError(true);
       });
-
-      setIsLoading(false);
-      setError(null);
-
-      setCookie("isLogin", "true");
-      setCookie("profile", JSON.stringify(connect?.data?.data));
-      setCookie("token", connect?.data?.token);
-      setSuccess("Login successful");
-
-      setTimeout(() => {
-        router.replace("/");
-      }, 1700);
-    } catch (error) {
-      setIsLoading(false);
-      setError(
-        error?.response?.data?.messages ?? "Something wrong in our server"
-      );
-    }
   };
-
   return (
     <div>
       <Head>
@@ -70,24 +68,32 @@ const Login = () => {
                     className={styles.registerLogo}
                   />
                 </Link>
-                <h4
-                  className={`styles.pleaseRegister ${
-                    error || success ? "mb-3" : ""
-                  }`}
-                >
+                <h4 className={`${styles.pleaseRegister} mb-4`}>
                   Please login with your account
                 </h4>
               </div>
 
-              {success ? (
-                <div className="alert alert-success mb-3" role="alert">
-                  {success}
+              {isSuccess === true ? (
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="alert alert-success d-flex justify-content-center"
+                    role="alert"
+                    style={{ width: "75%" }}
+                  >
+                    {success}
+                  </div>
                 </div>
               ) : null}
 
-              {error ? (
-                <div className="alert alert-danger mb-3" role="alert">
-                  {error}
+              {isError ? (
+                <div className="d-flex justify-content-center">
+                  <div
+                    className="alert alert-danger d-flex justify-content-center"
+                    role="alert"
+                    style={{ width: "75%" }}
+                  >
+                    {error}
+                  </div>
                 </div>
               ) : null}
 
@@ -114,8 +120,10 @@ const Login = () => {
                     type="submit"
                     className="btn btn-primary"
                     style={{ width: "75%" }}
+                    onClick={loginSubmit}
+                    disabled={isLoading}
                   >
-                    Login
+                    {isLoading ? "Loading..." : "Login"}
                   </button>
                 </div>
                 <p
@@ -125,7 +133,7 @@ const Login = () => {
                     textAlign: "center",
                   }}
                 >
-                  Don&apos;t have a Blanja account?
+                  Don&apos;t have a Blanja account?{" "}
                   <Link href="/auth/register" style={{ color: "#DB3022" }}>
                     Register
                   </Link>
