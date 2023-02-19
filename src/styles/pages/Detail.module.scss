@@ -1,0 +1,27 @@
+.breadcrumb{
+  --bs-breadcrumb-divider: ">";
+}
+
+.chat{
+  border: 1px solid #9B9B9B;
+  border-radius: 24px;
+  margin-left: 10px;
+}
+
+.chat:hover{
+  background: #DB3022;
+  border-radius: 25px;
+  color: white;
+} 
+
+.buyNow{
+  background: #DB3022;
+  border-radius: 25px;
+  color: white;
+}
+
+.buyNow:hover{
+  border: 1px solid #9B9B9B;
+  color: black;
+  border-radius: 24px;
+} 

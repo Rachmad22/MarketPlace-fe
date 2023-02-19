@@ -5,4 +5,27 @@
   align-items: center;
   padding: 4rem;
   min-height: 100vh;
+
+  .categoryBackground{
+    width: 13%;
+    position: absolute;
+    z-index: 1,
+  }
+
+  .categoryImage{
+    width: 11%;
+    position: absolute;
+    z-index: 2;
+    margin: 18px;
+    margin-top: 42px,
+  }
+
+  .categoryName {
+    position: absolute;
+    font-size: 31px;
+    z-index: 4;
+    margin: 45px;
+    margin-top: 70px;
+    color: white
+  }
 }

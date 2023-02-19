@@ -40,7 +40,7 @@ const Footer = () => {
               <h3>Khaidar Ali</h3>
             </div>
             <div class="col-3">
-              <h3>Rahmad Nur H</h3>
+              <h3>Rachmad Nur H</h3>
             </div>
           </div>
         </div>

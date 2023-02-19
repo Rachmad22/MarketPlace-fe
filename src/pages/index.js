@@ -55,7 +55,17 @@ const Home = () => {
               />
             </div>
             <div className="col-2 mb-4">
-              <img src="/images/shoes-category.png" style={{ width: "100%" }} />
+              <div>
+                <img
+                  src="/images/green-background.png"
+                  className={styles.categoryBackground}
+                />
+                <img
+                  src="/images/yeezy-shoes.png"
+                  className={styles.categoryImage}
+                />
+                <h3 className={styles.categoryName}>Shoes</h3>
+              </div>
             </div>
             <div className="col-2 mb-4">
               <img src="/images/pants-category.png" style={{ width: "100%" }} />
@@ -102,21 +112,6 @@ const Home = () => {
             <div style={{ flex: "0 0 auto", width: "15.5%" }}>
               <CardProduct />
             </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
           </div>
         </div>
         <div className="container">
@@ -126,21 +121,6 @@ const Home = () => {
             You&apos;ve never seen it before
           </p>
           <div className="row" style={{ gap: "3.5rem !important" }}>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
-            <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-              <CardProduct />
-            </div>
             <div style={{ flex: "0 0 auto", width: "15.5%" }}>
               <CardProduct />
             </div>
