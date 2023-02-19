@@ -1,21 +1,22 @@
+// Sidebar
 
 .bg {
   background-color: rgba(245, 245, 245, 1);
-
+  
   .box {
     display: flex;
-    min-height: 100vh;
-
+    min-height: 100%;
+    
     .sidebar {
       background-color: white;
-      width: 100vw;
+      width: 100%;
       padding: 20px;
       box-sizing: border-box;
       flex-direction: column;
 
       .content {
-        position: fixed;
-        margin: 80px 48px 20px 100px;
+        // position: fixed;
+        margin: 10px 48px 20px 100px;
 
         .picture {
           border-radius: 50%;
@@ -23,21 +24,40 @@
           height: 60px;
         }
 
+
+        .list:hover {
+          background-color: rgba(219, 48, 34, 1);
+          transition: all ease-in .3s;
+        }
+
         .list {
           color: rgba(155, 155, 155, 1) !important;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 12px 10px;
+          border-radius: 8px;
+          width: 285px;
+          box-sizing: border-box;
+
+          &.active {
+            background-color: rgba(219, 48, 34, 1);
+            transition: all ease-in .3s;
+          }
 
           span {
             font-style: normal;
             font-weight: 600;
-            font-size: 19px;
+            font-size: 23px;
             line-height: 24px;
           }
 
           span:hover {
-            color: black;
+            color: white;
+            // background-color: rgba(219, 48, 34, 1);
           }
 
-          .icon{
+          .icon {
             width: 100px;
             height: 100px;
             background-color: black;
@@ -50,8 +70,11 @@
 
   }
 
+  //End Sidebar 
+
+  // main content
   .card {
-    margin-top: 80px;
+    margin-top: 10px;
     margin-left: 30px;
     background-color: rgba(255, 255, 255, 1);
     padding: 30px 30px 100px 30px;
@@ -61,7 +84,7 @@
       width: 348px;
     }
 
-    .check:active {
+    .check:checked {
       background-color: rgba(219, 48, 34, 1);
     }
 
@@ -69,13 +92,15 @@
       width: 100px;
       height: 36px;
     }
-    .submit:hover{
+
+    .submit:hover {
       background-color: rgba(219, 48, 34, 1);
     }
 
     .border {
       border-left: 1px;
       color: rgba(212, 212, 212, 1);
+
       .edit:hover {
         background-color: rgba(219, 48, 34, 1);
       }
@@ -94,7 +119,11 @@
 
 }
 
-.cardOrder{
+// .address:active{
+//   border-color: rgba(219, 48, 34, 1);
+// }
+
+.cardOrder {
   margin-top: 80px;
   margin-left: 30px;
   background-color: rgba(255, 255, 255, 1);
@@ -110,7 +139,8 @@
   color: rgba(219, 48, 34, 1);
   border-bottom: 5px solid rgba(219, 48, 34, 1);
 }
-.font:active{
+
+.font:active {
   color: rgba(219, 48, 34, 1);
   border-bottom: 5px solid rgba(219, 48, 34, 1);
 }
@@ -119,5 +149,4 @@
   background-color: rgba(219, 48, 34, 1);
 }
 
-
-
+// end main content
