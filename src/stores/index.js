@@ -1,6 +1,4 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import register from "./reducer/register";
-import login from "./reducer/login";
 import profile from "./reducer/profile";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
@@ -27,7 +25,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persistedReducer, register, login },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
