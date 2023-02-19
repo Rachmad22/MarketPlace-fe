@@ -1,5 +1,5 @@
 import React from "react";
-import style from "@/styles/pages/profile.module.scss"
+import style from "@/styles/pages/Profile.module.scss"
 import { MdOutlineModeEdit } from "react-icons/md"
 import axios from "axios";
 import Link from 'next/link';
