@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import jacket from "public/images/jacket.png";
 import styles from "@/styles/pages/order/Checkout.module.scss";
-import Navbar from "@/components/organism/Navbar";
-import Footer from "@/components/organism/Footer";
+import Navbar from "@/components/organisms/Navbar";
+import Footer from "@/components/organisms/Footer";
+import Link from "next/link";
 
 export default function Checkout() {
   return (
@@ -98,7 +100,7 @@ export default function Checkout() {
                                             for="name"
                                             className="form-label"
                                           >
-                                            Recipient's name
+                                            Recipient&apos;s name
                                           </label>
                                           <input
                                             className="form-control"
@@ -111,7 +113,7 @@ export default function Checkout() {
                                             for="phone"
                                             className="form-label"
                                           >
-                                            Recipient's phone number
+                                            Recipient&apos;s phone number
                                           </label>
                                           <input
                                             className="form-control"
@@ -223,7 +225,7 @@ export default function Checkout() {
                             />
                           </div>
                           <div class={`col-7 ${styles.goods}`}>
-                            <h5>Men's formal suit - Black</h5>
+                            <h5>Men&apos;s formal suit - Black</h5>
                             <p>Zalora Cloth</p>
                           </div>
                         </div>
@@ -267,7 +269,7 @@ export default function Checkout() {
                             />
                           </div>
                           <div class={`col-7 ${styles.goods}`}>
-                            <h5>Men's formal suit - Black</h5>
+                            <h5>Men&apos;s formal suit - Black</h5>
                             <p>Zalora Cloth</p>
                           </div>
                         </div>

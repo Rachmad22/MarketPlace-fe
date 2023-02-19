@@ -4,8 +4,8 @@ import { MdOutlineModeEdit } from "react-icons/md"
 import axios from "axios";
 import Link from 'next/link';
 import Head from "next/head";
-import Navbar from "@/components/organism/Navbar";
-import Footer from "@/components/organism/Footer";
+import Navbar from "@/components/organisms/Navbar";
+import Footer from "@/components/organisms/Footer";
 
 export default function Seller(props) {
 
