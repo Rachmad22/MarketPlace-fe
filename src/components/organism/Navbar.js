@@ -1,7 +1,12 @@
 import React from "react";
 import blanja from "public/images/blanja-logo.svg";
 import sort from "public/images/sort.svg";
+import shop from "public/images/shopping-cart.svg";
+import mail from "public/images/mail.png";
+import bell from "public/images/bell.jpg";
+import profile from "public/images/profile.png";
 import styles from "@/styles/components/Navbar.module.scss";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   return (
@@ -176,8 +181,26 @@ export default function Navbar() {
               </div>
             </div>
             <div className="col">
-              <button className={`btn ${styles.login}`}>Sign Up</button>
-              <button className={`btn ${styles.login}`}>Login</button>
+              <Link href="auth/register">
+                <button className={`btn ${styles.login}`}>Sign Up</button>
+              </Link>
+              <Link href="auth/login">
+                <button className={`btn ${styles.login}`}>Login</button>
+              </Link>
+            </div>
+            <div className="col">
+              <button className="btn">
+                <img src={shop.src} />
+              </button>
+              <button className="btn">
+                <img src={bell.src} />
+              </button>
+              <button className="btn">
+                <img src={mail.src} />
+              </button>
+              <button className="btn">
+                <img src={profile.src} />
+              </button>
             </div>
           </div>
         </div>
