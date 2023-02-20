@@ -42,7 +42,7 @@ export default function Checkout() {
                     </button>
                   </div> */}
                   <section id="address">
-                    <div className={`card mb-5 ${style.card}`}>
+                    <div className={`card mb-5 ${styles.card}`}>
                       <div className="card-header">
                         <h3>Choose another address</h3>
                         <p>Manage your shipping address</p>
@@ -51,7 +51,7 @@ export default function Checkout() {
                         <div className="card-body">
                           <button
                             type="button"
-                            className={`btn btn-light ${style.dashed}`}
+                            className={`btn btn-light ${styles.dashed}`}
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
                           >
@@ -165,14 +165,14 @@ export default function Checkout() {
                                     <div class="modal-footer">
                                       <button
                                         type="button"
-                                        class={`btn btn-outline-dark rounded-5 ${style.submit}`}
+                                        class={`btn btn-outline-dark rounded-5 ${styles.submit}`}
                                         data-bs-dismiss="modal"
                                       >
                                         Cancel
                                       </button>
                                       <button
                                         type="button"
-                                        class={`btn btn-primary rounded-5 ${style.submit}`}
+                                        class={`btn btn-primary rounded-5 ${styles.submit}`}
                                       >
                                         Save
                                       </button>
@@ -183,7 +183,7 @@ export default function Checkout() {
                             </div>
                           </div>
 
-                          <div className={`card mt-5 ${style.address}`}>
+                          <div className={`card mt-5 ${styles.address}`}>
                             <div className="container m-2">
                               <h5>Andreas Jane</h5>
                               <p>
