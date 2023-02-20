@@ -1,16 +1,25 @@
 import styles from "@/styles/components/CardProduct.module.scss";
 import jacket from "public/images/jacket.png";
 import rating from "public/images/rating.svg";
+import Link from "next/link";
 
-const CardProduct = () => {
+const CardProduct = ({ item }) => {
   return (
     <>
       <div class="container">
         <div class={`card ${styles.cardProduct}`}>
-          <img src={jacket.src} class="card-img-top" alt="Jacket" />
+          <Link href={`/detail/${item?.product_id}`}>
+            <img
+              src={jacket.src}
+              class="card-img-top"
+              alt={item?.product_name}
+            />
+          </Link>
           <div class="card-body">
-            <h5>Men's formal suit - Black & White</h5>
-            <p class={styles.price}>$ 40.0</p>
+            <Link href={`/detail/${item?.id}`}>
+              <h5>{item?.product_name}</h5>
+            </Link>
+            <p class={styles.price}>$ {item?.price}</p>
             <p class={styles.store}>Zalora Cloth</p>
             <img src={rating.src} />
           </div>

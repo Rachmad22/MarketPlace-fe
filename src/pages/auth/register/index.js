@@ -17,14 +17,17 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const data = useSelector((state) => state.register);
 
   const router = useRouter();
 
   const submitRegister = () => {
+    setIsLoading(true);
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data)
       .then((res) => {
+        setIsLoading(false);
         setSuccess(res?.data?.message);
         setIsError(false);
         setIsSuccess(true);
@@ -34,6 +37,7 @@ const Register = () => {
         }, 1700);
       })
       .catch((err) => {
+        setIsLoading(false);
         setError(err?.response?.data?.message);
         setIsError(true);
         setIsSuccess(false);
@@ -123,9 +127,11 @@ const Register = () => {
                     style={{ width: "75%", border: "40px" }}
                     onClick={() => {
                       submitRegister();
+                      setIsLoading(true);
                     }}
+                    disabled={isLoading}
                   >
-                    Register
+                    {isLoading ? "Loading..." : "Register"}
                   </button>
                 </div>
                 <p
