@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styles from "@/styles/pages/Category.module.scss";
 import Head from "next/head";
@@ -48,6 +49,7 @@ const Category = (props) => {
                             src={item?.category_image}
                             // src="/images/shoes-category.png"
                             className={styles.categoryImage}
+                            alt={item?.category_name}
                           />
                           {/* <h3 className={styles.categoryName}>
                             {item?.category_name}

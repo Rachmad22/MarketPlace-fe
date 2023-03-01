@@ -4,13 +4,17 @@ import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import styles from "@/styles/pages/order/MyBag.module.scss";
 import jacket from "public/images/jacket.png";
+import Head from "next/head";
 
 const MyBag = () => {
   return (
     <>
+      <Head>
+        <title>My Bag | Blanja</title>
+      </Head>
       <Navbar />
 
-      <div className={styles.main}>
+      <main className={styles.main}>
         <div className="container ">
           <div className={styles.content}>
             <h2>My Bag</h2>
@@ -153,7 +157,7 @@ const MyBag = () => {
             </div>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );

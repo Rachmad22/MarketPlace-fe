@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Footer from "@/components/organisms/Footer";
 import Navbar from "@/components/organisms/Navbar";
 import Head from "next/head";
@@ -13,6 +14,7 @@ const DetailProduct = (props) => {
     product: {
       data: { product, store },
     },
+    products,
   } = props;
 
   const dataProduct = product[0];
@@ -72,6 +74,7 @@ const DetailProduct = (props) => {
                 <img
                   className={styles.bigPhoto}
                   src="/images/tshirt-detail.jpg"
+                  alt="detail"
                 />
               </div>
               <div className="row mt-2" style={{ gap: "0.89rem" }}>
@@ -79,6 +82,7 @@ const DetailProduct = (props) => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/tshirt-detail.jpg"
+                    alt="detail"
                     // onClick={selectImage("img1")}
                   />
                 </div>
@@ -86,6 +90,7 @@ const DetailProduct = (props) => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/beach-tshirt.jpg"
+                    alt="detail"
                     // onClick={setImageSelected("/images/beach-tshirt.jpg")}
                   />
                 </div>
@@ -93,6 +98,7 @@ const DetailProduct = (props) => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/art-tshirt.jpg"
+                    alt="detail"
                     // onClick={setImageSelected("/images/art-tshirt.jpg")}
                   />
                 </div>
@@ -101,6 +107,7 @@ const DetailProduct = (props) => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/tshirt-detail.jpg"
+                    alt="detail"
                   />
                 </div>
               </div>
@@ -113,6 +120,7 @@ const DetailProduct = (props) => {
               <img
                 src="/images/rating.svg"
                 style={{ width: "25%", marginBottom: "15px" }}
+                alt="rating"
               />
               <p style={{ marginBottom: "5px" }}>Price</p>
               <h3>$ {dataProduct?.price}</h3>
@@ -298,7 +306,11 @@ const DetailProduct = (props) => {
                       /10
                     </p>
                   </div>
-                  <img src="/images/five-star.png" style={{ width: "150px" }} />
+                  <img
+                    src="/images/five-star.png"
+                    style={{ width: "150px" }}
+                    alt="five star"
+                  />
                 </div>
                 <div>
                   <div className="d-flex">
@@ -309,6 +321,7 @@ const DetailProduct = (props) => {
                         height: "17px",
                         marginLeft: "38px",
                       }}
+                      alt="one star"
                     />
                     <p className="ms-2" style={{ marginTop: "-3px" }}>
                       5
@@ -321,6 +334,7 @@ const DetailProduct = (props) => {
                         marginLeft: "15px",
                         marginTop: "5px",
                       }}
+                      alt="line review"
                     />
                     <p className="ms-3" style={{ marginTop: "-4px" }}>
                       8
@@ -442,9 +456,15 @@ const DetailProduct = (props) => {
                 </p>
               </div>
               <div className="row" style={{ gap: "3.5rem" }}>
-                <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-                  <CardProduct />
-                </div>
+                {products?.data?.map((item, key) => {
+                  return (
+                    <React.Fragment key={key}>
+                      <div style={{ flex: "0 0 auto", width: "15.5%" }}>
+                        <CardProduct item={item} />
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -463,11 +483,18 @@ export const getServerSideProps = async (context) => {
     `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
   );
 
-  const convert = productData?.data;
+  const convertProduct = productData?.data;
+
+  const productsData = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/products`
+  );
+
+  const convertProducts = productsData?.data;
 
   return {
     props: {
-      product: convert,
+      product: convertProduct,
+      products: convertProducts,
     },
   };
   revalidate: 10;

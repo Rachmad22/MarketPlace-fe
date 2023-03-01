@@ -10,13 +10,10 @@ import axios from "axios";
 
 const CategoryType = (props) => {
   const {
-    product: {
-      data: { product, store },
-    },
+    product: { data },
   } = props;
 
-  const dataProduct = product[0];
-  const dataStore = store[0];
+  const dataProduct = data;
   const router = useRouter();
   const {
     query: { id },
@@ -25,7 +22,7 @@ const CategoryType = (props) => {
   return (
     <div>
       <Head>
-        <title>{dataProduct} | Blanja</title>
+        <title>{dataProduct[0]?.category_name} | Blanja</title>
       </Head>
       <Navbar />
       <main>
@@ -43,16 +40,26 @@ const CategoryType = (props) => {
                     Category
                   </Link>
                 </li>
-                <li className="breadcrumb-item active"></li>
+                <li className="breadcrumb-item active">
+                  {dataProduct[0]?.category_name}
+                </li>
               </ol>
             </nav>
           </div>
           <div className="mt-5">
-            <h1>T-Shirt</h1>
+            <h1>{dataProduct[0]?.category_name}</h1>
             <div className="row mt-4" style={{ gap: "3.5rem" }}>
-              <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-                <CardProduct />
-              </div>
+              {dataProduct.length > 0
+                ? dataProduct?.map((item, key) => {
+                    return (
+                      <React.Fragment key={key}>
+                        <div style={{ flex: "0 0 auto", width: "15.5%" }}>
+                          <CardProduct item={item} />
+                        </div>
+                      </React.Fragment>
+                    );
+                  })
+                : "Product not found"}
             </div>
           </div>
         </div>
@@ -66,8 +73,9 @@ export const getServerSideProps = async (context) => {
   const {
     query: { id },
   } = context;
+
   const productData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${category_id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products/category/${id}`
   );
 
   const convert = productData?.data;
