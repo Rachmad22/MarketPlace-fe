@@ -23,7 +23,6 @@ export default function Seller(props) {
                   <Link href="#">
                     <img
                       src={
-                        profile.data[0].photo ||
                         `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`
                       }
                       alt="profile"
@@ -32,7 +31,7 @@ export default function Seller(props) {
                   </Link>
 
                   <div className="m-2">
-                    <h5>{profile.data[0].name}</h5>
+                    <h5>AAAAAA</h5>
                     <Link href="#" className="text-secondary">
                       <MdOutlineModeEdit /> Ubah Profile
                     </Link>
@@ -190,7 +189,6 @@ export default function Seller(props) {
                         <div className={style.border}>
                           <img
                             src={
-                              profile.data[0].photo ||
                               `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`
                             }
                             alt="profile"
@@ -463,13 +461,13 @@ export default function Seller(props) {
   );
 }
 
-export async function getStaticProps(context) {
-  const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/1`);
-  const convertData = profile.data;
+// export async function getStaticProps(context) {
+//   const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/`);
+//   const convertData = profile.data;
 
-  // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)
+//   // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/1`)
 
-  return {
-    props: convertData, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: convertData, // will be passed to the page component as props
+//   };
+// }
