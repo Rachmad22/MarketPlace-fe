@@ -1,11 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import blanja from "public/images/blanja-logo.svg";
+import shop from "public/images/shop.svg";
+import mail from "public/images/mail.png";
+import bell from "public/images/bell.jpg";
+import profileFoto from "public/images/profile.png";
 import sort from "public/images/sort.svg";
 import styles from "@/styles/components/Navbar.module.scss";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import * as profileReducer from "../../stores/reducer/profile.js";
 
 const Navbar = () => {
+  const data = useSelector((state) => state.profile);
+
   return (
     <>
       <div className={styles.main}>
@@ -183,14 +191,38 @@ const Navbar = () => {
                 <button className={`btn ${styles.submit}`}>Search</button>
               </div>
             </div>
-            <div className="col">
-              <Link href="/auth/register">
-                <button className={`btn ${styles.login}`}>Register</button>
-              </Link>
-              <Link href="/auth/login">
-                <button className={`btn ${styles.login}`}>Login</button>
-              </Link>
-            </div>
+            {!data?.profile?.payload ? (
+              <div className="col">
+                <Link href="/auth/register">
+                  <button className={`btn ${styles.login}`}>Register</button>
+                </Link>
+                <Link href="/auth/login">
+                  <button className={`btn ${styles.login}`}>Login</button>
+                </Link>
+              </div>
+            ) : (
+              <div className="col">
+                <button className="btn">
+                  <img src={shop.src} />
+                </button>
+                <button className="btn">
+                  <img src={bell.src} />
+                </button>
+                <button className="btn">
+                  <img src={mail.src} />
+                </button>
+                <button className="btn">
+                  <img
+                    src={data?.profile?.payload?.photo}
+                    style={
+                      ({ width: "50px" },
+                      { height: "50px" },
+                      { borderRadius: "25px" })
+                    }
+                  />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
