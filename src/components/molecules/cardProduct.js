@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from "@/styles/components/CardProduct.module.scss";
 import jacket from "public/images/jacket.png";
 import rating from "public/images/rating.svg";
@@ -8,7 +9,7 @@ const CardProduct = ({ item }) => {
     <>
       <div class="container">
         <div class={`card ${styles.cardProduct}`}>
-          <Link href={`/detail/${item?.product_id}`}>
+          <Link href={`/detail/${item?.id}`}>
             <img
               src={jacket.src}
               class="card-img-top"
@@ -16,12 +17,12 @@ const CardProduct = ({ item }) => {
             />
           </Link>
           <div class="card-body">
-            <Link href={`/detail/${item?.product_id}`}>
+            <Link href={`/detail/${item?.id}`}>
               <h5>{item?.product_name}</h5>
             </Link>
             <p class={styles.price}>$ {item?.price}</p>
-            <p class={styles.store}>Zalora Cloth</p>
-            <img src={rating.src} />
+            <p class={styles.store}>{item?.store_name}</p>
+            <img src={rating.src} alt="rating" />
           </div>
         </div>
       </div>

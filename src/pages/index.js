@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/pages/Home.module.scss";
@@ -13,8 +14,6 @@ const Home = (props) => {
     categories: { data },
     products,
   } = props;
-
-  console.log(data);
 
   const totalData = data?.length;
 
@@ -33,12 +32,14 @@ const Home = (props) => {
               <img
                 src="/images/carousel1.png"
                 style={{ width: "100%", height: "100%" }}
+                alt="carousel"
               />
             </div>
             <div className="col-6">
               <img
                 src="/images/carousel2.png"
                 style={{ width: "100%", height: "100%" }}
+                alt="carousel"
               />
             </div>
           </div>
@@ -62,6 +63,7 @@ const Home = (props) => {
                         <img
                           src={item?.category_image}
                           className={styles.categoryImage}
+                          alt="category"
                         />
                         {/* <h3 className={styles.categoryName}>
                           {item?.category_name}
