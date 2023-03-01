@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import blanja from "public/images/blanja-logo.svg";
 import shop from "public/images/shop.svg";
@@ -20,7 +21,11 @@ const Navbar = () => {
           <div className="row align-items-center">
             <div className="col">
               <Link href="/">
-                <img src={blanja.src} className={styles.blanja} />
+                <img
+                  src={blanja.src}
+                  className={styles.blanja}
+                  alt="logo blanja"
+                />
               </Link>
             </div>
             <div className="col-6">

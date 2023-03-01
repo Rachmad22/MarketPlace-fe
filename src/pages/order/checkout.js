@@ -5,13 +5,17 @@ import styles from "@/styles/pages/order/Checkout.module.scss";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Checkout() {
   return (
     <div>
+      <Head>
+        <title>Checkout | Blanja</title>
+      </Head>
       <Navbar />
 
-      <div className={styles.main}>
+      <main className={styles.main}>
         <div className="container ">
           <div className={styles.content}>
             <h2>Checkout</h2>
@@ -319,7 +323,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

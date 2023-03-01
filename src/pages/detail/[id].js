@@ -1,12 +1,29 @@
+/* eslint-disable @next/next/no-img-element */
 import Footer from "@/components/organisms/Footer";
 import Navbar from "@/components/organisms/Navbar";
 import Head from "next/head";
 import React, { useState } from "react";
 import styles from "@/styles/pages/Detail.module.scss";
 import Link from "next/link";
-import CardProduct from "@/components/molecules/CardProduct";
+import CardProduct from "@/components/molecules/cardProduct";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-const DetailProduct = () => {
+const DetailProduct = (props) => {
+  const {
+    product: {
+      data: { product, store },
+    },
+    products,
+  } = props;
+
+  const dataProduct = product[0];
+  const dataStore = store[0];
+  const router = useRouter();
+  const {
+    query: { id },
+  } = router;
+
   const [quantity, setQuantity] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(false);
   const [colorSelected, setColorSelected] = useState(null);
@@ -29,7 +46,7 @@ const DetailProduct = () => {
   return (
     <div>
       <Head>
-        <title>Detail | Blanja</title>
+        <title>{dataProduct?.product_name} | Blanja</title>
       </Head>
       <Navbar />
       <main>
@@ -42,7 +59,11 @@ const DetailProduct = () => {
                     Home
                   </Link>
                 </li>
-                <li className="breadcrumb-item active">Category</li>
+                <li className="breadcrumb-item active">
+                  <Link href="/category" style={{ color: "grey" }}>
+                    Category
+                  </Link>
+                </li>
                 <li className="breadcrumb-item active">T-Shirt</li>
               </ol>
             </nav>
@@ -53,6 +74,7 @@ const DetailProduct = () => {
                 <img
                   className={styles.bigPhoto}
                   src="/images/tshirt-detail.jpg"
+                  alt="detail"
                 />
               </div>
               <div className="row mt-2" style={{ gap: "0.89rem" }}>
@@ -60,6 +82,7 @@ const DetailProduct = () => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/tshirt-detail.jpg"
+                    alt="detail"
                     // onClick={selectImage("img1")}
                   />
                 </div>
@@ -67,6 +90,7 @@ const DetailProduct = () => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/beach-tshirt.jpg"
+                    alt="detail"
                     // onClick={setImageSelected("/images/beach-tshirt.jpg")}
                   />
                 </div>
@@ -74,6 +98,7 @@ const DetailProduct = () => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/art-tshirt.jpg"
+                    alt="detail"
                     // onClick={setImageSelected("/images/art-tshirt.jpg")}
                   />
                 </div>
@@ -82,21 +107,23 @@ const DetailProduct = () => {
                   <img
                     className={styles.smallPhoto}
                     src="/images/tshirt-detail.jpg"
+                    alt="detail"
                   />
                 </div>
               </div>
             </div>
             <div>
-              <h3>Tshirt Robotic</h3>
+              <h3>{dataProduct?.product_name}</h3>
               <p style={{ marginBottom: "15px", color: "#9B9B9B" }}>
-                Zalora Cloth
+                {dataStore?.store_name}
               </p>
               <img
                 src="/images/rating.svg"
                 style={{ width: "25%", marginBottom: "15px" }}
+                alt="rating"
               />
               <p style={{ marginBottom: "5px" }}>Price</p>
-              <h3>$ 20.0</h3>
+              <h3>$ {dataProduct?.price}</h3>
               <p style={{ marginTop: "20px", marginBottom: "5px" }}>Color</p>
               <div className="d-flex mb-3">
                 <div className="d-flex">
@@ -254,26 +281,13 @@ const DetailProduct = () => {
               <p
                 style={{ fontSize: "22px", color: "#DB3022", fontWeight: 500 }}
               >
-                New
+                {dataProduct?.condition === true ? "New" : "Second"}
               </p>
             </div>
             <div className="mt-4">
               <h4>Description</h4>
               <p style={{ width: "95%", color: "#9B9B9B" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                <br /> <br /> Donec non magna rutrum, pellentesque augue eu,
-                sagittis velit. Phasellus quis laoreet dolor. Fusce nec pharetra
-                quam. Interdum et malesuada fames ac ante ipsum primis in
-                faucibus. Praesent sed enim vel turpis blandit imperdiet ac ac
-                felis. Etiam tincidunt tristique placerat. Pellentesque a
-                consequat mauris, vel suscipit ipsum. Donec ac mauris vitae diam
-                commodo vehicula. Donec quam elit, sollicitudin eu nisl at,
-                ornare suscipit magna. <br /> <br /> Donec non magna rutrum,
-                pellentesque augue eu, sagittis velit. Phasellus quis laoreet
-                dolor. Fusce nec pharetra quam. Interdum et malesuada fames ac
-                ante ipsum primis in faucibus. Praesent sed enim vel turpis
-                blandit imperdiet ac ac felis. <br /> <br /> In ultricies rutrum
-                tempus. Mauris vel molestie orci.
+                {dataProduct?.description}
               </p>
             </div>
             <div className="mt-4">
@@ -292,7 +306,11 @@ const DetailProduct = () => {
                       /10
                     </p>
                   </div>
-                  <img src="/images/five-star.png" style={{ width: "150px" }} />
+                  <img
+                    src="/images/five-star.png"
+                    style={{ width: "150px" }}
+                    alt="five star"
+                  />
                 </div>
                 <div>
                   <div className="d-flex">
@@ -303,6 +321,7 @@ const DetailProduct = () => {
                         height: "17px",
                         marginLeft: "38px",
                       }}
+                      alt="one star"
                     />
                     <p className="ms-2" style={{ marginTop: "-3px" }}>
                       5
@@ -315,6 +334,7 @@ const DetailProduct = () => {
                         marginLeft: "15px",
                         marginTop: "5px",
                       }}
+                      alt="line review"
                     />
                     <p className="ms-3" style={{ marginTop: "-4px" }}>
                       8
@@ -436,9 +456,15 @@ const DetailProduct = () => {
                 </p>
               </div>
               <div className="row" style={{ gap: "3.5rem" }}>
-                <div style={{ flex: "0 0 auto", width: "15.5%" }}>
-                  <CardProduct />
-                </div>
+                {products?.data?.map((item, key) => {
+                  return (
+                    <React.Fragment key={key}>
+                      <div style={{ flex: "0 0 auto", width: "15.5%" }}>
+                        <CardProduct item={item} />
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -447,6 +473,31 @@ const DetailProduct = () => {
       <Footer />
     </div>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const {
+    query: { id },
+  } = context;
+  const productData = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
+  );
+
+  const convertProduct = productData?.data;
+
+  const productsData = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/products`
+  );
+
+  const convertProducts = productsData?.data;
+
+  return {
+    props: {
+      product: convertProduct,
+      products: convertProducts,
+    },
+  };
+  revalidate: 10;
 };
 
 export default DetailProduct;

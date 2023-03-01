@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styles from "@/styles/components/Footer.module.scss";
 import blanja from "public/images/blanja-logo.svg";
@@ -9,7 +10,7 @@ const Footer = () => {
         <div class="container text-center">
           <div class="row align-items-center">
             <div class="col-2">
-              <img src={blanja.src} />
+              <img src={blanja.src} alt="logo blanja" />
             </div>
             <div class="col-8 offset-1">
               <button className={`btn ${styles.text}`}>About</button>
