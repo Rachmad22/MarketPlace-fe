@@ -2,6 +2,8 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import login from "./reducer/login";
 import register from "./reducer/register";
 import profile from "./reducer/profile";
+import login from "./reducer/login";
+import register from "./reducer/register";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
