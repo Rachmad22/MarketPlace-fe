@@ -14,7 +14,7 @@ export default function Checkout() {
       <div className={styles.main}>
         <div className="container ">
           <div className={styles.content}>
-            <h2>My Bag</h2>
+            <h2>Checkout</h2>
             <div class={`row ${styles.bot}`}>
               <div class="col-8">
                 <div
