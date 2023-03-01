@@ -4,6 +4,7 @@ import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import styles from "@/styles/pages/order/MyBag.module.scss";
 import jacket from "public/images/jacket.png";
+import Link from "next/link";
 
 const MyBag = () => {
   return (
@@ -146,7 +147,9 @@ const MyBag = () => {
                     </div>
                   </div>
                   <div class="text-center">
-                    <button class={`btn ${styles.buy}`}>Buy</button>
+                    <Link href="/order/checkout">
+                      <button class={`btn ${styles.buy}`}>Buy</button>
+                    </Link>
                   </div>
                 </div>
               </div>

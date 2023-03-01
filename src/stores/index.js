@@ -1,4 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import login from "./reducer/login";
+import register from "./reducer/register";
 import profile from "./reducer/profile";
 import login from "./reducer/login";
 import register from "./reducer/register";
@@ -8,7 +10,9 @@ import storage from "redux-persist/lib/storage";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 
 const reducers = combineReducers({
-  profile, login, register,
+  profile,
+  login,
+  register,
 });
 
 const persistConfig = {
