@@ -12,6 +12,8 @@ const Category = (props) => {
     categories: { data },
   } = props;
 
+  console.log(data);
+
   return (
     <div>
       <Head>
