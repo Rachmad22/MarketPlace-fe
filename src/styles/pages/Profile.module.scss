@@ -28,6 +28,9 @@
         .list:hover {
           background-color: rgba(219, 48, 34, 1);
           transition: all ease-in .3s;
+          span{
+            color: white;
+          }
         }
 
         .list {
@@ -39,11 +42,7 @@
           border-radius: 8px;
           width: 285px;
           box-sizing: border-box;
-
-          &.active {
-            background-color: rgba(219, 48, 34, 1);
-            transition: all ease-in .3s;
-          }
+          cursor: pointer;
 
           span {
             font-style: normal;
@@ -70,6 +69,13 @@
 
   }
 
+  .listActive {
+    background-color: rgba(219, 48, 34, 1);
+    
+    span{
+      color: white;
+    }
+  }
   //End Sidebar 
 
   // main content
@@ -124,15 +130,17 @@
 // }
 
 .cardOrder {
-  margin-top: 80px;
+  // margin-top: 80px;
   margin-left: 30px;
   background-color: rgba(255, 255, 255, 1);
   padding: 30px 30px 400px 30px;
+  border-radius: 15px;
 }
 
 .font {
   color: rgba(155, 155, 155, 1);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .font:hover {
