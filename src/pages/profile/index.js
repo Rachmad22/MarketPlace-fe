@@ -8,9 +8,7 @@ import Footer from "@/components/organisms/Footer";
 import { useSelector } from "react-redux";
 
 
-export default function MyProfile(props) {
-
- const { profile, address } = props
+export default function MyProfile() {
 
  // data from redux
  const data = useSelector((state) => state.profile);
@@ -40,10 +38,14 @@ export default function MyProfile(props) {
  // state for sidebar menu
  const [isAccount, setIsAccount] = React.useState(false);
  const [isAddress, setIsAddress] = React.useState(false);
+ const [allAddress, setAllAddress] = React.useState([])
  const [isOrder, setIsOrder] = React.useState(false);
+ const [allItems, setAllItems] = React.useState([])
 
+ // data redux
  const token = data.token.payload
  const id = data.profile.payload.id
+ const profileUser = data.profile.payload
 
  const orderStatus = async () => {
   setIsLoading(true)
@@ -53,16 +55,35 @@ export default function MyProfile(props) {
     Authorization: `Bearer ${token}`,
    },
   };
-  await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/checkouts/users/${id}`, config)
-   .then((res)=>{
-    console.log(res)
-    setIsLoading(false)
-    setError(null)
-   })
-   .catch((error)=>{
-    console.log(error)
-   })
+
+  await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/checkouts/users/${id}`, config).then((res) => {
+   setAllItems(res.data.data)
+   setIsLoading(false)
+   setError(null)
+  }).catch((error) => {
+   console.log(error)
+  })
  }
+
+ const getAddress = async () => {
+  setIsLoading(true)
+  const config = {
+   headers: {
+    "Content-Type": "multipart/form-data",
+    Authorization: `Bearer ${token}`,
+   },
+  };
+
+  await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/addresses`, config).then((res) => {
+   console.log(res.data.data)
+   setAllAddress(res.data.data)
+   setIsLoading(false)
+   setError(null)
+  }).catch((error) => {
+   console.log(error)
+  })
+ }
+
 
 
  const handleEdit = async () => {
@@ -129,7 +150,7 @@ export default function MyProfile(props) {
   }
  };
 
-
+ // console.log(profileUser)
  return (
   <>
    <Head>
@@ -145,11 +166,11 @@ export default function MyProfile(props) {
        <div className="header">
         <div className="list-item d-flex align-items-center mt-5">
          <Link href="#">
-          <img src={profile?.data[0]?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className={style.picture} />
+          <img src={profileUser?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className={style.picture} />
          </Link>
 
          <div className="m-2">
-          <h5>{profile?.data[0]?.name}</h5>
+          <h5>{profileUser?.name}</h5>
           <Link href="#" className="text-secondary">
            <p class='bx bx-edit-alt'> Ubah Profile</p>
           </Link>
@@ -175,6 +196,7 @@ export default function MyProfile(props) {
            setIsAccount(false)
            setIsAddress(true)
            setIsOrder(false)
+           getAddress()
           }}>
            <span class='bx bxs-map' > Shipping Address</span>
           </div>
@@ -184,6 +206,7 @@ export default function MyProfile(props) {
            setIsAccount(false)
            setIsAddress(false)
            setIsOrder(true)
+           orderStatus()
           }}>
            <span class='bx bx-clipboard'> My Order</span>
           </div>
@@ -218,7 +241,7 @@ export default function MyProfile(props) {
                 <label for="exampleInputName" class="form-label">Name</label>
                </div>
                <div className="col-9">
-                <input type="text" class={`form-control ${style.in}`} id="exampleInputName" placeholder={profile?.data[0]?.name} onChange={(event) => setName(event.target.value)} />
+                <input type="text" class={`form-control ${style.in}`} id="exampleInputName" placeholder={profileUser?.name} onChange={(event) => setName(event.target.value)} />
                </div>
               </div>
              </div>
@@ -228,7 +251,7 @@ export default function MyProfile(props) {
                 <label for="exampleInputEmail1" class="form-label">Email</label>
                </div>
                <div className="col-9">
-                <input type="email" class={`form-control ${style.in}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={profile?.data[0]?.email} onChange={(event) => setEmail(event.target.value)} />
+                <input type="email" class={`form-control ${style.in}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={profileUser?.email} onChange={(event) => setEmail(event.target.value)} />
                </div>
               </div>
              </div>
@@ -247,7 +270,7 @@ export default function MyProfile(props) {
                  type="number"
                  class={`form-control phone ${style.in}`}
                  id="exampleFormControlInput1"
-                 placeholder={profile?.data[0]?.phone_number}
+                 placeholder={profileUser?.phone_number}
                  onChange={(event) => setPhone_number(event.target.value)}
                 />
                </div>
@@ -301,7 +324,7 @@ export default function MyProfile(props) {
            </div>
            <div className="col-3 text-center">
             <div className={style.border}>
-             <img src={profile?.data[0]?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className="rounded-circle mt-4" style={{ width: "100px", height: "100px" }} />
+             <img src={profileUser?.photo || `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`} alt="profile" className="rounded-circle mt-4" style={{ width: "100px", height: "100px" }} />
 
              <button data-bs-toggle="modal" data-bs-target="#image" className={`btn btn-light rounded-5 mt-3 ${style.edit}`}>Select Image</button>
 
@@ -350,7 +373,7 @@ export default function MyProfile(props) {
          </div>
          <div className="container">
           <div className="card-body">
-           <button type="button" className={`btn btn-light ${style.dashed}`} data-bs-toggle="modal" data-bs-target="#addAddress">Add New Address</button>
+           <button type="button" className={`btn btn-light mb-3 ${style.dashed}`} data-bs-toggle="modal" data-bs-target="#addAddress">Add New Address</button>
 
            {/* <!-- Modal --> */}
            <div class="modal fade" id="addAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -401,27 +424,21 @@ export default function MyProfile(props) {
             </div>
            </div>
 
-           <div className="mt-5">
-            <input type="radio" className="btn-check" name="options-outlined" id="danger-outlined1" autocomplete="off" />
-            <label className="btn btn-outline-danger mb-3" for="danger-outlined1">
-             <div className="container m-2 text-lg-start text-dark">
-              <h5>{address?.data[0]?.recipient_name}</h5>
-              <h6>{address?.data[0]?.address_alias}</h6>
-              <p>{address?.data[0]?.street}, {address?.data[0]?.city}, {address?.data[0]?.postal_code}, <br /> hp: {address?.data[0]?.recipient_phone_number}</p>
-              <span href="#" className="" data-bs-toggle="modal" data-bs-target="#addAddress">Change Address</span>
+           {allAddress.map((item, key) => {
+            return <React.Fragment key={key}>
+             <div className="mt-2">
+              <input type="radio" className="btn-check" name="options-outlined" id={`primary-outlined${item.id}`} autocomplete="off" />
+              <label className="btn btn-outline-danger mb-3" for={`primary-outlined${item.id}`}>
+               <div className="container m-2 text-lg-start text-dark">
+                <h5>{item?.recipient_name}</h5>
+                <h6>{item?.address_alias}</h6>
+                <p>{item?.street}, {item?.city}, {item?.postal_code}, <br /> hp: {item?.recipient_phone_number}</p>
+                <span href="#" className="" data-bs-toggle="modal" data-bs-target="#addAddress">Change Address</span>
+               </div>
+              </label>
              </div>
-            </label>
-
-            {/* <input type="radio" className={`btn-check ${style.address}`} name="options-outlined" id="danger-outlined" autocomplete="off" />
-          <label className="btn btn-outline-danger mb-3" for="danger-outlined">
-           <div className="container m-2 text-lg-start text-black">
-            <h5>Andreas Jane</h5>
-            <p>Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
-            <span href="#" className="" data-bs-toggle="modal" data-bs-target="#addAddress">Change Address</span>
-           </div>
-          </label> */}
-           </div>
-
+            </React.Fragment>
+           })}
 
           </div>
          </div>
@@ -461,202 +478,227 @@ export default function MyProfile(props) {
           </ul>
           <div>
            {order === 0 && (
-            <div className="card py-3 m-3">
-             <div className="container">
-              <div className="row">
-               <div className="col-7">
-                <div className="d-flex justify-content-center align-items-center gap-3">
-                 <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
-                 <div>
-                  <h5>Product</h5>
-                  <h5>product name</h5>
-                  <p>price</p>
+            allItems.map((item, key) => {
+             console.log(allItems)
+             return <>
+              <div className="card py-3 m-3" key={item.product_id}>
+               <div className="container">
+                <div className="row">
+                 <div className="col-7">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                   <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
+                   <div>
+                    <h5>Product</h5>
+                    <h5>{item.product_name}</h5>
+                    <p>$  {item.price}</p>
+                   </div>
+                  </div>
                  </div>
+
+                 <div className="col-2">
+                  <div>
+                   <h5>qty</h5>
+                   <p>{item.qty}</p>
+                  </div>
+                 </div>
+
+                 <div className="col-3">
+                  <div>
+                   <h5>Status</h5>
+                   <p>{item.status === 1 && "Not yet paid" || item.status === 2 && "Packed" || item.status === 3 && "Sent" || item.status === 4 && "Completed" || item.status === 5 && "Order Cancel"}</p>
+                  </div>
+                 </div>
+
                 </div>
                </div>
-
-               <div className="col-2">
-                <div>
-                 <h5>qty</h5>
-                 <p>100</p>
-                </div>
-               </div>
-
-               <div className="col-3">
-                <div>
-                 <h5>Status</h5>
-                 <p>Sent</p>
-                </div>
-               </div>
-
               </div>
-             </div>
-            </div>
+             </>
+            })
            )}
            {order === 1 && (
-            <div className="card py-3 m-3">
-             <div className="container">
-              <div className="row">
-               <div className="col-7">
-                <div className="d-flex justify-content-center align-items-center gap-3">
-                 <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
-                 <div>
-                  <h5>Product</h5>
-                  <h5>product name</h5>
-                  <p>price</p>
+            allItems.filter(items => items.status === 1).map((item, key) => {
+             return <>
+              <div className="card py-3 m-3" key={item.product_id}>
+               <div className="container">
+                <div className="row">
+                 <div className="col-7">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                   <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
+                   <div>
+                    <h5>Product</h5>
+                    <h5>{item.product_name}</h5>
+                    <p>$ {item.price}</p>
+                   </div>
+                  </div>
                  </div>
+
+                 <div className="col-2">
+                  <div>
+                   <h5>qty</h5>
+                   <p>{item.qty}</p>
+                  </div>
+                 </div>
+
+                 <div className="col-3">
+                  <div>
+                   <h5>Status</h5>
+                   <p>Not yet paid</p>
+                  </div>
+                 </div>
+
                 </div>
                </div>
-
-               <div className="col-2">
-                <div>
-                 <h5>qty</h5>
-                 <p>100</p>
-                </div>
-               </div>
-
-               <div className="col-3">
-                <div>
-                 <h5>Status</h5>
-                 <p>Not yet paid</p>
-                </div>
-               </div>
-
               </div>
-             </div>
-            </div>
+             </>
+            })
            )}
            {order === 2 && (
-            <div className="card py-3 m-3">
-             <div className="container">
-              <div className="row">
-               <div className="col-7">
-                <div className="d-flex justify-content-center align-items-center gap-3">
-                 <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
-                 <div>
-                  <h5>Product</h5>
-                  <h5>product name</h5>
-                  <p>price</p>
+            allItems.filter(items => items.status === 2).map((item, key) => {
+             return <>
+              <div className="card py-3 m-3">
+               <div className="container">
+                <div className="row">
+                 <div className="col-7">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                   <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
+                   <div>
+                    <h5>Product</h5>
+                    <h5>{item.product_name}</h5>
+                    <p>$  {item.price}</p>
+                   </div>
+                  </div>
                  </div>
+
+                 <div className="col-2">
+                  <div>
+                   <h5>qty</h5>
+                   <p>{item.qty}</p>
+                  </div>
+                 </div>
+
+                 <div className="col-3">
+                  <div>
+                   <h5>Status</h5>
+                   <p>Packed</p>
+                  </div>
+                 </div>
+
                 </div>
                </div>
-
-               <div className="col-2">
-                <div>
-                 <h5>qty</h5>
-                 <p>100</p>
-                </div>
-               </div>
-
-               <div className="col-3">
-                <div>
-                 <h5>Status</h5>
-                 <p>Packed</p>
-                </div>
-               </div>
-
               </div>
-             </div>
-            </div>
+             </>
+            })
            )}
            {order === 3 && (
-            <div className="card py-3 m-3">
-             <div className="container">
-              <div className="row">
-               <div className="col-7">
-                <div className="d-flex justify-content-center align-items-center gap-3">
-                 <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
-                 <div>
-                  <h5>Product</h5>
-                  <h5>product name</h5>
-                  <p>price</p>
+            allItems.filter(items => items.status === 3).map((item, key) => {
+             return <>
+              <div className="card py-3 m-3" key={item.product_id}>
+               <div className="container">
+                <div className="row">
+                 <div className="col-7">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                   <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
+                   <div>
+                    <h5>Product</h5>
+                    <h5>{item.product_name}</h5>
+                    <p>$  {item.price}</p>
+                   </div>
+                  </div>
                  </div>
+
+                 <div className="col-2">
+                  <div>
+                   <h5>qty</h5>
+                   <p>{item.qty}</p>
+                  </div>
+                 </div>
+
+                 <div className="col-3">
+                  <div>
+                   <h5>Status</h5>
+                   <p>Sent</p>
+                  </div>
+                 </div>
+
                 </div>
                </div>
-
-               <div className="col-2">
-                <div>
-                 <h5>qty</h5>
-                 <p>100</p>
-                </div>
-               </div>
-
-               <div className="col-3">
-                <div>
-                 <h5>Status</h5>
-                 <p>Sent</p>
-                </div>
-               </div>
-
               </div>
-             </div>
-            </div>
+             </>
+            })
            )}
            {order === 4 && (
-            <div className="card py-3 m-3">
-             <div className="container">
-              <div className="row">
-               <div className="col-7">
-                <div className="d-flex justify-content-center align-items-center gap-3">
-                 <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
-                 <div>
-                  <h5>Product</h5>
-                  <h5>product name</h5>
-                  <p>price</p>
+            allItems.filter(items => items.status === 4).map((item, key) => {
+             return <>
+              <div className="card py-3 m-3">
+               <div className="container">
+                <div className="row">
+                 <div className="col-7">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                   <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
+                   <div>
+                    <h5>Product</h5>
+                    <h5>{item.product_name}</h5>
+                    <p>$  {item.price}</p>
+                   </div>
+                  </div>
                  </div>
+
+                 <div className="col-2">
+                  <div>
+                   <h5>qty</h5>
+                   <p>{item.qty}</p>
+                  </div>
+                 </div>
+
+                 <div className="col-3">
+                  <div>
+                   <h5>Status</h5>
+                   <p>Completed</p>
+                  </div>
+                 </div>
+
                 </div>
                </div>
-
-               <div className="col-2">
-                <div>
-                 <h5>qty</h5>
-                 <p>100</p>
-                </div>
-               </div>
-
-               <div className="col-3">
-                <div>
-                 <h5>Status</h5>
-                 <p>Completed</p>
-                </div>
-               </div>
-
               </div>
-             </div>
-            </div>
+             </>
+            })
            )}
            {order === 5 && (
-            <div className="card py-3 m-3">
-             <div className="container">
-              <div className="row">
-               <div className="col-7">
-                <div className="d-flex justify-content-center align-items-center gap-3">
-                 <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
-                 <div>
-                  <h5>Product</h5>
-                  <h5>product name</h5>
-                  <p>price</p>
+            allItems.filter(items => items.status === 5).map((item, key) => {
+             return <>
+              <div className="card py-3 m-3" key={item.product_id}>
+               <div className="container">
+                <div className="row">
+                 <div className="col-7">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                   <img src="/images/jacket.png" alt="product" style={{ width: "90px", height: "80px", objectFit: "cover", borderRadius: "7px" }} />
+                   <div>
+                    <h5>Product</h5>
+                    <h5>{item.product_name}</h5>
+                    <p>$  {item.price}</p>
+                   </div>
+                  </div>
                  </div>
+
+                 <div className="col-2">
+                  <div>
+                   <h5>qty</h5>
+                   <p>{item.qty}</p>
+                  </div>
+                 </div>
+
+                 <div className="col-3">
+                  <div>
+                   <h5>Status</h5>
+                   <p>Order Cancel</p>
+                  </div>
+                 </div>
+
                 </div>
                </div>
-
-               <div className="col-2">
-                <div>
-                 <h5>qty</h5>
-                 <p>100</p>
-                </div>
-               </div>
-
-               <div className="col-3">
-                <div>
-                 <h5>Status</h5>
-                 <p>Order Cancel</p>
-                </div>
-               </div>
-
               </div>
-             </div>
-            </div>
+             </>
+            })
            )}
           </div>
          </div>

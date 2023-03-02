@@ -1,8 +1,13 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
+
+const data = useSelector((state) => state.profile);
+const token = data?.token?.payload
+const id = data?.profile?.payload?.id
 
 export default function handler(req, res) {
     try {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoyMywibmFtZSI6IkFuZG8iLCJlbWFpbCI6InJlc3R1QGdtYWlsLmNvbSIsInBob25lX251bWJlciI6IjA4OTY4Nzg3OCIsInN0b3JlX25hbWUiOiJhbHZpYW5kbyBzdG9yZSIsInJvbGUiOmZhbHNlLCJwaG90byI6Imh0dHA6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZHptYWdpaGZ1L2ltYWdlL3VwbG9hZC92MTY3Njc5MzYyOS82NmY0NWYxZC0yM2YwLTRmOTItYjM0ZC0zMDVkZTdjZmMyYTYuanBnIiwiZGF0ZV9vZl9iaXJ0aCI6bnVsbCwiZ2VuZGVyIjp0cnVlLCJjcmVhdGVkX2F0IjoiMjAyMy0wMi0xOFQyMDo1NTozMC4xNDZaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDItMTlUMTA6MzM6MjcuMDAwWiJ9LCJpYXQiOjE2NzY4MDc2ODcsImV4cCI6MTY3NjgxMTI4N30.2ROMXrlEJFXjwJngv3-hqGxKVc3vgD1czZfgGevTvgU"
+        
         const config = {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -12,7 +17,7 @@ export default function handler(req, res) {
         const { name, email, phone_number, photo, date_of_birth, gender } = req.body;
 console.log(req.body)
         axios
-            .patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/23`, {
+            .patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/${id}`, {
                 name,
                 email,
                 phone_number,
