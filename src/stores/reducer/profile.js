@@ -10,6 +10,7 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfile: (state, payload) => {
+      console.log(payload);
       state.profile = payload;
     },
     setToken: (state, payload) => {
