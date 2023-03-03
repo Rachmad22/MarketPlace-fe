@@ -34,6 +34,10 @@ export default function MyProfile() {
 
  const [isLoading, setIsLoading] = React.useState(false);
  const [error, setError] = React.useState(null);
+ const [isError, setIsError] = React.useState(false)
+ const [success, setSuccess] = React.useState(null)
+ const [isSuccess, setIsSuccess] = React.useState(false)
+
 
  // state for sidebar menu
  const [isAccount, setIsAccount] = React.useState(false);
@@ -46,6 +50,8 @@ export default function MyProfile() {
  const token = data.token.payload
  const id = data.profile.payload.id
  const profileUser = data.profile.payload
+ const role = data.profile.payload.role
+ // console.log(data.profile)
 
  const orderStatus = async () => {
   setIsLoading(true)
@@ -74,7 +80,7 @@ export default function MyProfile() {
    },
   };
 
-  await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/addresses`, config).then((res) => {
+  await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${id}`, config).then((res) => {
    console.log(res.data.data)
    setAllAddress(res.data.data)
    setIsLoading(false)
@@ -96,23 +102,25 @@ export default function MyProfile() {
      Authorization: `Bearer ${token}`,
     },
    };
-   await axios.patch(`/api/edit`, {
-    name,
-    email,
-    phone_number,
-    photo,
-    date_of_birth,
-    gender,
-   }, config);
+   const edit =
+    await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/${id}`, {
+     name,
+     email,
+     phone_number,
+     photo,
+     date_of_birth,
+     gender,
+    }, config);
    setIsLoading(false);
    setError(null);
-   // console.log(photo)
+   setIsSuccess(true)
+   setSuccess(edit?.data?.message)
   } catch (error) {
    setIsLoading(false);
+   setIsError(true)
    setError(
     error?.response?.data?.message ?? error?.response?.data?.message?.email?.message ?? error?.response?.data?.message?.name?.message ?? error?.response?.data?.message?.phone_number?.message ?? error?.response?.data?.message?.photo?.message ?? "Something wrong in our server"
    );
-   // console.log(error.response)
   }
  };
 
@@ -129,24 +137,28 @@ export default function MyProfile() {
      Authorization: `Bearer ${token}`,
     },
    };
-   // console.log(name)
-   await axios.post(`/api/addAddress`, {
-    address_alias,
-    recipient_name,
-    street,
-    city,
-    postal_code,
-    recipient_phone_number,
-   }, config);
+   const add =
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/addresses`, {
+     address_alias,
+     recipient_name,
+     street,
+     city,
+     postal_code,
+     recipient_phone_number,
+     is_primary: false,
+     user_id: id,
+    }, config);
    setIsLoading(false);
    setError(null);
+   setIsSuccess(true)
 
+   setSuccess(add?.data?.message)
   } catch (error) {
    setIsLoading(false);
+   setIsError(true)
    setError(
-    error?.response?.data?.message ?? error?.response?.data?.message?.email?.message ?? error?.response?.data?.message?.name?.message ?? error?.response?.data?.message?.phone_number?.message ?? error?.response?.data?.message?.photo?.message ?? "Something wrong in our server"
+    error?.response?.data?.message ?? "Something wrong in our server"
    );
-   // console.log(error.response)
   }
  };
 
@@ -171,9 +183,9 @@ export default function MyProfile() {
 
          <div className="m-2">
           <h5>{profileUser?.name}</h5>
-          <Link href="#" className="text-secondary">
-           <p class='bx bx-edit-alt'> Ubah Profile</p>
-          </Link>
+          <div className="text-secondary">
+           <button className='bx bx-edit-alt'> Ubah Profile</button>
+          </div>
          </div>
         </div>
        </div>
@@ -233,6 +245,30 @@ export default function MyProfile() {
          <div className="card-body">
           <div className="row">
            <div className="col-9">
+
+            {isSuccess ? (
+             <div className="d-flex justify-content-center">
+              <div
+               className="alert alert-success d-flex justify-content-center"
+               role="alert"
+               style={{ width: "75%" }}
+              >
+               {success}
+              </div>
+             </div>
+            ) : null}
+
+            {isError ? (
+             <div className="d-flex justify-content-center">
+              <div
+               className="alert alert-danger d-flex justify-content-center"
+               role="alert"
+               style={{ width: "75%" }}
+              >
+               {error}
+              </div>
+             </div>
+            ) : null}
 
             <form>
              <div class="mb-3">
@@ -376,6 +412,7 @@ export default function MyProfile() {
            <button type="button" className={`btn btn-light mb-3 ${style.dashed}`} data-bs-toggle="modal" data-bs-target="#addAddress">Add New Address</button>
 
            {/* <!-- Modal --> */}
+
            <div class="modal fade" id="addAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
              <div class="modal-content">
@@ -386,6 +423,32 @@ export default function MyProfile() {
                <div className="row">
                 <div className="col-12">
                  <div class="mb-3">
+
+                  {isSuccess ? (
+                   <div className="d-flex justify-content-center">
+                    <div
+                     className="alert alert-success d-flex justify-content-center"
+                     role="alert"
+                     style={{ width: "75%" }}
+                    >
+                     {success}
+                    </div>
+                   </div>
+                  ) : null}
+
+                  {isError ? (
+                   <div className="d-flex justify-content-center">
+                    <div
+                     className="alert alert-danger d-flex justify-content-center"
+                     role="alert"
+                     style={{ width: "75%" }}
+                    >
+                     {error}
+                    </div>
+                   </div>
+                  ) : null}
+
+
                   <label for="exampleFormControlTextarea1" class="form-label">Save address as (ex: home address, office address)</label>
                   <input class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Home" onChange={(e) => setAddress_alias(e.target.value)} />
                  </div>
@@ -717,6 +780,11 @@ export default function MyProfile() {
 
 // export async function getStaticProps(context) {
 
+// const data = useSelector((state) => state.profile);
+
+// const token = data.token.payload
+// const id = data.profile.payload.id
+
 //  const config = {
 //   headers: {
 //    "Content-Type": "multipart/form-data",
@@ -724,16 +792,16 @@ export default function MyProfile() {
 //   },
 //  };
 
-//  const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/23`)
+//  const profile = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, config)
 //  const convertData = profile.data
 
-//  const address = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/addresses/users/23`, config)
+//  const address = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${id}`, config)
 //  const convertAddress = address.data
 
-//  // const addAddress = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/addresses`, config)
-//  // const convertAdd = addAddress.data
-//  // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/6`)
-//  // convertEdit = editProfile.data
+// //  // const addAddress = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/addresses`, config)
+// //  // const convertAdd = addAddress.data
+// //  // const editProfile =await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/update/6`)
+// //  // convertEdit = editProfile.data
 
 //  return {
 //   props: {
