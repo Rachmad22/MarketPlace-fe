@@ -53,6 +53,7 @@ export default function MyProfile() {
  const role = data.profile.payload.role
  // console.log(data.profile)
 
+ // get history order
  const orderStatus = async () => {
   setIsLoading(true)
   const config = {
@@ -71,6 +72,7 @@ export default function MyProfile() {
   })
  }
 
+ // get address card
  const getAddress = async () => {
   setIsLoading(true)
   const config = {
@@ -91,7 +93,7 @@ export default function MyProfile() {
  }
 
 
-
+// edit profile
  const handleEdit = async () => {
   try {
    setIsLoading(true)
@@ -126,7 +128,7 @@ export default function MyProfile() {
 
 
 
-
+// add address
  const handleAddAddress = async () => {
   try {
    setIsLoading(true);
@@ -162,7 +164,7 @@ export default function MyProfile() {
   }
  };
 
- // console.log(profileUser)
+ 
  return (
   <>
    <Head>
@@ -184,7 +186,33 @@ export default function MyProfile() {
          <div className="m-2">
           <h5>{profileUser?.name}</h5>
           <div className="text-secondary">
-           <button className='bx bx-edit-alt'> Ubah Profile</button>
+           <button data-bs-toggle="modal" data-bs-target="#image" className='bx bx-edit-alt'> Ubah Profile</button>
+          </div>
+
+          {/* <!-- Modal edit photo --> */}
+          <div className="modal fade" id="image" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+           <div className="modal-dialog">
+            <div className="modal-content">
+             <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">Profile Picture</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div className="modal-body">
+
+              <div className="mb-3">
+               <label for="formFile" className="form-label">Upload your profile picture</label>
+               <input className="form-control" type="file" id="formFile" onChange={(event) =>
+                setPhoto(event.target.files[0])} />
+              </div>
+
+              <div className="modal-footer">
+               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               <button type="button" className="btn btn-primary" onClick={handleEdit} disabled={isLoading}>{isLoading ? "Loading..." : "Save"}</button>
+              </div>
+             </div>
+            </div>
+           </div>
+
           </div>
          </div>
         </div>
