@@ -51,7 +51,7 @@ export default function MyProfile() {
  const id = data.profile.payload.id
  const profileUser = data.profile.payload
  const role = data.profile.payload.role
- // console.log(data.profile)
+
 
  // get history order
  const orderStatus = async () => {
@@ -93,7 +93,7 @@ export default function MyProfile() {
  }
 
 
-// edit profile
+ // edit profile
  const handleEdit = async () => {
   try {
    setIsLoading(true)
@@ -128,7 +128,7 @@ export default function MyProfile() {
 
 
 
-// add address
+ // add address
  const handleAddAddress = async () => {
   try {
    setIsLoading(true);
@@ -164,7 +164,7 @@ export default function MyProfile() {
   }
  };
 
- 
+
  return (
   <>
    <Head>
@@ -186,7 +186,7 @@ export default function MyProfile() {
          <div className="m-2">
           <h5>{profileUser?.name}</h5>
           <div className="text-secondary">
-           <button data-bs-toggle="modal" data-bs-target="#image" className='bx bx-edit-alt'> Ubah Profile</button>
+           <span data-bs-toggle="modal" data-bs-target="#image" className='bx bx-edit-alt' style={{ cursor: "pointer" }}> Ubah Profile</span>
           </div>
 
           {/* <!-- Modal edit photo --> */}
@@ -265,7 +265,7 @@ export default function MyProfile() {
      {isAccount &&
       (
        <section id="account">
-        <div className={`card mb-5 ${style.card}`}>
+        <div className={`card mb-5 shadow ${style.card}`}>
          <div className="card-header">
           <h3>My Profile</h3>
           <p className="text-secondary">Manage your profile information</p>
@@ -430,7 +430,7 @@ export default function MyProfile() {
      {isAddress &&
       (
        <section id="address">
-        <div className={`card mb-5 ${style.card}`}>
+        <div className={`card mb-5 shadow ${style.card}`}>
          <div className="card-header">
           <h3>Choose another address</h3>
           <p>Manage your shipping address</p>
@@ -542,7 +542,7 @@ export default function MyProfile() {
      {isOrder &&
       (
        <section id="order">
-        <div className={`card mb-5 ${style.cardOrder}`}>
+        <div className={`card mb-5 shadow ${style.cardOrder}`}>
          <div className="card-header">
           <h5>My Order</h5>
          </div>
