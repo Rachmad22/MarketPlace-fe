@@ -1,4 +1,3 @@
-
 import styles from "@/styles/components/CardProduct.module.scss";
 import jacket from "public/images/jacket.png";
 // import rating from "public/images/rating.svg";
@@ -11,7 +10,7 @@ const CardProduct = ({ item }) => {
         <div class={`card ${styles.cardProduct}`}>
           <Link href={`/detail/${item?.id}`}>
             <img
-              src={jacket.src}
+              src={item?.product_images}
               class="card-img-top"
               alt={item?.product_name}
             />
@@ -26,8 +25,8 @@ const CardProduct = ({ item }) => {
           </div>
         </div>
       </div>
-      </>
+    </>
+  );
+};
 
-      )}
-
-      export default CardProduct;
+export default CardProduct;
