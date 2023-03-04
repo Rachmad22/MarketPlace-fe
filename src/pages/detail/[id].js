@@ -8,6 +8,7 @@ import Link from "next/link";
 import CardProduct from "@/components/molecules/cardProduct";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const DetailProduct = (props) => {
   const {
@@ -24,9 +25,14 @@ const DetailProduct = (props) => {
     query: { id },
   } = router;
 
-  const [quantity, setQuantity] = useState(0);
-  const [sizeSelected, setSizeSelected] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [sizeSelected, setSizeSelected] = useState("S");
   const [colorSelected, setColorSelected] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const data = useSelector((state) => state.profile);
+
+  console.log(data);
 
   // const [imageSelected, setImageSelected] = useState(null);
 
@@ -41,6 +47,33 @@ const DetailProduct = (props) => {
   const increaseQuantity = () => {
     const plus = quantity + 1;
     setQuantity(plus);
+  };
+
+  const addToCart = () => {
+    const isLogin = data?.profile?.payload;
+    const dataPost = {
+      product_id: id,
+      qty: quantity,
+      size: sizeSelected,
+    };
+
+    if (!isLogin) {
+      router.replace("/auth/register");
+    }
+
+    setIsLoading(true);
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${data?.token?.payload}`,
+      },
+    };
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, dataPost, config)
+      .then((res) => alert("Product has been added to cart"))
+      .catch((err) => alert(err.response.data.message));
   };
 
   return (
@@ -255,14 +288,13 @@ const DetailProduct = (props) => {
                     Chat
                   </button>
                 </Link>
-                <Link href="/order">
-                  <button
-                    className={`btn ${styles.chat} me-2`}
-                    style={{ width: "150px" }}
-                  >
-                    Add bag
-                  </button>
-                </Link>
+                <button
+                  className={`btn ${styles.chat} me-2`}
+                  style={{ width: "150px" }}
+                  onClick={addToCart}
+                >
+                  Add bag
+                </button>
                 <Link href="/order">
                   <button
                     className={`btn ${styles.buyNow}`}
