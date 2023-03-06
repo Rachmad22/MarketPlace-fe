@@ -10,9 +10,17 @@ const CardProduct = ({ item }) => {
         <div class={`card ${styles.cardProduct}`}>
           <Link href={`/detail/${item?.id}`}>
             <img
-              src={item?.product_images}
-              class="card-img-top"
+              src={
+                item?.product_images?.[0]?.image ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhf-td4GXegmuo582JIu6X6H8x5yxF3ehow&usqp=CAU"
+              }
+              class="card-img-top w-100"
               alt={item?.product_name}
+              style={{
+                height: "145px",
+                objectPosition: "center",
+                objectFit: "contain",
+              }}
             />
           </Link>
           <div class="card-body">

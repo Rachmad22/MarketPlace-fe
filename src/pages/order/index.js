@@ -8,14 +8,20 @@ import Head from "next/head";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { BsTrash } from "react-icons/bs";
 
 const MyBag = () => {
   const [orderProduct, setOrderProduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectAllOrder, setSelectAllOrder] = useState(false);
+  const [selectOrder, setSelectOrder] = useState(false);
 
   const data = useSelector((state) => state.profile);
 
   useEffect(() => {
+    setIsLoading(true);
     const token = data?.token?.payload;
 
     const config = {
@@ -31,34 +37,139 @@ const MyBag = () => {
         config
       )
       .then((res) => {
-        console.log(res?.data?.data);
+        setIsLoading(false);
         setOrderProduct(res?.data?.data);
       })
-      .catch((err) => console.log(err?.response?.data?.message));
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err?.response?.data?.message);
+      });
   }, []);
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
+
   const decreaseQuantity = () => {
-    const minus = quantity - 1;
-    setQuantity(minus);
-    if (quantity === 0) {
-      setQuantity(0);
-    }
+    setIsLoading(true);
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/qty/${orderProduct?.[0]?.orders_id}/down`,
+        config
+      )
+      .then((res) => {
+        setIsLoading(false);
+        Swal.fire("The product was successfully removed", "", "success");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: err.response.data.message,
+          text: "Please try again later",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   const increaseQuantity = () => {
-    const plus = quantity + 1;
-    setQuantity(plus);
+    setIsLoading(true);
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/qty/${orderProduct?.[0]?.orders_id}/down`,
+        config
+      )
+      .then((res) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: "Product added successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+          background: "#ffffff",
+        });
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: err.response.data.message,
+          text: "Please try again later",
+          icon: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: "#ffffff",
+        });
+      });
+  };
+
+  const deleteOrder = () => {
+    setIsLoading(true);
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/delete/${orderProduct?.[0]?.orders_id}`,
+        config
+      )
+      .then((res) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: "Product deleted successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+          background: "#ffffff",
+        });
+        setTimeout(() => {
+          refreshPage();
+        }, 1200);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: err.response.data.message,
+          text: "Please try again later",
+          icon: "error",
+          confirmButtonText: "OK",
+          buttonsStyling: "#ffffff",
+        });
+      });
   };
 
   const totalPrice = () => {
     let totalOrder = 0;
 
     orderProduct.map((item, key) => {
-      const total = parseInt(parseInt(item?.price) * parseInt(item?.qty));
+      const total = item?.price * item?.qty;
       totalOrder += total;
     });
 
     return totalOrder;
+  };
+
+  const totalWithDelivery = () => {
+    let totalDelivery = 10000;
+
+    return totalDelivery + totalPrice();
   };
 
   return (
@@ -82,6 +193,11 @@ const MyBag = () => {
                       <input
                         class="form-check-input"
                         type="checkbox"
+                        onChange={() => {
+                          setSelectAllOrder(!selectAllOrder);
+                          setSelectOrder(!selectOrder);
+                        }}
+                        checked={selectAllOrder}
                         value=""
                         id="flexCheckDefault"
                       />
@@ -89,7 +205,8 @@ const MyBag = () => {
                         class={`form-check-label ${styles.label}`}
                         for="flexCheckChecked"
                       >
-                        Select all items <span>(2 items selected)</span>
+                        Select all items{" "}
+                        <span>({orderProduct?.length} items selected)</span>
                       </label>
                     </div>
                   </div>
@@ -99,9 +216,15 @@ const MyBag = () => {
                     </button>
                   </div>
                 </div>
+                {/* {isLoading ? (
+                  <>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder w-75"></span>
+                    <span class="placeholder" style="width: 25%;"></span>
+                  </>
+                ) : ( */}
                 {orderProduct.map((item, key) => (
                   <>
-                    {console.log(item.product_images[0].image)}
                     <div
                       class={`row align-items-center ${styles.item}`}
                       key={key}
@@ -111,6 +234,10 @@ const MyBag = () => {
                           <input
                             class={`form-check-input ${styles.form}`}
                             type="checkbox"
+                            checked={selectOrder}
+                            onChange={() => {
+                              setSelectAllOrder(!selectAllOrder);
+                            }}
                             value=""
                             id="flexCheckDefault"
                           />
@@ -119,15 +246,20 @@ const MyBag = () => {
                             for="flexCheckDefault"
                           >
                             <div class="row">
-                              <div class="col">
+                              <div class="col-4">
                                 <Link href={`/detail/${item?.product_id}`}>
                                   <img
-                                    src="https://images.tokopedia.net/img/cache/500-square/product-1/2020/2/12/19731241/19731241_542fdadd-1818-44a6-9e20-e553212edef7_1050_1050"
-                                    style={{ width: "150px", height: "100px" }}
+                                    src={item?.product_images[0]?.image}
+                                    style={{
+                                      width: "100px",
+                                      height: "100px",
+                                      objectFit: "cover",
+                                      marginRight: "50px",
+                                    }}
                                   />
                                 </Link>
                               </div>
-                              <div class={`col-6 ${styles.goods}`}>
+                              <div class={`col-8 ${styles.goods}`}>
                                 <Link href={`/detail/${item?.product_id}`}>
                                   <h5>{item?.product_name}</h5>
                                 </Link>
@@ -148,6 +280,7 @@ const MyBag = () => {
                               className="btn"
                               onClick={decreaseQuantity}
                               style={{ background: "white" }}
+                              disabled={isLoading}
                             >
                               -
                             </button>
@@ -156,14 +289,19 @@ const MyBag = () => {
                               type="button"
                               className="btn"
                               onClick={increaseQuantity}
+                              disabled={isLoading}
                             >
                               +
                             </button>
                           </div>
                         </div>
                       </div>
-                      <div class={`col ${styles.price}`}>
-                        <p>$ {item?.price * item?.qty}</p>
+                      <div class={`col ${styles.price} d-flex`}>
+                        <p className="me-5">$ {item?.price * item?.qty}</p>
+                        <BsTrash
+                          style={{ cursor: "pointer" }}
+                          onClick={deleteOrder}
+                        />
                       </div>
                     </div>
                   </>
@@ -179,8 +317,13 @@ const MyBag = () => {
                       <div class="col-4">
                         <p class={styles.text}>Total price</p>
                       </div>
-                      <div class="col-5">
-                        <p class={styles.cost}>$ {totalPrice()}</p>
+                      <div class="col-3">
+                        <p class={styles.cost}>
+                          ${" "}
+                          {selectAllOrder
+                            ? totalPrice()
+                            : "Ini belum jumlah semua"}
+                        </p>
                       </div>
                     </div>
                   </div>

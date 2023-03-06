@@ -9,6 +9,7 @@ import CardProduct from "@/components/molecules/cardProduct";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const DetailProduct = (props) => {
   const {
@@ -19,6 +20,7 @@ const DetailProduct = (props) => {
   } = props;
 
   const dataProduct = product[0];
+  console.log(dataProduct);
   const dataStore = store[0];
   const router = useRouter();
   const {
@@ -32,24 +34,26 @@ const DetailProduct = (props) => {
 
   const data = useSelector((state) => state.profile);
 
-  console.log(data);
-
-  // const [imageSelected, setImageSelected] = useState(null);
+  const [imageSelected, setImageSelected] = useState(
+    dataProduct?.product_images?.[0]?.image
+  );
 
   const decreaseQuantity = () => {
     const minus = quantity - 1;
     setQuantity(minus);
-    if (quantity === 0) {
-      setQuantity(0);
+    if (quantity === 1) {
+      setQuantity(1);
     }
   };
 
   const increaseQuantity = () => {
     const plus = quantity + 1;
     setQuantity(plus);
+    console.log(imageSelected);
   };
 
   const addToCart = () => {
+    setIsLoading(true);
     const isLogin = data?.profile?.payload;
     const dataPost = {
       product_id: id,
@@ -61,8 +65,6 @@ const DetailProduct = (props) => {
       router.replace("/auth/register");
     }
 
-    setIsLoading(true);
-
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -72,8 +74,25 @@ const DetailProduct = (props) => {
 
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, dataPost, config)
-      .then((res) => alert("Product has been added to cart"))
-      .catch((err) => alert(err.response.data.message));
+      .then((res) => {
+        Swal.fire({
+          title: "Product added successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: err.response.data.message,
+          text: "Please try again later",
+          icon: "error",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
+        });
+      });
   };
 
   return (
@@ -102,47 +121,37 @@ const DetailProduct = (props) => {
             </nav>
           </div>
           <div className="mt-5 d-flex">
-            <div>
+            <div className="me-5">
               <div>
                 <img
                   className={styles.bigPhoto}
-                  src="/images/tshirt-detail.jpg"
-                  alt="detail"
+                  src={
+                    imageSelected ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhf-td4GXegmuo582JIu6X6H8x5yxF3ehow&usqp=CAU"
+                  }
+                  alt={dataProduct?.product_name}
                 />
               </div>
               <div className="row mt-2" style={{ gap: "0.89rem" }}>
-                <div className="col-2">
-                  <img
-                    className={styles.smallPhoto}
-                    src="/images/tshirt-detail.jpg"
-                    alt="detail"
-                    // onClick={selectImage("img1")}
-                  />
-                </div>
-                <div className="col-2">
-                  <img
-                    className={styles.smallPhoto}
-                    src="/images/beach-tshirt.jpg"
-                    alt="detail"
-                    // onClick={setImageSelected("/images/beach-tshirt.jpg")}
-                  />
-                </div>
-                <div className="col-2">
-                  <img
-                    className={styles.smallPhoto}
-                    src="/images/art-tshirt.jpg"
-                    alt="detail"
-                    // onClick={setImageSelected("/images/art-tshirt.jpg")}
-                  />
-                </div>
-
-                <div className="col-2">
-                  <img
-                    className={styles.smallPhoto}
-                    src="/images/tshirt-detail.jpg"
-                    alt="detail"
-                  />
-                </div>
+                {product.map((item, key) => (
+                  <div
+                    className="col-2"
+                    style={{ cursor: "pointer" }}
+                    key={key}
+                  >
+                    <img
+                      className={styles.smallPhoto}
+                      src={
+                        item?.product_images[key]?.image ||
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhf-td4GXegmuo582JIu6X6H8x5yxF3ehow&usqp=CAU"
+                      }
+                      alt={item?.product_name}
+                      onClick={() =>
+                        setImageSelected(item?.product_images?.[key]?.image)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
             </div>
             <div>
@@ -292,8 +301,9 @@ const DetailProduct = (props) => {
                   className={`btn ${styles.chat} me-2`}
                   style={{ width: "150px" }}
                   onClick={addToCart}
+                  disabled={isLoading}
                 >
-                  Add bag
+                  {isLoading ? "Loading..." : "Add bag"}
                 </button>
                 <Link href="/order">
                   <button
