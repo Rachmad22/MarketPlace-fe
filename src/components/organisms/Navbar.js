@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={styles.main}>
+      <div className={`shadow bg-light fixed-top ${styles.main}`}>
         <div className="container text-center">
           <div className="row align-items-center">
             <div className="col">
