@@ -47,6 +47,14 @@ const MyBag = () => {
       });
   }, []);
 
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: false,
+  });
+
   const refreshPage = () => {
     window.location.reload(false);
   };
@@ -139,8 +147,8 @@ const MyBag = () => {
         Swal.fire({
           title: "Product deleted successfully",
           icon: "success",
-          confirmButtonText: "Ok",
-          background: "#ffffff",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
         });
         setTimeout(() => {
           refreshPage();
@@ -153,7 +161,48 @@ const MyBag = () => {
           text: "Please try again later",
           icon: "error",
           confirmButtonText: "OK",
-          buttonsStyling: "#ffffff",
+          confirmButtonColor: "#DB3022",
+        });
+      });
+  };
+
+  const deleteAllOrders = () => {
+    setIsLoading(true);
+
+    const id = data?.profile?.payload?.id;
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/delete/users/${id}`,
+        config
+      )
+      .then((res) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: "Product deleted successfully",
+          icon: "success",
+          confirmButtonText: "Okay",
+          confirmButtonColor: "#DB3022",
+        });
+        setTimeout(() => {
+          refreshPage();
+        }, 1200);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: err.response.data.message,
+          text: "Please try again later",
+          icon: "error",
+          confirmButtonText: "Okay",
+          confirmButtonColor: "#DB3022",
         });
       });
   };
@@ -191,7 +240,7 @@ const MyBag = () => {
       <Navbar />
 
       <main className={styles.main}>
-        <div className="container ">
+        <div className="container" style={{ marginTop: "120px" }}>
           <div className={styles.content}>
             <h2>My Bag</h2>
             <div class={`row ${styles.bot}`}>
@@ -226,8 +275,37 @@ const MyBag = () => {
                     </div>
                   </div>
                   <div class="col-2">
-                    <button className="btn">
-                      <p>Delete</p>
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        swalWithBootstrapButtons
+                          .fire({
+                            title: "Are you sure?",
+                            text: "All products in your cart will be deleted!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel!",
+                            reverseButtons: true,
+                          })
+                          .then((res) => {
+                            if (res.isConfirmed) {
+                              deleteAllOrders();
+                            } else if (
+                              res.dismiss === Swal.DismissReason.cancel
+                            ) {
+                              swalWithBootstrapButtons.fire({
+                                title: "Cancelled",
+                                text: "Your product remains in the cart",
+                                icon: "error",
+                                confirmButtonText: "Okay",
+                                confirmButtonColor: "#DB3022",
+                              });
+                            }
+                          });
+                      }}
+                    >
+                      <p>Delete all</p>
                     </button>
                   </div>
                 </div>
@@ -295,10 +373,13 @@ const MyBag = () => {
                             for="flexCheckDefault"
                           >
                             <div class="row">
-                              <div class="col-4">
+                              <div class="col-2 me-5">
                                 <Link href={`/detail/${item?.product_id}`}>
                                   <img
-                                    src={item?.product_images[0]?.image}
+                                    src={
+                                      item?.product_images[0]?.image ||
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhf-td4GXegmuo582JIu6X6H8x5yxF3ehow&usqp=CAU"
+                                    }
                                     style={{
                                       width: "100px",
                                       height: "100px",
@@ -308,11 +389,17 @@ const MyBag = () => {
                                   />
                                 </Link>
                               </div>
-                              <div class={`col-8 ${styles.goods}`}>
+                              <div class={`col-4 ${styles.goods}`}>
                                 <Link href={`/detail/${item?.product_id}`}>
                                   <h5>{item?.product_name}</h5>
                                 </Link>
                                 <p>{item?.store_name}</p>
+                              </div>
+                              <div
+                                class="col-1"
+                                style={{ margin: "auto", marginLeft: "10px" }}
+                              >
+                                <h6>{item?.size}</h6>
                               </div>
                             </div>
                           </label>
