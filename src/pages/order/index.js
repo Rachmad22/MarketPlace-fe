@@ -68,7 +68,15 @@ const MyBag = () => {
       )
       .then((res) => {
         setIsLoading(false);
-        Swal.fire("The product was successfully removed", "", "success");
+        Swal.fire({
+          title: "The product was successfully reduced",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
+        });
+        setTimeout(() => {
+          refreshPage();
+        }, 1200);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -77,6 +85,7 @@ const MyBag = () => {
           text: "Please try again later",
           icon: "error",
           confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
         });
       });
   };
@@ -103,8 +112,11 @@ const MyBag = () => {
           title: "Product added successfully",
           icon: "success",
           confirmButtonText: "Ok",
-          background: "#ffffff",
+          confirmButtonColor: "#DB3022",
         });
+        setTimeout(() => {
+          refreshPage();
+        }, 1200);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -113,7 +125,7 @@ const MyBag = () => {
           text: "Please try again later",
           icon: "error",
           confirmButtonText: "OK",
-          buttonsStyling: "#ffffff",
+          confirmButtonColor: "#DB3022",
         });
       });
   };
@@ -138,8 +150,8 @@ const MyBag = () => {
         Swal.fire({
           title: "Product deleted successfully",
           icon: "success",
-          confirmButtonText: "Ok",
-          background: "#ffffff",
+          confirmButtonText: "OK",
+          cancelButtonColor: "#DB3022",
         });
         setTimeout(() => {
           refreshPage();
@@ -152,7 +164,49 @@ const MyBag = () => {
           text: "Please try again later",
           icon: "error",
           confirmButtonText: "OK",
-          buttonsStyling: "#ffffff",
+          confirmButtonColor: "#DB3022",
+        });
+      });
+  };
+
+  const deleteAllOrders = () => {
+    setIsLoading(true);
+
+    const id = data?.profile?.payload?.id;
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/delete/users/${id}`,
+        config
+      )
+      .then((res) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: "Product deleted successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
+        });
+        setTimeout(() => {
+          refreshPage();
+        }, 1200);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Swal.fire({
+          title: err.response.data.message,
+          text: "Please try again later",
+          icon: "error",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#DB3022",
         });
       });
   };
@@ -168,11 +222,11 @@ const MyBag = () => {
     return totalOrder;
   };
 
-  const totalWithDelivery = () => {
-    let totalDelivery = 10000;
+  // const totalWithDelivery = () => {
+  //   let totalDelivery = 10000;
 
-    return totalDelivery + totalPrice();
-  };
+  //   return totalDelivery + totalPrice();
+  // };
 
   return (
     <>
@@ -208,12 +262,31 @@ const MyBag = () => {
                         for="flexCheckChecked"
                       >
                         Select all items{" "}
-                        <span>({orderProduct?.length} items selected)</span>
+                        <span>
+                          ({selectAllOrder ? orderProduct?.length : 0} items
+                          selected)
+                        </span>
                       </label>
                     </div>
                   </div>
                   <div class="col-2">
-                    <button className="btn">
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "The product will be removed from the cart",
+                          text: "Are you sure you want to delete it?",
+                          icon: "success",
+                          cancelButtonText: "CANCEL",
+                          cancelButtonColor: "#DB3022",
+                          confirmButtonText: "CONFIRM",
+                          confirmButtonColor: "#DB3022",
+                          showCancelButton: true,
+                        }).then((res) => {
+                          if (res.value) deleteAllOrders();
+                        });
+                      }}
+                    >
                       <p>Delete</p>
                     </button>
                   </div>
@@ -331,10 +404,7 @@ const MyBag = () => {
                       </div>
                       <div class="col-3">
                         <p class={styles.cost}>
-                          ${" "}
-                          {selectAllOrder
-                            ? totalPrice()
-                            : "Ini belum jumlah semua"}
+                          $ {selectAllOrder ? totalPrice() : 0}
                         </p>
                       </div>
                     </div>
