@@ -50,7 +50,7 @@ const MyBag = () => {
     window.location.reload(false);
   };
 
-  const decreaseQuantity = () => {
+  const decreaseQuantity = (qty, order_id) => {
     setIsLoading(true);
     const token = data?.token?.payload;
 
@@ -62,7 +62,8 @@ const MyBag = () => {
     };
     axios
       .post(
-        `${process.env.NEXT_PUBLIC_API_URL}/orders/qty/${orderProduct?.[0]?.orders_id}/down`,
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/qty/${order_id}/down`,
+        { qty: parseInt(qty) - 1 },
         config
       )
       .then((res) => {
@@ -80,7 +81,7 @@ const MyBag = () => {
       });
   };
 
-  const increaseQuantity = () => {
+  const increaseQuantity = (qty, order_id) => {
     setIsLoading(true);
     const token = data?.token?.payload;
 
@@ -92,7 +93,8 @@ const MyBag = () => {
     };
     axios
       .post(
-        `${process.env.NEXT_PUBLIC_API_URL}/orders/qty/${orderProduct?.[0]?.orders_id}/down`,
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/qty/${order_id}/up`,
+        { qty: parseInt(qty) + 1 },
         config
       )
       .then((res) => {
@@ -278,7 +280,12 @@ const MyBag = () => {
                             <button
                               type="button"
                               className="btn"
-                              onClick={decreaseQuantity}
+                              onClick={() => {
+                                decreaseQuantity(
+                                  orderProduct?.[key]?.qty,
+                                  orderProduct?.[key]?.orders_id
+                                );
+                              }}
                               style={{ background: "white" }}
                               disabled={isLoading}
                             >
@@ -288,7 +295,12 @@ const MyBag = () => {
                             <button
                               type="button"
                               className="btn"
-                              onClick={increaseQuantity}
+                              onClick={() => {
+                                increaseQuantity(
+                                  orderProduct?.[key]?.qty,
+                                  orderProduct?.[key]?.orders_id
+                                );
+                              }}
                               disabled={isLoading}
                             >
                               +
