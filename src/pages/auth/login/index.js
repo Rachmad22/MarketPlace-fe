@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as profileReducer from "@/stores/reducer/profile";
+import { setCookie } from "cookies-next";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +34,9 @@ const Login = () => {
 
         dispatch(profileReducer.setProfile(res?.data?.data));
         dispatch(profileReducer.setToken(res?.data?.token));
+
+        setCookie("profile", JSON.stringify(res?.data?.data));
+        setCookie("token", res?.data?.token);
 
         setTimeout(() => {
           router.replace("/");
