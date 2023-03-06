@@ -17,6 +17,7 @@ const MyBag = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectAllOrder, setSelectAllOrder] = useState(false);
   const [selectOrder, setSelectOrder] = useState(false);
+  const [selectOrderList, setSelectOrderList] = useState([]);
 
   const data = useSelector((state) => state.profile);
 
@@ -160,10 +161,18 @@ const MyBag = () => {
   const totalPrice = () => {
     let totalOrder = 0;
 
-    orderProduct.map((item, key) => {
-      const total = item?.price * item?.qty;
-      totalOrder += total;
-    });
+    if (selectAllOrder) {
+      orderProduct.map((item, key) => {
+        const total = item?.price * item?.qty;
+        totalOrder += total;
+      });
+    } else {
+      selectOrderList.map((item) => {
+        const key = parseInt(item);
+        const total = orderProduct[key]?.price * orderProduct[key]?.qty;
+        totalOrder += total;
+      });
+    }
 
     return totalOrder;
   };
@@ -196,12 +205,16 @@ const MyBag = () => {
                         class="form-check-input"
                         type="checkbox"
                         onChange={() => {
+                          if (selectAllOrder && selectOrderList.length > 0) {
+                            setSelectOrderList([]);
+                          } else {
+                            setSelectOrderList(Object.keys(orderProduct));
+                          }
                           setSelectAllOrder(!selectAllOrder);
-                          setSelectOrder(!selectOrder);
+                          // setSelectOrder(!selectOrder);
                         }}
                         checked={selectAllOrder}
-                        value=""
-                        id="flexCheckDefault"
+                        id="flexCheckDefault11"
                       />
                       <label
                         class={`form-check-label ${styles.label}`}
@@ -236,12 +249,46 @@ const MyBag = () => {
                           <input
                             class={`form-check-input ${styles.form}`}
                             type="checkbox"
-                            checked={selectOrder}
+                            checked={
+                              selectOrderList.findIndex(
+                                (item) => item === key.toString()
+                              ) !== -1
+                                ? true
+                                : false
+                            }
+                            value={key}
                             onChange={() => {
-                              setSelectAllOrder(!selectAllOrder);
+                              if (selectOrderList.length > 0) {
+                                const arrIndex = selectOrderList.findIndex(
+                                  (item) => item === key.toString()
+                                );
+                                if (arrIndex === -1) {
+                                  setSelectOrderList((state) => [
+                                    ...state,
+                                    key.toString(),
+                                  ]);
+                                } else {
+                                  if (selectOrderList.length === 1) {
+                                    setSelectOrderList([]);
+                                  } else {
+                                    const newOrderList = selectOrderList.splice(
+                                      arrIndex - 1,
+                                      1
+                                    );
+                                    setSelectOrderList(newOrderList);
+                                  }
+                                }
+                              } else {
+                                setSelectOrderList((state) => [
+                                  ...state,
+                                  key.toString(),
+                                ]);
+                              }
+
+                              setSelectAllOrder(false);
+                              totalPrice();
                             }}
-                            value=""
-                            id="flexCheckDefault"
+                            id="flexCheckDefault2"
                           />
                           <label
                             class="form-check-label"
@@ -330,12 +377,7 @@ const MyBag = () => {
                         <p class={styles.text}>Total price</p>
                       </div>
                       <div class="col-3">
-                        <p class={styles.cost}>
-                          ${" "}
-                          {selectAllOrder
-                            ? totalPrice()
-                            : "Ini belum jumlah semua"}
-                        </p>
+                        <p class={styles.cost}>$ {totalPrice()}</p>
                       </div>
                     </div>
                   </div>
