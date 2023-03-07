@@ -25,7 +25,7 @@ const Home = (props) => {
         <title>Home | Blanja</title>
       </Head>
       <Navbar />
-      <main className={styles.main}>
+      <main className={styles.main} style={{marginTop: "90px"}}>
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-xs-3">

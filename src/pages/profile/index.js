@@ -7,9 +7,11 @@ import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import { useSelector } from "react-redux";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 export default function MyProfile(props) {
  const { address, myOrder } = props;
+ const router = useRouter()
 
  // data from redux
  const data = useSelector((state) => state.profile);
@@ -49,8 +51,10 @@ export default function MyProfile(props) {
 
  // data redux
  const token = data.token.payload;
- const id = data.profile.payload.id;
  const profileUser = data.profile.payload;
+ const id = data.profile.payload.id;
+ const role = profileUser?.role
+
 
  // edit profile
  const handleEdit = async () => {
@@ -786,7 +790,7 @@ export default function MyProfile(props) {
            onClick={() => setOrder(0)}
           >
            <span
-            className={`nav-link ${style.font}`}
+            className={`nav-link ${order === 0 && "active bg-danger text-white"} ${style.font}`}
             aria-current="page"
            >
             All items
@@ -796,7 +800,7 @@ export default function MyProfile(props) {
            className={`nav-item ${style.font}`}
            onClick={() => setOrder(1)}
           >
-           <span className={`nav-link ${style.font}`} href="#">
+           <span className={`nav-link ${order === 1 && "active bg-danger text-white"} ${style.font}`} href="#">
             Not yet paid
            </span>
           </li>
@@ -804,7 +808,7 @@ export default function MyProfile(props) {
            className={`nav-item ${style.font}`}
            onClick={() => setOrder(2)}
           >
-           <span className={`nav-link ${style.font}`} href="#">
+           <span className={`nav-link ${order === 2 && "active bg-danger text-white"} ${style.font}`} href="#">
             Packed
            </span>
           </li>
@@ -812,7 +816,7 @@ export default function MyProfile(props) {
            className={`nav-item ${style.font}`}
            onClick={() => setOrder(3)}
           >
-           <span className={`nav-link ${style.font}`} href="#">
+           <span className={`nav-link ${order === 3 && "active bg-danger text-white"} ${style.font}`} href="#">
             Sent
            </span>
           </li>
@@ -820,7 +824,7 @@ export default function MyProfile(props) {
            className={`nav-item ${style.font}`}
            onClick={() => setOrder(4)}
           >
-           <span className={`nav-link ${style.font}`} href="#">
+           <span className={`nav-link ${order === 4 && "active bg-danger text-white"} ${style.font}`} href="#">
             Completed
            </span>
           </li>
@@ -828,7 +832,7 @@ export default function MyProfile(props) {
            className={`nav-item ${style.font}`}
            onClick={() => setOrder(5)}
           >
-           <span className={`nav-link ${style.font}`} href="#">
+           <span className={`nav-link ${order === 5 && "active bg-danger text-white"} ${style.font}`} href="#">
             Order cancel
            </span>
           </li>
@@ -848,7 +852,7 @@ export default function MyProfile(props) {
                  <div className="col-7">
                   <div className="d-flex justify-content-center align-items-center gap-3">
                    <img
-                    src="/images/jacket.png"
+                    src={item?.product_images?.[0]?.image}
                     alt="product"
                     style={{
                      width: "90px",
@@ -906,7 +910,7 @@ export default function MyProfile(props) {
                   <div className="col-7">
                    <div className="d-flex justify-content-center align-items-center gap-3">
                     <img
-                     src="/images/jacket.png"
+                     src={item?.product_images?.[0]?.image}
                      alt="product"
                      style={{
                       width: "90px",
@@ -954,7 +958,7 @@ export default function MyProfile(props) {
                   <div className="col-7">
                    <div className="d-flex justify-content-center align-items-center gap-3">
                     <img
-                     src="/images/jacket.png"
+                     src={item?.product_images?.[0]?.image}
                      alt="product"
                      style={{
                       width: "90px",
@@ -1005,7 +1009,7 @@ export default function MyProfile(props) {
                   <div className="col-7">
                    <div className="d-flex justify-content-center align-items-center gap-3">
                     <img
-                     src="/images/jacket.png"
+                     src={item?.product_images?.[0]?.image}
                      alt="product"
                      style={{
                       width: "90px",
@@ -1053,7 +1057,7 @@ export default function MyProfile(props) {
                   <div className="col-7">
                    <div className="d-flex justify-content-center align-items-center gap-3">
                     <img
-                     src="/images/jacket.png"
+                     src={item?.product_images?.[0]?.image}
                      alt="product"
                      style={{
                       width: "90px",
@@ -1104,7 +1108,7 @@ export default function MyProfile(props) {
                   <div className="col-7">
                    <div className="d-flex justify-content-center align-items-center gap-3">
                     <img
-                     src="/images/jacket.png"
+                     src={item?.product_images?.[0]?.image}
                      alt="product"
                      style={{
                       width: "90px",
@@ -1159,19 +1163,19 @@ export async function getServerSideProps({ req, res }) {
  const token = getCookie("token", { req, res });
  const id = JSON.parse(getCookie("profile", { req, res })).id;
 
+
  const config = {
   headers: {
    "Content-Type": "multipart/form-data",
    Authorization: `Bearer ${token}`,
   },
  };
-
  // get all address
  const address = await axios.get(
   `${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${id}`,
   config
- );
- const convertAddress = address.data;
+ )
+ const convertAddress = address?.data;
 
  // get history order
  const myOrder = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/checkouts/users/${id}`, config)

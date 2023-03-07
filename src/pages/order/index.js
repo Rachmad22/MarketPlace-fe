@@ -78,6 +78,7 @@ const MyBag = () => {
       .then((res) => {
         setIsLoading(false);
         Swal.fire("The product was successfully removed", "", "success");
+        refreshPage()
       })
       .catch((err) => {
         setIsLoading(false);
@@ -114,6 +115,7 @@ const MyBag = () => {
           confirmButtonText: "Ok",
           background: "#ffffff",
         });
+        refreshPage()
       })
       .catch((err) => {
         setIsLoading(false);
