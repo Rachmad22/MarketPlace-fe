@@ -5,7 +5,7 @@ import styles from "@/styles/pages/Home.module.scss";
 import Link from "next/link";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
-import CardProduct from "@/components/molecules/cardProduct";
+import CardProduct from "@/components/molecules/CardProduct";
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -28,18 +28,20 @@ const Home = (props) => {
       <main className={styles.main}>
         <div className="container">
           <div className="row">
-            <div className="col-6">
+            <div className="col-lg-6 col-xs-3">
               <img
-                src="/images/carousel1.png"
-                style={{ width: "100%", height: "100%" }}
+                src="/images/new-products.png"
+                style={{ width: "100%", height: "100%", borderRadius: "10px" }}
                 alt="carousel"
+                onClick={() => (window.location.href = "/#newproduct")}
               />
             </div>
-            <div className="col-6">
+            <div className="col-lg-6 col-xs-3">
               <img
-                src="/images/carousel2.png"
-                style={{ width: "100%", height: "100%" }}
+                src="/images/popular-products.png"
+                style={{ width: "100%", height: "100%", borderRadius: "10px" }}
                 alt="carousel"
+                onClick={() => (window.location.href = "/#popularproduct")}
               />
             </div>
           </div>
@@ -111,7 +113,7 @@ const Home = (props) => {
             ) : null} */}
           </div>
         </div>
-        <div className="container">
+        <div className="container" id="newproduct">
           <hr className="mt-5" />
           <h2 className="mt-4">New</h2>
           <p className="mb-4" style={{ color: "#9B9B9B" }}>
@@ -129,7 +131,7 @@ const Home = (props) => {
             })}
           </div>
         </div>
-        <div className="container">
+        <div className="container" id="popularproduct">
           <hr className="mt-5" />
           <h2 className="mt-4">Popular</h2>
           <p className="mb-4" style={{ color: "#9B9B9B" }}>

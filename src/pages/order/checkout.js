@@ -7,7 +7,7 @@ import Footer from "@/components/organisms/Footer";
 import Link from "next/link";
 import Head from "next/head";
 
-export default function Checkout() {
+const Checkout = () => {
   return (
     <div>
       <Head>
@@ -18,29 +18,29 @@ export default function Checkout() {
       <main className={styles.main}>
         <div className="container ">
           <div className={styles.content}>
-            <h2>Checkout</h2>
-            <div class={`row ${styles.bot}`}>
-              <div class="col-8">
+            <h2>My Bag</h2>
+            <div className={`row ${styles.bot}`}>
+              <div className="col-8">
                 <div
-                  class={`row justify-content-between align-items-center ${styles.all}`}
+                  className={`row justify-content-between align-items-center ${styles.all}`}
                 >
-                  {/* <div class="col-5">
-                    <div class="form-check">
+                  {/* <div className="col-5">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
                       <label
-                        class={`form-check-label ${styles.label}`}
+                        className={`form-check-label ${styles.label}`}
                         for="flexCheckChecked"
                       >
                         Select all items <span>(2 items selected)</span>
                       </label>
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div className="col-2">
                     <button className="btn">
                       <p>Delete</p>
                     </button>
@@ -64,35 +64,35 @@ export default function Checkout() {
 
                           {/* <!-- Modal --> */}
                           <div
-                            class="modal fade"
+                            className="modal fade"
                             id="exampleModal"
                             tabindex="-1"
                             aria-labelledby="exampleModalLabel"
                             aria-hidden="true"
                           >
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header mx-auto">
+                            <div className="modal-dialog modal-dialog-centered modal-lg">
+                              <div className="modal-content">
+                                <div className="modal-header mx-auto">
                                   <h1
-                                    class="modal-title fs-3"
+                                    className="modal-title fs-3"
                                     id="exampleModalLabel"
                                   >
                                     Add New Address
                                   </h1>
                                 </div>
-                                <div class="modal-body">
+                                <div className="modal-body">
                                   <div className="row">
                                     <div className="col-12">
-                                      <div class="mb-3">
+                                      <div className="mb-3">
                                         <label
                                           for="exampleFormControlTextarea1"
-                                          class="form-label"
+                                          className="form-label"
                                         >
                                           Save address as (ex: home address,
                                           office address)
                                         </label>
                                         <input
-                                          class="form-control"
+                                          className="form-control"
                                           id="exampleFormControlTextarea1"
                                           rows="3"
                                           placeholder="Home"
@@ -166,17 +166,17 @@ export default function Checkout() {
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class={`btn btn-outline-dark rounded-5 ${styles.submit}`}
+                                        className={`btn btn-outline-dark rounded-5 ${styles.submit}`}
                                         data-bs-dismiss="modal"
                                       >
                                         Cancel
                                       </button>
                                       <button
                                         type="button"
-                                        class={`btn btn-primary rounded-5 ${styles.submit}`}
+                                        className={`btn btn-primary rounded-5 ${styles.submit}`}
                                       >
                                         Save
                                       </button>
@@ -211,24 +211,27 @@ export default function Checkout() {
                     </div>
                   </section>
                 </div>
-                <div class={`row align-items-center ${styles.item}`}>
-                  <div class="col-7">
-                    <div class="form-check">
+                <div className={`row align-items-center ${styles.item}`}>
+                  <div className="col-7">
+                    <div className="form-check">
                       <input
-                        class={`form-check-input ${styles.form}`}
+                        className={`form-check-input ${styles.form}`}
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        <div class="row">
-                          <div class="col">
+                      <label
+                        className="form-check-label"
+                        for="flexCheckDefault"
+                      >
+                        <div className="row">
+                          <div className="col">
                             <img
                               src={jacket.src}
                               style={{ width: "150px", height: "100px" }}
                             />
                           </div>
-                          <div class={`col-7 ${styles.goods}`}>
+                          <div className={`col-7 ${styles.goods}`}>
                             <h5>Men&apos;s formal suit - Black</h5>
                             <p>Zalora Cloth</p>
                           </div>
@@ -236,43 +239,46 @@ export default function Checkout() {
                       </label>
                     </div>
                   </div>
-                  <div class="col">
-                    <div class="row">
-                      <div class="col">
-                        <button class={styles.but} disabled>
+                  <div className="col">
+                    <div className="row">
+                      <div className="col">
+                        <button className={styles.but} disabled>
                           -
                         </button>
                       </div>
-                      <div class={`col ${styles.num}`}>
+                      <div className={`col ${styles.num}`}>
                         <p>1</p>
                       </div>
-                      <div class={`col ${styles.plus}`}>
-                        <button class={styles.but}>+</button>
+                      <div className={`col ${styles.plus}`}>
+                        <button className={styles.but}>+</button>
                       </div>
                     </div>
                   </div>
-                  <div class={`col ${styles.price}`}>
+                  <div className={`col ${styles.price}`}>
                     <p>$ 20.0</p>
                   </div>
                 </div>
-                <div class={`row align-items-center ${styles.item}`}>
-                  <div class="col-7">
-                    <div class="form-check">
+                <div className={`row align-items-center ${styles.item}`}>
+                  <div className="col-7">
+                    <div className="form-check">
                       <input
-                        class={`form-check-input ${styles.form}`}
+                        className={`form-check-input ${styles.form}`}
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        <div class="row">
-                          <div class="col">
+                      <label
+                        className="form-check-label"
+                        for="flexCheckDefault"
+                      >
+                        <div className="row">
+                          <div className="col">
                             <img
                               src={jacket.src}
                               style={{ width: "150px", height: "100px" }}
                             />
                           </div>
-                          <div class={`col-7 ${styles.goods}`}>
+                          <div className={`col-7 ${styles.goods}`}>
                             <h5>Men&apos;s formal suit - Black</h5>
                             <p>Zalora Cloth</p>
                           </div>
@@ -280,43 +286,45 @@ export default function Checkout() {
                       </label>
                     </div>
                   </div>
-                  <div class="col">
-                    <div class="row">
-                      <div class="col">
-                        <button class={styles.but} disabled>
+                  <div className="col">
+                    <div className="row">
+                      <div className="col">
+                        <button className={styles.but} disabled>
                           -
                         </button>
                       </div>
-                      <div class={`col ${styles.num}`}>
+                      <div className={`col ${styles.num}`}>
                         <p>1</p>
                       </div>
-                      <div class={`col ${styles.plus}`}>
-                        <button class={styles.but}>+</button>
+                      <div className={`col ${styles.plus}`}>
+                        <button className={styles.but}>+</button>
                       </div>
                     </div>
                   </div>
-                  <div class={`col ${styles.price}`}>
+                  <div className={`col ${styles.price}`}>
                     <p>$ 20.0</p>
                   </div>
                 </div>
               </div>
-              <div class="col-4">
-                <div class={styles.detail}>
-                  <div class="container">
-                    <div class="row align-items-center">
+              <div className="col-4">
+                <div className={styles.detail}>
+                  <div className="container">
+                    <div className="row align-items-center">
                       <h6>Shopping summary</h6>
                     </div>
-                    <div class={`row justify-content-between ${styles.total}`}>
-                      <div class="col-4">
-                        <p class={styles.text}>Total price</p>
+                    <div
+                      className={`row justify-content-between ${styles.total}`}
+                    >
+                      <div className="col-4">
+                        <p className={styles.text}>Total price</p>
                       </div>
-                      <div class="col-4">
-                        <p class={styles.cost}>$ 40.0</p>
+                      <div className="col-4">
+                        <p className={styles.cost}>$ 40.0</p>
                       </div>
                     </div>
                   </div>
-                  <div class="text-center">
-                    <button class={`btn ${styles.buy}`}>Buy</button>
+                  <div className="text-center">
+                    <button className={`btn ${styles.buy}`}>Buy</button>
                   </div>
                 </div>
               </div>
@@ -328,4 +336,6 @@ export default function Checkout() {
       <Footer />
     </div>
   );
-}
+};
+
+export default Checkout;

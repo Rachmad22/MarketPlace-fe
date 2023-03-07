@@ -7,12 +7,12 @@ const Footer = () => {
   return (
     <>
       <div className={styles.main}>
-        <div class="container text-center">
-          <div class="row align-items-center">
-            <div class="col-2">
+        <div className="container text-center">
+          <div className="row align-items-center">
+            <div className="col-2">
               <img src={blanja.src} alt="logo blanja" />
             </div>
-            <div class="col-8 offset-1">
+            <div className="col-8 offset-1">
               <button className={`btn ${styles.text}`}>About</button>
               <button className={`btn ${styles.text}`}>
                 Terms & Condition
@@ -25,22 +25,22 @@ const Footer = () => {
             </div>
           </div>
           <hr />
-          <div class="row align-items-center">
-            <div class="col">
+          <div className="row align-items-center">
+            <div className="col">
               <h3>Created By</h3>
             </div>
           </div>
           <div className="row">
-            <div class="col-3">
+            <div className="col-3">
               <h3>M Restu Alviando</h3>
             </div>
-            <div class="col-3">
+            <div className="col-3">
               <h3>Riyadh R Albar</h3>
             </div>
-            <div class="col-3">
+            <div className="col-3">
               <h3>Khaidar Ali</h3>
             </div>
-            <div class="col-3">
+            <div className="col-3">
               <h3>Rachmad Nur H</h3>
             </div>
           </div>
