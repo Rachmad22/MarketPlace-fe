@@ -4,7 +4,7 @@ import Head from "next/head";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import Link from "next/link";
-import CardProduct from "@/components/molecules/CardProduct";
+import CardProduct from "@/components/molecules/cardProduct";
 import { useRouter } from "next/router";
 import axios from "axios";
 

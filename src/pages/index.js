@@ -5,7 +5,7 @@ import styles from "@/styles/pages/Home.module.scss";
 import Link from "next/link";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
-import CardProduct from "@/components/molecules/CardProduct";
+import CardProduct from "@/components/molecules/cardProduct";
 import React, { useState } from "react";
 import axios from "axios";
 
