@@ -25,6 +25,10 @@ export default function Checkout() {
     React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [getAddress, setGetAddress] = React.useState([]);
+  const [chooseAddress, setChooseAddress] = React.useState(false);
+  //form payment
+  const [payment, setPayment] = React.useState(null);
+  const [checkPay, setCheckPay] = React.useState();
 
   const totalPrice = () => {
     let totalOrder = 0;
@@ -82,6 +86,26 @@ export default function Checkout() {
     }
   };
 
+  const handlePayment = (type_payment, cost, shipping_cost) => {
+    setIsLoading(true);
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/payment`, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(handlePayment);
   const data = useSelector((state) => state.profile);
   React.useEffect(() => {
     const token = data.token.payload;
@@ -121,7 +145,7 @@ export default function Checkout() {
       )
       .then((res) => {
         setGetAddress(res.data.data);
-        console.log(res.data.data);
+        console.log(setGetAddress);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -146,11 +170,9 @@ export default function Checkout() {
                 >
                   <div className="container">
                     <div className={styles.add}>
-                      <h6>Andreas Jane</h6>
+                      <h6>{getAddress?.[0]?.recipient_name}</h6>
                       <p>
-                        Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja,
-                        Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note:
-                        blok c 16] Sokaraja, Kab. Banyumas, 53181
+                        {`${getAddress?.[0]?.address_alias} ${getAddress?.[0]?.street} ${getAddress?.[0]?.city} ${getAddress?.[0]?.postal_code}  `}
                       </p>
                       <button
                         className={styles.choose}
@@ -170,7 +192,7 @@ export default function Checkout() {
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
                 >
-                  <div class="modal-dialog">
+                  <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -338,18 +360,41 @@ export default function Checkout() {
                               </div>
                             </div>
                           </div>
-                          <div className={styles.change}>
+                          {getAddress?.map((item, key) => {
+                            return (
+                              <div key={key} className={styles.change}>
+                                <div className={styles.changeAdd}>
+                                  <h6>Penerima : {item?.recipient_name}</h6>
+                                  <p>
+                                    Alamat :
+                                    {`${item?.address_alias} ${item?.street} ${item?.city} ${item?.postal_code}  `}
+                                  </p>
+                                  <button
+                                    className="btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#changeAddress"
+                                  >
+                                    Change Address
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          {/* <div className={styles.change}>
                             <div className={styles.changeAdd}>
-                              <h6>Andreas Jane</h6>
+                              <h6>{getAddress?.[2]?.recipient_name}</h6>
                               <p>
-                                Perumahan Sapphire Mediterania, Wiradadi, Kec.
-                                Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181
-                                [Tokopedia Note: blok c 16] Sokaraja, Kab.
-                                Banyumas, 53181
+                                {`${getAddress?.[2]?.address_alias} ${getAddress?.[2]?.street} ${getAddress?.[2]?.city} ${getAddress?.[2]?.postal_code}`}
                               </p>
-                              <button className="btn">Change Address</button>
+                              <button
+                                className="btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#changeAddress"
+                              >
+                                Change Address
+                              </button>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -371,7 +416,7 @@ export default function Checkout() {
                   {orderProduct.map((item, key) => (
                     <div class={`row align-items-center ${styles.item}`}>
                       <div class="col-7">
-                        <div class="form-check">
+                        {/* <div class="form-check">
                           <input
                             class={`form-check-input ${styles.form}`}
                             type="checkbox"
@@ -381,21 +426,21 @@ export default function Checkout() {
                           <label
                             class="form-check-label"
                             for="flexCheckDefault"
-                          >
-                            <div class="row">
-                              <div class="col">
-                                <img
-                                  src={jacket.src}
-                                  style={{ width: "150px", height: "100px" }}
-                                />
-                              </div>
-                              <div class={`col-6 ${styles.goods}`}>
-                                <h5>{item.product_name}</h5>
-                                <p>Zalora Cloth</p>
-                              </div>
-                            </div>
-                          </label>
+                          > */}
+                        <div class="row">
+                          <div class="col">
+                            <img
+                              src={item?.product_images?.image}
+                              style={{ width: "150px", height: "100px" }}
+                            />
+                          </div>
+                          <div class={`col-6 ${styles.goods}`}>
+                            <h5>{item.product_name}</h5>
+                            <p>{item?.store_name}</p>
+                          </div>
                         </div>
+                        {/* </label>
+                        </div> */}
                       </div>
                       <div class="col">
                         <div class="row">
