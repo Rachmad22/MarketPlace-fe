@@ -114,7 +114,7 @@ const MyBag = () => {
                             />
                           </div>
                           <div className={`col-7 ${styles.goods}`}>
-                            <h5>Men's formal suit - Black</h5>
+                            <h5>Men&apos;s formal suit - Black</h5>
                             <p>Zalora Cloth</p>
                           </div>
                         </div>
