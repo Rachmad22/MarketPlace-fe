@@ -101,7 +101,7 @@ const DetailProduct = (props) => {
         <title>{dataProduct?.product_name} | Blanja</title>
       </Head>
       <Navbar />
-      <main>
+      <main style={{marginTop: "140px"}}>
         <div className="container">
           <div>
             <nav className={`mt-5 ${styles.breadcrumb}`}>

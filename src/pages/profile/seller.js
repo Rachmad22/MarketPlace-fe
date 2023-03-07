@@ -8,6 +8,7 @@ import Head from "next/head";
 import { useSelector } from "react-redux";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
+import { useRouter } from "next/router";
 
 
 export default function Seller() {
@@ -18,7 +19,7 @@ export default function Seller() {
  const id = data.profile.payload.id
  const profileUser = data.profile.payload
  const role = data.profile.payload.role
- console.log(data)
+ console.log(role)
 
  // state for sidebar menu
  const [isStore, setIsStore] = React.useState(false);
@@ -26,6 +27,14 @@ export default function Seller() {
  const [allAddress, setAllAddress] = React.useState([])
  const [isSale, setIsSale] = React.useState(false);
  const [allItems, setAllItems] = React.useState([])
+
+ const router = useRouter()
+
+ React.useEffect(()=>{
+    if(role){
+        router.replace("/profile")
+    }
+ },[])
 
 
  return (

@@ -33,3 +33,19 @@
     background-color: #DB3022 !important;
   }
 }
+
+@media (max-width: 768px) { 
+  .pleaseRegister{
+    // background-color: #DB3022;
+    font-size: 13pt;
+    margin-top: -15px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+    padding-bottom: -10px;
+  }
+
+  .loginForm{
+    margin-top: -20px;
+  }
+}

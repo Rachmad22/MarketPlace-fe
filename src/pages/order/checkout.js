@@ -166,7 +166,7 @@ export default function Checkout() {
               <div class="col-8">
                 <h5>Shipping Address</h5>
                 <div
-                  class={`row justify-content-between align-items-center ${styles.all}`}
+                  className={`row justify-content-between align-items-center ${styles.all}`}
                 >
                   <div className="container">
                     <div className={styles.add}>
@@ -222,29 +222,29 @@ export default function Checkout() {
                             aria-labelledby="exampleModalLabel"
                             aria-hidden="true"
                           >
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header mx-auto">
+                            <div className="modal-dialog modal-dialog-centered modal-lg">
+                              <div className="modal-content">
+                                <div className="modal-header mx-auto">
                                   <h1
-                                    class="modal-title fs-3"
+                                    className="modal-title fs-3"
                                     id="exampleModalLabel"
                                   >
                                     Add New Address
                                   </h1>
                                 </div>
-                                <div class="modal-body">
+                                <div className="modal-body">
                                   <div className="row">
                                     <div className="col-12">
-                                      <div class="mb-3">
+                                      <div className="mb-3">
                                         <label
                                           for="exampleFormControlTextarea1"
-                                          class="form-label"
+                                          className="form-label"
                                         >
                                           Save address as (ex: home address,
                                           office address)
                                         </label>
                                         <input
-                                          class="form-control"
+                                          className="form-control"
                                           id="exampleFormControlTextarea1"
                                           rows="3"
                                           placeholder="Home"
@@ -338,10 +338,10 @@ export default function Checkout() {
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class={`btn btn-outline-dark rounded-5 ${styles.submit}`}
+                                        className={`btn btn-outline-dark rounded-5 ${styles.submit}`}
                                         data-bs-dismiss="modal"
                                       >
                                         Cancel
@@ -488,10 +488,10 @@ export default function Checkout() {
                   </div> */}
                 </div>
               </div>
-              <div class="col-4">
-                <div class={styles.detail}>
-                  <div class="container">
-                    <div class="row align-items-center">
+              <div className="col-4">
+                <div className={styles.detail}>
+                  <div className="container">
+                    <div className="row align-items-center">
                       <h6>Shopping summary</h6>
                     </div>
                     <div class={`row justify-content-between ${styles.total}`}>

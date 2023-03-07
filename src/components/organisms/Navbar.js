@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={styles.main}>
+      <div className={`shadow bg-light fixed-top ${styles.main}`}>
         <div className="container text-center">
           <div className="row align-items-center">
             <div className="col">
@@ -216,7 +216,13 @@ const Navbar = () => {
                 <button className="btn">
                   <img src={mail.src} />
                 </button>
-                <Link href={"/profile"}>
+                <Link
+                  href={
+                    data?.profile?.payload?.role
+                      ? "/profile"
+                      : "/profile/seller"
+                  }
+                >
                   <button className="btn">
                     <img
                       src={

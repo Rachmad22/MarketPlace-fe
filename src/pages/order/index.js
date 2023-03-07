@@ -17,6 +17,7 @@ const MyBag = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectAllOrder, setSelectAllOrder] = useState(false);
   const [selectOrder, setSelectOrder] = useState(false);
+  const [selectOrderList, setSelectOrderList] = useState([]);
 
   const data = useSelector((state) => state.profile);
 
@@ -46,6 +47,14 @@ const MyBag = () => {
       });
   }, []);
 
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: false,
+  });
+
   const refreshPage = () => {
     window.location.reload(false);
   };
@@ -68,15 +77,8 @@ const MyBag = () => {
       )
       .then((res) => {
         setIsLoading(false);
-        Swal.fire({
-          title: "The product was successfully reduced",
-          icon: "success",
-          confirmButtonText: "OK",
-          confirmButtonColor: "#DB3022",
-        });
-        setTimeout(() => {
-          refreshPage();
-        }, 1200);
+        Swal.fire("The product was successfully removed", "", "success");
+        refreshPage()
       })
       .catch((err) => {
         setIsLoading(false);
@@ -85,7 +87,6 @@ const MyBag = () => {
           text: "Please try again later",
           icon: "error",
           confirmButtonText: "OK",
-          confirmButtonColor: "#DB3022",
         });
       });
   };
@@ -112,11 +113,9 @@ const MyBag = () => {
           title: "Product added successfully",
           icon: "success",
           confirmButtonText: "Ok",
-          confirmButtonColor: "#DB3022",
+          background: "#ffffff",
         });
-        setTimeout(() => {
-          refreshPage();
-        }, 1200);
+        refreshPage()
       })
       .catch((err) => {
         setIsLoading(false);
@@ -125,7 +124,7 @@ const MyBag = () => {
           text: "Please try again later",
           icon: "error",
           confirmButtonText: "OK",
-          confirmButtonColor: "#DB3022",
+          buttonsStyling: "#ffffff",
         });
       });
   };
@@ -151,7 +150,7 @@ const MyBag = () => {
           title: "Product deleted successfully",
           icon: "success",
           confirmButtonText: "OK",
-          cancelButtonColor: "#DB3022",
+          confirmButtonColor: "#DB3022",
         });
         setTimeout(() => {
           refreshPage();
@@ -181,7 +180,6 @@ const MyBag = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-
     axios
       .delete(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/delete/users/${id}`,
@@ -192,7 +190,7 @@ const MyBag = () => {
         Swal.fire({
           title: "Product deleted successfully",
           icon: "success",
-          confirmButtonText: "OK",
+          confirmButtonText: "Okay",
           confirmButtonColor: "#DB3022",
         });
         setTimeout(() => {
@@ -205,7 +203,7 @@ const MyBag = () => {
           title: err.response.data.message,
           text: "Please try again later",
           icon: "error",
-          confirmButtonText: "OK",
+          confirmButtonText: "Okay",
           confirmButtonColor: "#DB3022",
         });
       });
@@ -214,19 +212,27 @@ const MyBag = () => {
   const totalPrice = () => {
     let totalOrder = 0;
 
-    orderProduct.map((item, key) => {
-      const total = item?.price * item?.qty;
-      totalOrder += total;
-    });
+    if (selectAllOrder) {
+      orderProduct.map((item, key) => {
+        const total = item?.price * item?.qty;
+        totalOrder += total;
+      });
+    } else {
+      selectOrderList.map((item) => {
+        const key = parseInt(item);
+        const total = orderProduct[key]?.price * orderProduct[key]?.qty;
+        totalOrder += total;
+      });
+    }
 
     return totalOrder;
   };
 
-  // const totalWithDelivery = () => {
-  //   let totalDelivery = 10000;
+  const totalWithDelivery = () => {
+    let totalDelivery = 10000;
 
-  //   return totalDelivery + totalPrice();
-  // };
+    return totalDelivery + totalPrice();
+  };
 
   return (
     <>
@@ -236,58 +242,73 @@ const MyBag = () => {
       <Navbar />
 
       <main className={styles.main}>
-        <div className="container ">
+        <div className="container" style={{ marginTop: "120px" }}>
           <div className={styles.content}>
             <h2>My Bag</h2>
-            <div class={`row ${styles.bot}`}>
-              <div class="col-8">
+            <div className={`row ${styles.bot}`}>
+              <div className="col-8">
                 <div
-                  class={`row justify-content-between align-items-center ${styles.all}`}
+                  className={`row justify-content-between align-items-center ${styles.all}`}
                 >
-                  <div class="col-5">
-                    <div class="form-check">
+                  <div className="col-5">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         onChange={() => {
+                          if (selectAllOrder && selectOrderList.length > 0) {
+                            setSelectOrderList([]);
+                          } else {
+                            setSelectOrderList(Object.keys(orderProduct));
+                          }
                           setSelectAllOrder(!selectAllOrder);
-                          setSelectOrder(!selectOrder);
+                          // setSelectOrder(!selectOrder);
                         }}
                         checked={selectAllOrder}
-                        value=""
-                        id="flexCheckDefault"
+                        id="flexCheckDefault11"
                       />
                       <label
-                        class={`form-check-label ${styles.label}`}
+                        className={`form-check-label ${styles.label}`}
                         for="flexCheckChecked"
                       >
                         Select all items{" "}
-                        <span>
-                          ({selectAllOrder ? orderProduct?.length : 0} items
-                          selected)
-                        </span>
+                        <span>({orderProduct?.length} items selected)</span>
                       </label>
                     </div>
                   </div>
+
                   <div class="col-2">
                     <button
                       className="btn"
                       onClick={() => {
-                        Swal.fire({
-                          title: "The product will be removed from the cart",
-                          text: "Are you sure you want to delete it?",
-                          icon: "success",
-                          cancelButtonText: "CANCEL",
-                          cancelButtonColor: "#DB3022",
-                          confirmButtonText: "CONFIRM",
-                          confirmButtonColor: "#DB3022",
-                          showCancelButton: true,
-                        }).then((res) => {
-                          if (res.value) deleteAllOrders();
-                        });
+                        swalWithBootstrapButtons
+                          .fire({
+                            title: "Are you sure?",
+                            text: "All products in your cart will be deleted!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel!",
+                            reverseButtons: true,
+                          })
+                          .then((res) => {
+                            if (res.isConfirmed) {
+                              deleteAllOrders();
+                            } else if (
+                              res.dismiss === Swal.DismissReason.cancel
+                            ) {
+                              swalWithBootstrapButtons.fire({
+                                title: "Cancelled",
+                                text: "Your product remains in the cart",
+                                icon: "error",
+                                confirmButtonText: "Okay",
+                                confirmButtonColor: "#DB3022",
+                              });
+                            }
+                          });
                       }}
                     >
-                      <p>Delete</p>
+                      <p>Delete all</p>
                     </button>
                   </div>
                 </div>
@@ -309,22 +330,59 @@ const MyBag = () => {
                           <input
                             class={`form-check-input ${styles.form}`}
                             type="checkbox"
-                            checked={selectOrder}
+                            checked={
+                              selectOrderList.findIndex(
+                                (item) => item === key.toString()
+                              ) !== -1
+                                ? true
+                                : false
+                            }
+                            value={key}
                             onChange={() => {
-                              setSelectAllOrder(!selectAllOrder);
+                              if (selectOrderList.length > 0) {
+                                const arrIndex = selectOrderList.findIndex(
+                                  (item) => item === key.toString()
+                                );
+                                if (arrIndex === -1) {
+                                  setSelectOrderList((state) => [
+                                    ...state,
+                                    key.toString(),
+                                  ]);
+                                } else {
+                                  if (selectOrderList.length === 1) {
+                                    setSelectOrderList([]);
+                                  } else {
+                                    const newOrderList = selectOrderList.splice(
+                                      arrIndex - 1,
+                                      1
+                                    );
+                                    setSelectOrderList(newOrderList);
+                                  }
+                                }
+                              } else {
+                                setSelectOrderList((state) => [
+                                  ...state,
+                                  key.toString(),
+                                ]);
+                              }
+
+                              setSelectAllOrder(false);
+                              totalPrice();
                             }}
-                            value=""
-                            id="flexCheckDefault"
+                            id="flexCheckDefault2"
                           />
                           <label
                             class="form-check-label"
                             for="flexCheckDefault"
                           >
                             <div class="row">
-                              <div class="col-4">
+                              <div class="col-2 me-5">
                                 <Link href={`/detail/${item?.product_id}`}>
                                   <img
-                                    src={item?.product_images[0]?.image}
+                                    src={
+                                      item?.product_images[0]?.image ||
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhf-td4GXegmuo582JIu6X6H8x5yxF3ehow&usqp=CAU"
+                                    }
                                     style={{
                                       width: "100px",
                                       height: "100px",
@@ -334,11 +392,17 @@ const MyBag = () => {
                                   />
                                 </Link>
                               </div>
-                              <div class={`col-8 ${styles.goods}`}>
+                              <div class={`col-4 ${styles.goods}`}>
                                 <Link href={`/detail/${item?.product_id}`}>
                                   <h5>{item?.product_name}</h5>
                                 </Link>
                                 <p>{item?.store_name}</p>
+                              </div>
+                              <div
+                                class="col-1"
+                                style={{ margin: "auto", marginLeft: "10px" }}
+                              >
+                                <h6>{item?.size}</h6>
                               </div>
                             </div>
                           </label>
@@ -391,28 +455,29 @@ const MyBag = () => {
                     </div>
                   </>
                 ))}
+
               </div>
-              <div class="col-4">
-                <div class={styles.detail}>
-                  <div class="container">
-                    <div class="row align-items-center">
+              <div className="col-4">
+                <div className={styles.detail}>
+                  <div className="container">
+                    <div className="row align-items-center">
                       <h6>Shopping summary</h6>
                     </div>
-                    <div class={`row justify-content-between ${styles.total}`}>
-                      <div class="col-4">
-                        <p class={styles.text}>Total price</p>
+                    <div
+                      className={`row justify-content-between ${styles.total}`}
+                    >
+                      <div className="col-4">
+                        <p className={styles.text}>Total price</p>
                       </div>
+
                       <div class="col-3">
-                        <p class={styles.cost}>
-                          $ {selectAllOrder ? totalPrice() : 0}
-                        </p>
+                        <p class={styles.cost}>$ {totalPrice()}</p>
+
                       </div>
                     </div>
                   </div>
-                  <div class="text-center">
-                    <Link href="/order/checkout">
-                      <button class={`btn ${styles.buy}`}>Buy</button>
-                    </Link>
+                  <div className="text-center">
+                    <button className={`btn ${styles.buy}`}>Buy</button>
                   </div>
                 </div>
               </div>
