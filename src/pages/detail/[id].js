@@ -5,7 +5,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import styles from "@/styles/pages/Detail.module.scss";
 import Link from "next/link";
-import CardProduct from "@/components/molecules/CardProduct";
+import CardProduct from "@/components/molecules/cardProduct";
 import { useRouter } from "next/router";
 import axios from "axios";
 
