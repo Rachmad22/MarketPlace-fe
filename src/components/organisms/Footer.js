@@ -6,10 +6,12 @@ import blanja from "public/images/blanja-logo.svg";
 const Footer = () => {
   return (
     <>
-      <div className={styles.main}>
-        <div className="container text-center">
-          <div className="row align-items-center">
-            <div className="col-2">
+
+      <div className={`mt-5 ${styles.main}`}>
+        <div class="container text-center">
+          <div class="row align-items-center">
+            <div class="col-2">
+
               <img src={blanja.src} alt="logo blanja" />
             </div>
             <div className="col-8 offset-1">
