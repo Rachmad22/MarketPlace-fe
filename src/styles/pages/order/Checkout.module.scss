@@ -1,0 +1,326 @@
+.bot{
+    margin-top: 40px;
+}
+
+.box{
+    margin-bottom: 50px;
+}
+
+.item{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
+    border-radius: 4px;
+    height: 120px;
+    margin-top: 20px;
+
+    .form{
+        margin-top: 50px;
+    }
+
+    .but{
+        background: #FFFFFF;
+        box-shadow: 0px 0px 4px rgba(142, 142, 142, 0.25);
+        border-radius: 25px;
+        width: 30px;
+    }
+
+    .goods{
+        p{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 12px;
+            color: #9B9B9B;
+        }
+    }
+
+    .num{
+        margin-left: -30px;
+
+        p{
+            font-family: 'Metropolis';
+            font-style: normal;
+            color: #222222;
+        }
+    }
+
+    .plus{
+        margin-left: -50px;
+    }
+
+    .price{
+        margin-left: 50px;
+
+        p{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 16px;
+            color: #222222;
+        }
+    }
+}
+
+.detail{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
+    border-radius: 4px;
+    height: 300px;
+    width: 370px;
+
+    h6{
+        font-family: 'Metropolis';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: #222222;
+        margin-top: 20px;
+    }
+
+    .total{
+        margin-top: 30px;
+
+        .text{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 16px;
+            color: #9B9B9B;
+        }
+
+        .cost{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 18px;
+            color: #222222;
+        }
+    }
+    .delivery{
+        margin-top: 10px;
+
+        .text{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 16px;
+            color: #9B9B9B;
+        }
+
+        .cost{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 18px;
+            color: #222222;
+        }
+    }
+
+    .shop{
+        margin-top: 10px;
+
+        .text{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 16px;
+            color: #222222;
+        }
+
+        .cost{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 18px;
+            color: #DB3022;
+        }
+    }
+
+    .buy{
+        margin-top: 20px;
+        width: 300px;
+        background: #DB3022;
+        border-radius: 25px;
+        font-family: 'Metropolis';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: #FFFFFF;
+    }
+}
+
+.modals{
+    overflow-y: hidden;
+    margin-top: -15px;
+}
+
+.header{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 6px rgba(53, 50, 50, 0.25);
+    border-radius: 8px 8px 0px 0px;
+}
+
+.footer{
+    background: #FFFFFF;
+    box-shadow: 0px -8px 10px rgba(217, 217, 217, 0.25);
+    border-radius: 0px 0px 8px 8px;
+
+    .text{
+        font-family: 'Metropolis';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: #222222;
+    }
+
+    .cost{
+        font-family: 'Metropolis';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 18px;
+        color: #DB3022;
+    }
+}
+
+.paymentMethod{
+    margin-top: 40px;
+
+    .method{
+        margin-bottom: 30px;
+
+        .useMethod{
+            font-family: 'Metropolis';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 16px;
+            color: #222222;
+        }
+    }
+
+}
+.sum{
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: #222222;
+    text-align: left;
+}
+
+.all{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
+    border-radius: 4px;
+    margin-top: 20px;
+
+    .add{
+        padding-top: 30px;
+        padding-left: 30px;
+        padding-bottom: 30px;
+        padding-right: 30px;
+        
+            h6{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 16px;
+                color: #222222;
+            }
+        
+            p{
+                font-family: 'Metropolis';
+                font-weight: 400;
+                font-size: 14px;
+                color: #222222;
+            }
+
+            .choose{
+                border: 1px solid #9B9B9B;
+                border-radius: 24px;
+                width: 200px;
+                height: 40px;
+
+                p{
+                    font-family: 'Metropolis';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 20px;
+                    text-align: center;
+                    color: #9B9B9B;
+                    margin-top: 7px;
+                }
+            }
+    }
+}
+
+.modalAddress{
+
+    .butAdd{
+        border: 1px dashed #9B9B9B;
+        border-radius: 8px;
+        font-family: 'Metropolis';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 18px;
+        color: #9B9B9B;
+        width: 450px;
+        height: 70px;
+    }
+
+    .change{
+        background: #FFFFFF;
+        border: 1px solid #DB3022;
+        border-radius: 4px;
+        margin-top: 20px;
+
+        .changeAdd{
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-bottom: 20px;
+
+            h6{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 16px;
+                color: #222222;
+            }
+            
+            p{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 24px;
+                color: #222222;
+            }
+
+            button{
+                font-family: 'Metropolis';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 16px;
+                color: #DB3022;
+            }
+        }
+    }
+}

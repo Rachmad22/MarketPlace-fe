@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import blanjaLogo from "public/images/blanja-logo.svg";
 import Head from "next/head";
 import Image from "next/image";
@@ -21,6 +21,15 @@ const Register = () => {
   const data = useSelector((state) => state.register);
 
   const router = useRouter();
+
+  const profile = useSelector((state) => state.profile)
+
+  useEffect(() => {
+    const isLogin = profile?.profile?.payload;
+    if (isLogin) {
+      router.replace("/");
+    }
+  }, []);
 
   const submitRegister = () => {
     setIsLoading(true);
@@ -72,7 +81,9 @@ const Register = () => {
               <div className={styles.button}>
                 <button
                   type="button"
-                  className={`btn ${form ? styles.activeButton : ""}`}
+                  className={`btn ${styles.buttonMenu1} ${
+                    form ? styles.activeButton : ""
+                  }`}
                   onClick={() => {
                     setForm(true);
                     dispatch(registerReducer.setRegisterRole(true));
@@ -83,7 +94,9 @@ const Register = () => {
                 </button>
                 <button
                   type="button"
-                  className={`btn ${!form ? styles.activeButton : ""}`}
+                  className={`btn ${styles.buttonMenu2} ${
+                    !form ? styles.activeButton : ""
+                  }`}
                   onClick={() => {
                     setForm(false);
                     dispatch(registerReducer.setRegisterRole(false));

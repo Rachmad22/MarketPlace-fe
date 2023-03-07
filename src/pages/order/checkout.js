@@ -1,13 +1,156 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import jacket from "public/images/jacket.png";
 import styles from "@/styles/pages/order/Checkout.module.scss";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
+import axios from "axios";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import Head from "next/head";
+import Gopay from "public/images/payment/Gopay.png";
+import Ovo from "public/images/payment/Ovo.png";
+import Dana from "public/images/payment/Dana.png";
 
 export default function Checkout() {
+  const [orderProduct, setOrderProduct] = React.useState([]);
+  const [total, setTotal] = React.useState(0);
+  // form add address
+  const [address_alias, setAddress_alias] = React.useState("");
+  const [recipient_name, setRecipient_name] = React.useState("");
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [postal_code, setPostal_code] = React.useState("");
+  const [recipient_phone_number, setRecipient_phone_number] =
+    React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [getAddress, setGetAddress] = React.useState([]);
+  const [chooseAddress, setChooseAddress] = React.useState(false);
+  //form payment
+  const [payment, setPayment] = React.useState(null);
+  const [checkPay, setCheckPay] = React.useState();
+
+  const totalPrice = () => {
+    let totalOrder = 0;
+
+    orderProduct.map((item, key) => {
+      const total = item?.price * item?.qty;
+      totalOrder += total;
+    });
+
+    return totalOrder;
+  };
+
+  const totalWithDelivery = () => {
+    let totalDelivery = 10000;
+
+    return totalDelivery + totalPrice();
+  };
+
+  const handleAddAddress = async () => {
+    try {
+      setIsLoading(true);
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      // console.log(name)
+      await axios.post(
+        `/api/addAddress`,
+        {
+          address_alias,
+          recipient_name,
+          street,
+          city,
+          postal_code,
+          recipient_phone_number,
+        },
+        config
+      );
+      setIsLoading(false);
+      setError(null);
+    } catch (error) {
+      setIsLoading(false);
+      setError(
+        error?.response?.data?.message ??
+          error?.response?.data?.message?.email?.message ??
+          error?.response?.data?.message?.name?.message ??
+          error?.response?.data?.message?.phone_number?.message ??
+          error?.response?.data?.message?.photo?.message ??
+          "Something wrong in our server"
+      );
+      // console.log(error.response)
+    }
+  };
+
+  const handlePayment = (type_payment, cost, shipping_cost) => {
+    setIsLoading(true);
+    const token = data?.token?.payload;
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/payment`, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(handlePayment);
+  const data = useSelector((state) => state.profile);
+  React.useEffect(() => {
+    const token = data.token.payload;
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/users/${data.profile.payload.id}`,
+        config
+      )
+      .then((res) => {
+        setOrderProduct(res.data.data);
+        const dataOrder = res.data.data;
+        dataOrder.map((item, key) => {
+          setTotal(total + item.price * item.qty);
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  React.useEffect(() => {
+    const token = data.token.payload;
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${data.profile.payload.id}`,
+        config
+      )
+      .then((res) => {
+        setGetAddress(res.data.data);
+        console.log(setGetAddress);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(total);
   return (
     <div>
       <Head>
@@ -21,81 +164,93 @@ export default function Checkout() {
             <h2>Checkout</h2>
             <div class={`row ${styles.bot}`}>
               <div class="col-8">
+                <h5>Shipping Address</h5>
                 <div
-                  class={`row justify-content-between align-items-center ${styles.all}`}
+                  className={`row justify-content-between align-items-center ${styles.all}`}
                 >
-                  {/* <div class="col-5">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label
-                        class={`form-check-label ${styles.label}`}
-                        for="flexCheckChecked"
+                  <div className="container">
+                    <div className={styles.add}>
+                      <h6>{getAddress?.[0]?.recipient_name}</h6>
+                      <p>
+                        {`${getAddress?.[0]?.address_alias} ${getAddress?.[0]?.street} ${getAddress?.[0]?.city} ${getAddress?.[0]?.postal_code}  `}
+                      </p>
+                      <button
+                        className={styles.choose}
+                        data-bs-toggle="modal"
+                        data-bs-target="#address"
                       >
-                        Select all items <span>(2 items selected)</span>
-                      </label>
+                        <p>Choose another address</p>
+                      </button>
                     </div>
                   </div>
-                  <div class="col-2">
-                    <button className="btn">
-                      <p>Delete</p>
-                    </button>
-                  </div> */}
-                  <section id="address">
-                    <div className={`card mb-5 ${styles.card}`}>
-                      <div className="card-header">
-                        <h3>Choose another address</h3>
-                        <p>Manage your shipping address</p>
+                </div>
+                {/* <!-- Modal --> */}
+                <div
+                  class={`modal fade ${styles.modalAddress}`}
+                  id="address"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                          Choose another address
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
                       </div>
-                      <div className="container">
-                        <div className="card-body">
+                      <div class="modal-body">
+                        <div className="container">
                           <button
-                            type="button"
-                            className={`btn btn-light ${styles.dashed}`}
+                            className={styles.butAdd}
                             data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"
+                            data-bs-target="#addAddress"
                           >
                             Add New Address
                           </button>
-
                           {/* <!-- Modal --> */}
                           <div
                             class="modal fade"
-                            id="exampleModal"
+                            id="addAddress"
                             tabindex="-1"
                             aria-labelledby="exampleModalLabel"
                             aria-hidden="true"
                           >
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header mx-auto">
+                            <div className="modal-dialog modal-dialog-centered modal-lg">
+                              <div className="modal-content">
+                                <div className="modal-header mx-auto">
                                   <h1
-                                    class="modal-title fs-3"
+                                    className="modal-title fs-3"
                                     id="exampleModalLabel"
                                   >
                                     Add New Address
                                   </h1>
                                 </div>
-                                <div class="modal-body">
+                                <div className="modal-body">
                                   <div className="row">
                                     <div className="col-12">
-                                      <div class="mb-3">
+                                      <div className="mb-3">
                                         <label
                                           for="exampleFormControlTextarea1"
-                                          class="form-label"
+                                          className="form-label"
                                         >
                                           Save address as (ex: home address,
                                           office address)
                                         </label>
                                         <input
-                                          class="form-control"
+                                          className="form-control"
                                           id="exampleFormControlTextarea1"
                                           rows="3"
                                           placeholder="Home"
+                                          onChange={(e) =>
+                                            setAddress_alias(e.target.value)
+                                          }
                                         />
                                       </div>
                                       <div className="row">
@@ -104,12 +259,15 @@ export default function Checkout() {
                                             for="name"
                                             className="form-label"
                                           >
-                                            Recipient&apos;s name
+                                            Recipient's name
                                           </label>
                                           <input
                                             className="form-control"
                                             id="name"
                                             type="text"
+                                            onChange={(e) =>
+                                              setRecipient_name(e.target.value)
+                                            }
                                           />
                                         </div>
                                         <div className="col-6">
@@ -117,12 +275,17 @@ export default function Checkout() {
                                             for="phone"
                                             className="form-label"
                                           >
-                                            Recipient&apos;s phone number
+                                            Recipient's phone number
                                           </label>
                                           <input
                                             className="form-control"
                                             id="phone"
                                             type="number"
+                                            onChange={(e) =>
+                                              setRecipient_phone_number(
+                                                e.target.value
+                                              )
+                                            }
                                           />
                                         </div>
                                         <div className="col-6">
@@ -136,6 +299,9 @@ export default function Checkout() {
                                             className="form-control"
                                             id="address"
                                             type="text"
+                                            onChange={(e) =>
+                                              setStreet(e.target.value)
+                                            }
                                           />
                                         </div>
                                         <div className="col-6">
@@ -149,6 +315,9 @@ export default function Checkout() {
                                             className="form-control"
                                             id="post"
                                             type="text"
+                                            onChange={(e) =>
+                                              setPostal_code(e.target.value)
+                                            }
                                           />
                                         </div>
                                         <div className="col-6">
@@ -162,14 +331,17 @@ export default function Checkout() {
                                             className="form-control"
                                             id="city"
                                             type="text"
+                                            onChange={(e) =>
+                                              setCity(e.target.value)
+                                            }
                                           />
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class={`btn btn-outline-dark rounded-5 ${styles.submit}`}
+                                        className={`btn btn-outline-dark rounded-5 ${styles.submit}`}
                                         data-bs-dismiss="modal"
                                       >
                                         Cancel
@@ -177,8 +349,10 @@ export default function Checkout() {
                                       <button
                                         type="button"
                                         class={`btn btn-primary rounded-5 ${styles.submit}`}
+                                        onClick={handleAddAddress}
+                                        disabled={isLoading}
                                       >
-                                        Save
+                                        {isLoading ? "Loading..." : "Save"}
                                       </button>
                                     </div>
                                   </div>
@@ -186,137 +360,306 @@ export default function Checkout() {
                               </div>
                             </div>
                           </div>
-
-                          <div className={`card mt-5 ${styles.address}`}>
-                            <div className="container m-2">
-                              <h5>Andreas Jane</h5>
+                          {getAddress?.map((item, key) => {
+                            return (
+                              <div key={key} className={styles.change}>
+                                <div className={styles.changeAdd}>
+                                  <h6>Penerima : {item?.recipient_name}</h6>
+                                  <p>
+                                    Alamat :
+                                    {`${item?.address_alias} ${item?.street} ${item?.city} ${item?.postal_code}  `}
+                                  </p>
+                                  <button
+                                    className="btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#changeAddress"
+                                  >
+                                    Change Address
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          {/* <div className={styles.change}>
+                            <div className={styles.changeAdd}>
+                              <h6>{getAddress?.[2]?.recipient_name}</h6>
                               <p>
-                                Perumahan Sapphire Mediterania, Wiradadi, Kec.
-                                Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181
-                                [Tokopedia Note: blok c 16] Sokaraja, Kab.
-                                Banyumas, 53181
+                                {`${getAddress?.[2]?.address_alias} ${getAddress?.[2]?.street} ${getAddress?.[2]?.city} ${getAddress?.[2]?.postal_code}`}
                               </p>
-                              <Link
-                                href="#"
-                                className="text-danger"
+                              <button
+                                className="btn"
                                 data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
+                                data-bs-target="#changeAddress"
                               >
                                 Change Address
-                              </Link>
+                              </button>
+                            </div>
+                          </div> */}
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.box}>
+                  {orderProduct.map((item, key) => (
+                    <div class={`row align-items-center ${styles.item}`}>
+                      <div class="col-7">
+                        {/* <div class="form-check">
+                          <input
+                            class={`form-check-input ${styles.form}`}
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          > */}
+                        <div class="row">
+                          <div class="col">
+                            <img
+                              src={item?.product_images?.image}
+                              style={{ width: "150px", height: "100px" }}
+                            />
+                          </div>
+                          <div class={`col-6 ${styles.goods}`}>
+                            <h5>{item.product_name}</h5>
+                            <p>{item?.store_name}</p>
+                          </div>
+                        </div>
+                        {/* </label>
+                        </div> */}
+                      </div>
+                      <div class="col">
+                        <div class="row">
+                          <div class={`col ${styles.num}`}>
+                            <p>{item.qty}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class={`col ${styles.price}`}>
+                        <p>{item.price}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {/* <div class={`row align-items-center ${styles.item}`}>
+                    <div class="col-7">
+                      <div class="form-check">
+                        <input
+                          class={`form-check-input ${styles.form}`}
+                          type="checkbox"
+                          value=""
+                          id="flexCheckDefault"
+                        />
+                        <label class="form-check-label" for="flexCheckDefault">
+                          <div class="row">
+                            <div class="col">
+                              <img
+                                src={jacket.src}
+                                style={{ width: "150px", height: "100px" }}
+                              />
+                            </div>
+                            <div class={`col-7 ${styles.goods}`}>
+                              <h5>Men&apos;s formal suit - Black</h5>
+                              <p>Zalora Cloth</p>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    <div class={`col ${styles.num}`}>
+                      <p>1</p>
+                    </div>
+                    <div class={`col ${styles.price}`}>
+                      <p>$ 20.0</p>
+                    </div>
+                  </div> */}
+                </div>
+              </div>
+              <div className="col-4">
+                <div className={styles.detail}>
+                  <div className="container">
+                    <div className="row align-items-center">
+                      <h6>Shopping summary</h6>
+                    </div>
+                    <div class={`row justify-content-between ${styles.total}`}>
+                      <div class="col-4">
+                        <p class={styles.text}>Order</p>
+                      </div>
+                      <div class="col-4">
+                        <p class={styles.cost}>{totalPrice()}</p>
+                      </div>
+                    </div>
+                    <div
+                      class={`row justify-content-between ${styles.delivery}`}
+                    >
+                      <div class="col-4">
+                        <p class={styles.text}>Delivery</p>
+                      </div>
+                      <div class="col-4">
+                        <p class={styles.cost}>10000</p>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class={`row justify-content-between ${styles.shop}`}>
+                      <div class="col-6">
+                        <p class={styles.text}>Shopping Summary</p>
+                      </div>
+                      <div class="col-4">
+                        <p class={styles.cost}>{totalWithDelivery()}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button
+                      class={`btn ${styles.buy}`}
+                      data-bs-toggle="modal"
+                      data-bs-target="#payment"
+                    >
+                      Buy
+                    </button>
+                    {/* <!-- Modal --> */}
+                    <div
+                      class={`modal fade ${styles.modals}`}
+                      id="payment"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class={`modal-header ${styles.header}`}>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                              Payment
+                            </h1>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+                            <h5 style={{ textAlign: "left" }}>
+                              Payment Method
+                            </h5>
+                            <div
+                              class={`container text-center ${styles.paymentMethod}`}
+                            >
+                              <div class={`row ${styles.method}`}>
+                                <div class="col-3">
+                                  <img src={Gopay.src} alt="Gopay" />
+                                </div>
+                                <div class="col-5">
+                                  <p className={styles.useMethod}>Gopay</p>
+                                </div>
+                                <div class="col-1 offset-3">
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      value=""
+                                      id="flexCheckDefault"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class={`row ${styles.method}`}>
+                                <div class="col-3">
+                                  <img src={Ovo.src} alt="Ovo" />
+                                </div>
+                                <div class="col-5">
+                                  <p className={styles.useMethod}>Ovo</p>
+                                </div>
+                                <div class="col-1 offset-3">
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      value=""
+                                      id="flexCheckDefault"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class={`row ${styles.method}`}>
+                                <div class="col-3">
+                                  <img src={Dana.src} alt="Dana" />
+                                </div>
+                                <div class="col-5">
+                                  <p className={styles.useMethod}>Dana</p>
+                                </div>
+                                <div class="col-1 offset-3">
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      value=""
+                                      id="flexCheckDefault"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                            <div class="container">
+                              <div class="row align-items-center">
+                                <h6 className={styles.sum}>Shopping summary</h6>
+                              </div>
+                              <div
+                                class={`row justify-content-between ${styles.total}`}
+                              >
+                                <div class="col-4">
+                                  <p class={styles.text}>Order</p>
+                                </div>
+                                <div class="col-4">
+                                  <p class={styles.cost}>{totalPrice()}</p>
+                                </div>
+                              </div>
+                              <div
+                                class={`row justify-content-between ${styles.delivery}`}
+                              >
+                                <div class="col-4">
+                                  <p class={styles.text}>Delivery</p>
+                                </div>
+                                <div class="col-4">
+                                  <p class={styles.cost}>10000</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class={`modal-footer ${styles.footer}`}>
+                            <div class="container text-center">
+                              <div class="row">
+                                <div class="col-5">
+                                  <p class={styles.text}>Shopping Summary</p>
+                                  <p class={styles.cost}>
+                                    {totalWithDelivery()}
+                                  </p>
+                                </div>
+                                <div class="col-4 offset-3">
+                                  <button type="button" class="btn btn-primary">
+                                    Save changes
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </section>
-                </div>
-                <div class={`row align-items-center ${styles.item}`}>
-                  <div class="col-7">
-                    <div class="form-check">
-                      <input
-                        class={`form-check-input ${styles.form}`}
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        <div class="row">
-                          <div class="col">
-                            <img
-                              src={jacket.src}
-                              style={{ width: "150px", height: "100px" }}
-                            />
-                          </div>
-                          <div class={`col-7 ${styles.goods}`}>
-                            <h5>Men&apos;s formal suit - Black</h5>
-                            <p>Zalora Cloth</p>
-                          </div>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="row">
-                      <div class="col">
-                        <button class={styles.but} disabled>
-                          -
-                        </button>
-                      </div>
-                      <div class={`col ${styles.num}`}>
-                        <p>1</p>
-                      </div>
-                      <div class={`col ${styles.plus}`}>
-                        <button class={styles.but}>+</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class={`col ${styles.price}`}>
-                    <p>$ 20.0</p>
-                  </div>
-                </div>
-                <div class={`row align-items-center ${styles.item}`}>
-                  <div class="col-7">
-                    <div class="form-check">
-                      <input
-                        class={`form-check-input ${styles.form}`}
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                      <label class="form-check-label" for="flexCheckDefault">
-                        <div class="row">
-                          <div class="col">
-                            <img
-                              src={jacket.src}
-                              style={{ width: "150px", height: "100px" }}
-                            />
-                          </div>
-                          <div class={`col-7 ${styles.goods}`}>
-                            <h5>Men&apos;s formal suit - Black</h5>
-                            <p>Zalora Cloth</p>
-                          </div>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="row">
-                      <div class="col">
-                        <button class={styles.but} disabled>
-                          -
-                        </button>
-                      </div>
-                      <div class={`col ${styles.num}`}>
-                        <p>1</p>
-                      </div>
-                      <div class={`col ${styles.plus}`}>
-                        <button class={styles.but}>+</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class={`col ${styles.price}`}>
-                    <p>$ 20.0</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class={styles.detail}>
-                  <div class="container">
-                    <div class="row align-items-center">
-                      <h6>Shopping summary</h6>
-                    </div>
-                    <div class={`row justify-content-between ${styles.total}`}>
-                      <div class="col-4">
-                        <p class={styles.text}>Total price</p>
-                      </div>
-                      <div class="col-4">
-                        <p class={styles.cost}>$ 40.0</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="text-center">
-                    <button class={`btn ${styles.buy}`}>Buy</button>
                   </div>
                 </div>
               </div>

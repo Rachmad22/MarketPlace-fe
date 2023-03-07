@@ -78,6 +78,7 @@ const MyBag = () => {
       .then((res) => {
         setIsLoading(false);
         Swal.fire("The product was successfully removed", "", "success");
+        refreshPage()
       })
       .catch((err) => {
         setIsLoading(false);
@@ -114,6 +115,7 @@ const MyBag = () => {
           confirmButtonText: "Ok",
           background: "#ffffff",
         });
+        refreshPage()
       })
       .catch((err) => {
         setIsLoading(false);
@@ -243,15 +245,15 @@ const MyBag = () => {
         <div className="container" style={{ marginTop: "120px" }}>
           <div className={styles.content}>
             <h2>My Bag</h2>
-            <div class={`row ${styles.bot}`}>
-              <div class="col-8">
+            <div className={`row ${styles.bot}`}>
+              <div className="col-8">
                 <div
-                  class={`row justify-content-between align-items-center ${styles.all}`}
+                  className={`row justify-content-between align-items-center ${styles.all}`}
                 >
-                  <div class="col-5">
-                    <div class="form-check">
+                  <div className="col-5">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         onChange={() => {
                           if (selectAllOrder && selectOrderList.length > 0) {
@@ -266,7 +268,7 @@ const MyBag = () => {
                         id="flexCheckDefault11"
                       />
                       <label
-                        class={`form-check-label ${styles.label}`}
+                        className={`form-check-label ${styles.label}`}
                         for="flexCheckChecked"
                       >
                         Select all items{" "}
@@ -274,6 +276,7 @@ const MyBag = () => {
                       </label>
                     </div>
                   </div>
+
                   <div class="col-2">
                     <button
                       className="btn"
@@ -452,26 +455,29 @@ const MyBag = () => {
                     </div>
                   </>
                 ))}
+
               </div>
-              <div class="col-4">
-                <div class={styles.detail}>
-                  <div class="container">
-                    <div class="row align-items-center">
+              <div className="col-4">
+                <div className={styles.detail}>
+                  <div className="container">
+                    <div className="row align-items-center">
                       <h6>Shopping summary</h6>
                     </div>
-                    <div class={`row justify-content-between ${styles.total}`}>
-                      <div class="col-4">
-                        <p class={styles.text}>Total price</p>
+                    <div
+                      className={`row justify-content-between ${styles.total}`}
+                    >
+                      <div className="col-4">
+                        <p className={styles.text}>Total price</p>
                       </div>
+
                       <div class="col-3">
                         <p class={styles.cost}>$ {totalPrice()}</p>
+
                       </div>
                     </div>
                   </div>
-                  <div class="text-center">
-                    <Link href="/order/checkout">
-                      <button class={`btn ${styles.buy}`}>Buy</button>
-                    </Link>
+                  <div className="text-center">
+                    <button className={`btn ${styles.buy}`}>Buy</button>
                   </div>
                 </div>
               </div>
