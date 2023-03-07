@@ -216,7 +216,37 @@ const Navbar = () => {
                 <button className="btn">
                   <img src={mail.src} />
                 </button>
-                <Link href="/profile">
+                <button
+                  class="btn dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src={
+                      data?.profile?.payload?.photo ||
+                      "https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg"
+                    }
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <Link class="dropdown-item" href="/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link class="dropdown-item" href="/auth/logout">
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+                {/* <Link href="/profile">
                   <button className="btn">
                     <img
                       src={
@@ -230,7 +260,7 @@ const Navbar = () => {
                       }}
                     />
                   </button>
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
