@@ -1166,19 +1166,15 @@ export async function getServerSideProps({ req, res }) {
   },
  };
 
- // const profile = await axios.get(
- //  `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
- //  config
- // );
- // const convertData = profile.data;
-
+ // get all address
  const address = await axios.get(
   `${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${id}`,
   config
  );
  const convertAddress = address.data;
 
- const myOrder =await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/checkouts/users/${id}`, config)
+ // get history order
+ const myOrder = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/checkouts/users/${id}`, config)
 
  const convertOrder = myOrder.data
 
@@ -1186,6 +1182,6 @@ export async function getServerSideProps({ req, res }) {
   props: {
    address: convertAddress,
    myOrder: convertOrder,
-  }, // will be passed to the page component as props
+  },
  }
 }
