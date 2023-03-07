@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 export default function MyProfile(props) {
  const { profile, address, myOrder } = props;
  const router = useRouter()
- console.log(profile?.data?.[0])
+ // console.log(profile?.data?.[0])
 
  // data from redux
  const data = useSelector((state) => state.profile);
@@ -737,7 +737,7 @@ export default function MyProfile(props) {
            </div>
           </div>
 
-          {allAddress.map((item, key) => {
+          {allAddress?.map((item, key) => {
            return (
             <React.Fragment key={key}>
              <div className="mt-2">
@@ -1170,7 +1170,6 @@ export async function getServerSideProps({ req, res }) {
 
  const config = {
   headers: {
-   "Content-Type": "multipart/form-data",
    Authorization: `Bearer ${token}`,
   },
  };
@@ -1187,13 +1186,13 @@ export async function getServerSideProps({ req, res }) {
  const address = await axios.get(
   `${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${id}`,
   config
- )
+ );
  const convertAddress = address?.data;
 
  // get history order
  const myOrder = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/checkouts/users/${id}`, config)
 
- const convertOrder = myOrder.data
+ const convertOrder = myOrder?.data
 
  return {
   props: {

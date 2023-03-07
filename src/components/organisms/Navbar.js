@@ -205,18 +205,24 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="col">
-                <button className="btn">
-                  <Link href="/order">
+                <Link href={"/order"}>
+                  <button className="btn">
                     <img src={shop.src} />
-                  </Link>
-                </button>
+                  </button>
+                </Link>
                 <button className="btn">
                   <img src={bell.src} />
                 </button>
                 <button className="btn">
                   <img src={mail.src} />
                 </button>
-                <Link href={data?.profile?.payload?.role ? "/profile" : "/profile/seller"}>
+                <Link
+                  href={
+                    data?.profile?.payload?.role
+                      ? "/profile"
+                      : "/profile/seller"
+                  }
+                >
                   <button className="btn">
                     <img
                       src={
