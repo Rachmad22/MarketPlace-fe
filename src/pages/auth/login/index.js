@@ -99,7 +99,7 @@ const Login = () => {
                 </div>
               ) : null}
 
-              <div>
+              <div className={`${styles.loginForm}`}>
                 <div>
                   <LoginForm />
                 </div>
