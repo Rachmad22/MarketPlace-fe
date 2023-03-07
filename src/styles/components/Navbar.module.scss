@@ -1,94 +1,90 @@
-.main{
+.main {
     background: #FFFFFF;
     box-shadow: 0px 6px 40px rgba(173, 173, 173, 0.25)
 }
 
-.blanja{
+.blanja {
     width: 100px;
     height: 100px;
 }
 
-.search{
+.search {
     background: #FFFFFF;
     border: 1px solid #8E8E93;
     border-radius: 23px;
     width: 400px
 }
 
-.sort{
+.sort {
     background: #FFFFFF;
     border: 1px solid #8E8E93;
     border-radius: 12px;
     margin-left: 5px;
     width: 50px
 }
-.sort:hover{
+
+.sort:hover {
     background: #FFFFFF;
     border: 1px solid #8E8E93;
 }
 
-.submit{
+.submit {
     background: #DB3022;
     border-radius: 25px;
     color: white;
     margin-left: 5px;
     width: 70px;
 }
-.submit:hover{
+
+.submit:hover {
     background: #DB3022;
     color: #FFFFFF;
 }
 
-.login{
+.login {
     border: 1px solid #9B9B9B;
     border-radius: 24px;
     margin-left: 10px;
 }
 
-.login:hover{
+.login:hover {
     background: #DB3022;
     border-radius: 25px;
     color: white;
 }
 
 
-.content{
+.content {
     background: #FFFFFF;
     border-radius: 8px;
 
-    .header{
+    .header {
         background: #FFFFFF;
         box-shadow: 0px 0px 6px rgba(53, 50, 50, 0.25);
         border-radius: 8px 8px 0px 0px;
     }
 
-    .body{
+    .body {
         height: 400px;
 
-        .down{
+        .down {
             display: flex;
             justify-content: left;
 
-            .drop{
-                background-color: #DB3022;
-                font-family: 'Metropolis';
-                font-size: 16px;
-                line-height: 16px;
-                color: white;
-            }
+
         }
 
-        .size{
+        .size {
             margin-top: 10px;
 
 
-            h5{
+            h5 {
                 margin-left: -50px;
-                text-align: left;
             }
 
         }
-        .butsize{
+
+        .butsize {
             box-sizing: border-box;
             background: #FFFFFF;
             border: 0.4px solid #9B9B9B;
@@ -97,17 +93,17 @@
             color: #222222;
         }
 
-        .butsize:hover{
+        .butsize:hover {
             background: #DB3022;
             color: #FFFFFF;
         }
 
-        .butsize:active{
+        .butsize:active {
             background: #DB3022;
             color: #FFFFFF;
         }
 
-        .butcat{
+        .butcat {
             box-sizing: border-box;
             border: 0.4px solid #9B9B9B;
             border-radius: 8px;
@@ -116,17 +112,32 @@
             color: #222222;
         }
 
-        .butcat:hover{
+        .butcat:hover {
             background: #DB3022;
             border-radius: 8px;
             color: #FFFFFF;
         }
 
-        .butcat:active{
+        .butcat:active {
             background: #DB3022;
             border-radius: 8px;
             color: white;
         }
     }
 
+}
+
+.drop {
+    background-color: #db3022;
+    font-family: Metropolis;
+    font-size: 16px;
+    line-height: 16px;
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    text-align: start;
+}
+
+.drop::after {
+    margin-left: 88%;
 }
