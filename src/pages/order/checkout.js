@@ -5,12 +5,15 @@ import styles from "@/styles/pages/order/Checkout.module.scss";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Head from "next/head";
 import Gopay from "public/images/payment/Gopay.png";
 import Ovo from "public/images/payment/Ovo.png";
 import Dana from "public/images/payment/Dana.png";
+import * as checkoutReducer from "@/stores/reducer/checkout";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 export default function Checkout() {
   const [orderProduct, setOrderProduct] = React.useState([]);
@@ -25,24 +28,34 @@ export default function Checkout() {
     React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [getAddress, setGetAddress] = React.useState([]);
-  const [chooseAddress, setChooseAddress] = React.useState(false);
+  const [chooseAddress, setChooseAddress] = React.useState(0);
   //form payment
   const [payment, setPayment] = React.useState(null);
   const [checkPay, setCheckPay] = React.useState();
 
+  const [typePayment, setTypePayment] = React.useState(0);
+
+  const router = useRouter();
+
+  const dispatch = useDispatch();
+
   const totalPrice = () => {
     let totalOrder = 0;
 
-    orderProduct.map((item, key) => {
-      const total = item?.price * item?.qty;
-      totalOrder += total;
-    });
+    orderProduct
+      .filter((parentItem) =>
+        dataCheckouts?.data?.includes(parentItem.orders_id)
+      )
+      .map((item, key) => {
+        const total = item?.price * item?.qty;
+        totalOrder += total;
+      });
 
     return totalOrder;
   };
 
   const totalWithDelivery = () => {
-    let totalDelivery = 10000;
+    let totalDelivery = 10;
 
     return totalDelivery + totalPrice();
   };
@@ -57,7 +70,6 @@ export default function Checkout() {
           Authorization: `Bearer ${token}`,
         },
       };
-      // console.log(name)
       await axios.post(
         `/api/addAddress`,
         {
@@ -82,31 +94,56 @@ export default function Checkout() {
           error?.response?.data?.message?.photo?.message ??
           "Something wrong in our server"
       );
-      // console.log(error.response)
     }
   };
 
-  const handlePayment = (type_payment, cost, shipping_cost) => {
+  const handlePayment = (cbtotalCost) => {
+    const itemCheckouts = orderProduct
+      .filter((parentItem) =>
+        dataCheckouts?.data?.includes(parentItem.orders_id)
+      )
+      .map((item, key) => {
+        return {
+          product_id: item?.product_id,
+          qty: item?.qty,
+          price: item?.price,
+        };
+      });
+
     setIsLoading(true);
     const token = data?.token?.payload;
 
+    const total = cbtotalCost;
+
+    const postData = {
+      type_payment: typePayment,
+      address_id: dataCheckouts?.address,
+      cost: parseInt(total),
+      shipping_cost: 10,
+      status: 0,
+      item_checkouts: itemCheckouts,
+    };
+
     const config = {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     };
+
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/payment`, config)
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/payments`, postData, config)
       .then((res) => {
-        console.log(res);
+        Swal.fire("The product was successfully checkout", "", "success");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  console.log(handlePayment);
+
   const data = useSelector((state) => state.profile);
+
+  const dataCheckouts = useSelector((state) => state.checkout);
+
   React.useEffect(() => {
     const token = data.token.payload;
     const config = {
@@ -138,6 +175,7 @@ export default function Checkout() {
         Authorization: `Bearer ${token}`,
       },
     };
+
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${data.profile.payload.id}`,
@@ -145,12 +183,19 @@ export default function Checkout() {
       )
       .then((res) => {
         setGetAddress(res.data.data);
-        console.log(setGetAddress);
+        const address = res.data.data;
+        const primaryAddress = address.filter(
+          (value) => value.is_primary === true
+        );
+        setChooseAddress(primaryAddress.map((item) => item.id)?.[0]);
+        dispatch(
+          checkoutReducer.setCheckoutAddress({
+            address: primaryAddress.map((item) => item.id)?.[0],
+          })
+        );
       })
       .catch((err) => console.log(err));
   }, []);
-
-  console.log(total);
   return (
     <div>
       <Head>
@@ -159,7 +204,7 @@ export default function Checkout() {
       <Navbar />
 
       <main className={styles.main}>
-        <div className="container ">
+        <div className="container">
           <div className={styles.content}>
             <h2>Checkout</h2>
             <div class={`row ${styles.bot}`}>
@@ -169,19 +214,27 @@ export default function Checkout() {
                   className={`row justify-content-between align-items-center ${styles.all}`}
                 >
                   <div className="container">
-                    <div className={styles.add}>
-                      <h6>{getAddress?.[0]?.recipient_name}</h6>
-                      <p>
-                        {`${getAddress?.[0]?.address_alias} ${getAddress?.[0]?.street} ${getAddress?.[0]?.city} ${getAddress?.[0]?.postal_code}  `}
-                      </p>
-                      <button
-                        className={styles.choose}
-                        data-bs-toggle="modal"
-                        data-bs-target="#address"
-                      >
-                        <p>Choose another address</p>
-                      </button>
-                    </div>
+                    {getAddress
+                      .filter((value) => value.id === dataCheckouts?.address)
+                      .map((val) => {
+                        return (
+                          <>
+                            <div key={val.id} className={styles.add}>
+                              <h6>{val?.recipient_name}</h6>
+                              <p>
+                                {`${val?.address_alias} ${val?.street} ${val?.city} ${val?.postal_code}  `}
+                              </p>
+                              <button
+                                className={styles.choose}
+                                data-bs-toggle="modal"
+                                data-bs-target="#address"
+                              >
+                                <p>Choose another address</p>
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })}
                   </div>
                 </div>
                 {/* <!-- Modal --> */}
@@ -360,6 +413,7 @@ export default function Checkout() {
                               </div>
                             </div>
                           </div>
+
                           {getAddress?.map((item, key) => {
                             return (
                               <div key={key} className={styles.change}>
@@ -371,8 +425,14 @@ export default function Checkout() {
                                   </p>
                                   <button
                                     className="btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#changeAddress"
+                                    onClick={() => {
+                                      setChooseAddress(item?.id);
+                                      dispatch(
+                                        checkoutReducer.setCheckoutAddress({
+                                          address: item?.id,
+                                        })
+                                      );
+                                    }}
                                   >
                                     Change Address
                                   </button>
@@ -380,21 +440,6 @@ export default function Checkout() {
                               </div>
                             );
                           })}
-                          {/* <div className={styles.change}>
-                            <div className={styles.changeAdd}>
-                              <h6>{getAddress?.[2]?.recipient_name}</h6>
-                              <p>
-                                {`${getAddress?.[2]?.address_alias} ${getAddress?.[2]?.street} ${getAddress?.[2]?.city} ${getAddress?.[2]?.postal_code}`}
-                              </p>
-                              <button
-                                className="btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#changeAddress"
-                              >
-                                Change Address
-                              </button>
-                            </div>
-                          </div> */}
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -405,55 +450,54 @@ export default function Checkout() {
                         >
                           Close
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        {/* <button type="button" class="btn btn-primary">
                           Save changes
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>
                 </div>
+
+                {/* components item checkouts */}
                 <div className={styles.box}>
-                  {orderProduct.map((item, key) => (
-                    <div class={`row align-items-center ${styles.item}`}>
-                      <div class="col-7">
-                        {/* <div class="form-check">
-                          <input
-                            class={`form-check-input ${styles.form}`}
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexCheckDefault"
-                          > */}
-                        <div class="row">
+                  {orderProduct
+                    .filter((parentItem) =>
+                      dataCheckouts?.data?.includes(parentItem.orders_id)
+                    )
+                    .map((item, key) => {
+                      return (
+                        <div
+                          key={key}
+                          class={`row align-items-center ${styles.item}`}
+                        >
+                          <div class="col-7">
+                            <div class="row">
+                              <div class="col">
+                                <img
+                                  src={item?.product_images?.[0]?.image}
+                                  style={{ width: "150px", height: "100px" }}
+                                />
+                              </div>
+                              <div class={`col-6 ${styles.goods}`}>
+                                <h5>{item.product_name}</h5>
+                                <p>{item?.store_name}</p>
+                              </div>
+                            </div>
+                          </div>
                           <div class="col">
-                            <img
-                              src={item?.product_images?.image}
-                              style={{ width: "150px", height: "100px" }}
-                            />
+                            <div class="row">
+                              <div class={`col ${styles.num}`}>
+                                <p>{item?.qty}</p>
+                              </div>
+                            </div>
                           </div>
-                          <div class={`col-6 ${styles.goods}`}>
-                            <h5>{item.product_name}</h5>
-                            <p>{item?.store_name}</p>
-                          </div>
-                        </div>
-                        {/* </label>
-                        </div> */}
-                      </div>
-                      <div class="col">
-                        <div class="row">
-                          <div class={`col ${styles.num}`}>
-                            <p>{item.qty}</p>
+                          <div class={`col ${styles.price}`}>
+                            <p>{item?.price}</p>
                           </div>
                         </div>
-                      </div>
-                      <div class={`col ${styles.price}`}>
-                        <p>{item.price}</p>
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    })}
+
                   {/* <div class={`row align-items-center ${styles.item}`}>
                     <div class="col-7">
                       <div class="form-check">
@@ -488,6 +532,8 @@ export default function Checkout() {
                   </div> */}
                 </div>
               </div>
+
+              {/* components total checkouts price */}
               <div className="col-4">
                 <div className={styles.detail}>
                   <div className="container">
@@ -509,7 +555,7 @@ export default function Checkout() {
                         <p class={styles.text}>Delivery</p>
                       </div>
                       <div class="col-4">
-                        <p class={styles.cost}>10000</p>
+                        <p class={styles.cost}>10</p>
                       </div>
                     </div>
                     <hr />
@@ -530,7 +576,7 @@ export default function Checkout() {
                     >
                       Buy
                     </button>
-                    {/* <!-- Modal --> */}
+                    {/* <!-- Modal Payment method--> */}
                     <div
                       class={`modal fade ${styles.modals}`}
                       id="payment"
@@ -570,8 +616,10 @@ export default function Checkout() {
                                     <input
                                       class="form-check-input"
                                       type="checkbox"
-                                      value=""
-                                      id="flexCheckDefault"
+                                      value={1}
+                                      id="flexCheckDefault1"
+                                      checked={typePayment === 1 ? true : false}
+                                      onChange={() => setTypePayment(1)}
                                     />
                                   </div>
                                 </div>
@@ -588,8 +636,10 @@ export default function Checkout() {
                                     <input
                                       class="form-check-input"
                                       type="checkbox"
-                                      value=""
-                                      id="flexCheckDefault"
+                                      value={2}
+                                      id="flexCheckDefault2"
+                                      checked={typePayment === 2 ? true : false}
+                                      onChange={() => setTypePayment(2)}
                                     />
                                   </div>
                                 </div>
@@ -606,8 +656,10 @@ export default function Checkout() {
                                     <input
                                       class="form-check-input"
                                       type="checkbox"
-                                      value=""
-                                      id="flexCheckDefault"
+                                      value={3}
+                                      id="flexCheckDefault3"
+                                      checked={typePayment === 3 ? true : false}
+                                      onChange={() => setTypePayment(3)}
                                     />
                                   </div>
                                 </div>
@@ -635,7 +687,7 @@ export default function Checkout() {
                                   <p class={styles.text}>Delivery</p>
                                 </div>
                                 <div class="col-4">
-                                  <p class={styles.cost}>10000</p>
+                                  <p class={styles.cost}>10</p>
                                 </div>
                               </div>
                             </div>
@@ -650,7 +702,11 @@ export default function Checkout() {
                                   </p>
                                 </div>
                                 <div class="col-4 offset-3">
-                                  <button type="button" class="btn btn-primary">
+                                  <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onClick={() => handlePayment(totalPrice())}
+                                  >
                                     Save changes
                                   </button>
                                 </div>

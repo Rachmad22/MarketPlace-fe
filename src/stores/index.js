@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import profile from "./reducer/profile";
 import login from "./reducer/login";
 import register from "./reducer/register";
+import checkout from "./reducer/checkout";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   profile,
   login,
   register,
+  checkout,
 });
 
 const persistConfig = {
