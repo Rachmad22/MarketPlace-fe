@@ -269,20 +269,30 @@
     }
 }
 
+.butAdd{
+    border: 1px dashed #9B9B9B;
+    border-radius: 8px;
+    font-family: 'Metropolis';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 18px;
+    color:#222222 ;
+    width: 450px;
+    height: 70px;
+}
+
+.submit {
+    width: 100px;
+    height: 36px;
+  }
+
+  .submit:hover {
+    background-color: #DB3022;
+  }
+
 .modalAddress{
 
-    .butAdd{
-        border: 1px dashed #9B9B9B;
-        border-radius: 8px;
-        font-family: 'Metropolis';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 18px;
-        color: #9B9B9B;
-        width: 450px;
-        height: 70px;
-    }
 
     .change{
         background: #FFFFFF;

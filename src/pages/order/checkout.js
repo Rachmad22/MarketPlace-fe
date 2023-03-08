@@ -30,10 +30,12 @@ export default function Checkout() {
   const [getAddress, setGetAddress] = React.useState([]);
   const [chooseAddress, setChooseAddress] = React.useState(0);
   //form payment
-  const [payment, setPayment] = React.useState(null);
-  const [checkPay, setCheckPay] = React.useState();
-
   const [typePayment, setTypePayment] = React.useState(0);
+
+  const [isErrorAdd, setIsErrorAdd] = React.useState(false);
+  const [isSuccessAdd, setIsSuccessAdd] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const [success, setSuccess] = React.useState(null);
 
   const router = useRouter();
 
@@ -60,18 +62,24 @@ export default function Checkout() {
     return totalDelivery + totalPrice();
   };
 
+  // add address
+  const dataAddress = useSelector((state) => state.profile);
+
+  const token = dataAddress?.token?.payload;
+  const profileUser = dataAddress?.profile?.payload;
+  const id = profileUser?.id;
   const handleAddAddress = async () => {
     try {
       setIsLoading(true);
 
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       };
-      await axios.post(
-        `/api/addAddress`,
+      const add = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/addresses`,
         {
           address_alias,
           recipient_name,
@@ -79,20 +87,21 @@ export default function Checkout() {
           city,
           postal_code,
           recipient_phone_number,
+          is_primary: true,
+          user_id: id,
         },
         config
       );
       setIsLoading(false);
       setError(null);
+      setIsSuccessAdd(true);
+
+      setSuccess(add?.data?.message);
     } catch (error) {
       setIsLoading(false);
+      setIsErrorAdd(true);
       setError(
-        error?.response?.data?.message ??
-          error?.response?.data?.message?.email?.message ??
-          error?.response?.data?.message?.name?.message ??
-          error?.response?.data?.message?.phone_number?.message ??
-          error?.response?.data?.message?.photo?.message ??
-          "Something wrong in our server"
+        error?.response?.data?.message ?? "Something wrong in our server"
       );
     }
   };
@@ -217,6 +226,164 @@ export default function Checkout() {
                   className={`row justify-content-between align-items-center ${styles.all}`}
                 >
                   <div className="container">
+                    <div className="d-flex justify-content-center mt-3">
+                      <button
+                        className={styles.butAdd}
+                        data-bs-toggle="modal"
+                        data-bs-target="#addAddress1"
+                      >
+                        Add New Address
+                      </button>
+                    </div>
+                    <div
+                      class="modal fade"
+                      id="addAddress1"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header mx-auto">
+                            <h1 class="modal-title fs-3" id="exampleModalLabel">
+                              Add New Address
+                            </h1>
+                          </div>
+                          <div class="modal-body">
+                            <div className="row">
+                              <div className="col-12">
+                                <div class="mb-3">
+                                  {isSuccessAdd ? (
+                                    <div className="d-flex justify-content-center">
+                                      <div
+                                        className="alert alert-success d-flex justify-content-center"
+                                        role="alert"
+                                        style={{ width: "75%" }}
+                                      >
+                                        {success}
+                                      </div>
+                                    </div>
+                                  ) : null}
+
+                                  {isErrorAdd ? (
+                                    <div className="d-flex justify-content-center">
+                                      <div
+                                        className="alert alert-danger d-flex justify-content-center"
+                                        role="alert"
+                                        style={{ width: "75%" }}
+                                      >
+                                        {error}
+                                      </div>
+                                    </div>
+                                  ) : null}
+
+                                  <label
+                                    for="exampleFormControlTextarea1"
+                                    class="form-label"
+                                  >
+                                    Save address as (ex: home address, office
+                                    address)
+                                  </label>
+                                  <input
+                                    class="form-control"
+                                    id="exampleFormControlTextarea1"
+                                    rows="3"
+                                    placeholder="Home"
+                                    onChange={(e) =>
+                                      setAddress_alias(e.target.value)
+                                    }
+                                  />
+                                </div>
+                                <div className="row">
+                                  <div className="col-6">
+                                    <label for="name" className="form-label">
+                                      Recipient&apos;s name
+                                    </label>
+                                    <input
+                                      className="form-control"
+                                      id="name"
+                                      type="text"
+                                      onChange={(e) =>
+                                        setRecipient_name(e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                  <div className="col-6">
+                                    <label for="phone" className="form-label">
+                                      Recipient&apos;s phone number
+                                    </label>
+                                    <input
+                                      className="form-control"
+                                      id="phone"
+                                      type="number"
+                                      onChange={(e) =>
+                                        setRecipient_phone_number(
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  <div className="col-6">
+                                    <label for="address" className="form-label">
+                                      Address
+                                    </label>
+                                    <input
+                                      className="form-control"
+                                      id="address"
+                                      type="text"
+                                      onChange={(e) =>
+                                        setStreet(e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                  <div className="col-6">
+                                    <label for="post" className="form-label">
+                                      Postal code
+                                    </label>
+                                    <input
+                                      className="form-control"
+                                      id="post"
+                                      type="text"
+                                      onChange={(e) =>
+                                        setPostal_code(e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                  <div className="col-6">
+                                    <label for="city" className="form-label">
+                                      City or subdistric
+                                    </label>
+                                    <input
+                                      className="form-control"
+                                      id="city"
+                                      type="text"
+                                      onChange={(e) => setCity(e.target.value)}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button
+                                  type="button"
+                                  class={`btn btn-outline-dark rounded-5 ${styles.submit}`}
+                                  data-bs-dismiss="modal"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  type="button"
+                                  class={`btn btn-primary rounded-5 ${styles.submit}`}
+                                  onClick={handleAddAddress}
+                                  disabled={isLoading}
+                                >
+                                  {isLoading ? "Loading..." : "Save"}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     {getAddress
                       .filter((value) => value.id === dataCheckouts?.address)
                       .map((val) => {
@@ -263,15 +430,15 @@ export default function Checkout() {
                       </div>
                       <div class="modal-body">
                         <div className="container">
-                          <button
+                          {/* <button
                             className={styles.butAdd}
                             data-bs-toggle="modal"
                             data-bs-target="#addAddress"
                           >
                             Add New Address
-                          </button>
+                          </button> */}
                           {/* <!-- Modal --> */}
-                          <div
+                          {/* <div
                             class="modal fade"
                             id="addAddress"
                             tabindex="-1"
@@ -415,7 +582,7 @@ export default function Checkout() {
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
 
                           {getAddress?.map((item, key) => {
                             return (
