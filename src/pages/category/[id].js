@@ -96,7 +96,6 @@ export const getServerSideProps = async (context) => {
     props: {
       product: convert,
     },
-    revalidate: 10,
   };
 };
 

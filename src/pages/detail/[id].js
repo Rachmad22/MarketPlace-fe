@@ -542,7 +542,6 @@ export const getServerSideProps = async (context) => {
       product: convertProduct,
       products: convertProducts,
     },
-    revalidate: 10,
   };
 };
 
