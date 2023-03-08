@@ -6,10 +6,12 @@ import styles from "@/styles/pages/order/MyBag.module.scss";
 import jacket from "public/images/jacket.png";
 import Head from "next/head";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { BsTrash } from "react-icons/bs";
+import { useRouter } from "next/router";
+import * as checkoutReducer from "@/stores/reducer/checkout";
 
 const MyBag = () => {
   const [orderProduct, setOrderProduct] = useState([]);
@@ -18,8 +20,9 @@ const MyBag = () => {
   const [selectAllOrder, setSelectAllOrder] = useState(false);
   const [selectOrder, setSelectOrder] = useState(false);
   const [selectOrderList, setSelectOrderList] = useState([]);
-
   const data = useSelector((state) => state.profile);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(true);
@@ -78,6 +81,7 @@ const MyBag = () => {
       .then((res) => {
         setIsLoading(false);
         Swal.fire("The product was successfully removed", "", "success");
+        refreshPage();
       })
       .catch((err) => {
         setIsLoading(false);
@@ -114,6 +118,7 @@ const MyBag = () => {
           confirmButtonText: "Ok",
           background: "#ffffff",
         });
+        refreshPage();
       })
       .catch((err) => {
         setIsLoading(false);
@@ -453,7 +458,6 @@ const MyBag = () => {
                     </div>
                   </>
                 ))}
-
               </div>
               <div className="col-4">
                 <div className={styles.detail}>
@@ -470,12 +474,34 @@ const MyBag = () => {
 
                       <div class="col-3">
                         <p class={styles.cost}>$ {totalPrice()}</p>
-
                       </div>
                     </div>
                   </div>
                   <div className="text-center">
-                    <button className={`btn ${styles.buy}`}>Buy</button>
+                    <button
+                      className={`btn ${styles.buy}`}
+                      onClick={() => {
+                        if (selectOrderList.length < 1) {
+                          Swal.fire({
+                            title: "Error",
+                            text: "At least you should have 1 item checkout!",
+                            icon: "error",
+                            confirmButtonText: "Okay",
+                            confirmButtonColor: "#DB3022",
+                          });
+                        } else {
+                          const checkouts = selectOrderList.map((item) => {
+                            return orderProduct[item].orders_id;
+                          });
+                          dispatch(
+                            checkoutReducer.setCheckout({ data: checkouts })
+                          );
+                          router.push("/order/checkout");
+                        }
+                      }}
+                    >
+                      Buy
+                    </button>
                   </div>
                 </div>
               </div>

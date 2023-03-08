@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import blanjaLogo from "public/images/blanja-logo.svg";
 import Head from "next/head";
 import Image from "next/image";
@@ -21,6 +21,15 @@ const Register = () => {
   const data = useSelector((state) => state.register);
 
   const router = useRouter();
+
+  const profile = useSelector((state) => state.profile)
+
+  useEffect(() => {
+    const isLogin = profile?.profile?.payload;
+    if (isLogin) {
+      router.replace("/");
+    }
+  }, []);
 
   const submitRegister = () => {
     setIsLoading(true);

@@ -22,6 +22,15 @@ const Login = () => {
   const router = useRouter();
 
   const data = useSelector((state) => state.login);
+  const profile = useSelector((state) => state.profile)
+
+  useEffect(() => {
+    const isLogin = profile?.profile?.payload;
+    if (isLogin) {
+      router.replace("/");
+    }
+  }, []);
+
   const loginSubmit = () => {
     setIsLoading(true);
     axios
