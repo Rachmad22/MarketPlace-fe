@@ -281,6 +281,8 @@ const DetailProduct = (props) => {
                         color: "white",
                         height: "35px",
                         width: "35px",
+                        paddingTop: "3px",
+                        paddingLeft: "12px",
                       }}
                     >
                       -
