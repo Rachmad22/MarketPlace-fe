@@ -120,7 +120,7 @@ export default function Checkout() {
       address_id: dataCheckouts?.address,
       cost: parseInt(total),
       shipping_cost: 10,
-      status: 0,
+      status: 1,
       item_checkouts: itemCheckouts,
     };
 
