@@ -174,38 +174,18 @@ const DetailProduct = (props) => {
                 <div className="d-flex">
                   <span
                     className={`me-2 ${styles.colorSelection} ${
-                      colorSelected === "red" ? styles.activeColor : ""
+                      colorSelected === "red" ? styles.activeColorBlack : ""
                     }`}
                     style={{ backgroundColor: "red" }}
                     onClick={() => {
                       setColorSelected("red");
-                    }}
-                  ></span>
-                  <span
-                    className={`me-2 ${styles.colorSelection} ${
-                      colorSelected === "green" ? styles.activeColor : ""
-                    }`}
-                    style={{ backgroundColor: "green" }}
-                    onClick={() => {
-                      setColorSelected("green");
-                    }}
-                  ></span>
-                  <span
-                    className={`me-2 ${styles.colorSelection} ${
-                      colorSelected === "blue" ? styles.activeColor : ""
-                    }`}
-                    style={{ backgroundColor: "blue" }}
-                    onClick={() => {
-                      setColorSelected("blue");
-                    }}
-                  ></span>
-                  <span
-                    className={`me-2 ${styles.colorSelection} ${
-                      colorSelected === "black" ? styles.activeColor : ""
-                    }`}
-                    style={{ backgroundColor: "black" }}
-                    onClick={() => {
-                      setColorSelected("black");
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "This feature is currently under maintenance!",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#DB3022",
+                      });
                     }}
                   ></span>
                   <span
@@ -215,6 +195,61 @@ const DetailProduct = (props) => {
                     style={{ backgroundColor: "yellow" }}
                     onClick={() => {
                       setColorSelected("yellow");
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "This feature is currently under maintenance!",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#DB3022",
+                      });
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "green" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "green" }}
+                    onClick={() => {
+                      setColorSelected("green");
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "This feature is currently under maintenance!",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#DB3022",
+                      });
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "blue" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "blue" }}
+                    onClick={() => {
+                      setColorSelected("blue");
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "This feature is currently under maintenance!",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#DB3022",
+                      });
+                    }}
+                  ></span>
+                  <span
+                    className={`me-2 ${styles.colorSelection} ${
+                      colorSelected === "black" ? styles.activeColor : ""
+                    }`}
+                    style={{ backgroundColor: "black" }}
+                    onClick={() => {
+                      setColorSelected("black");
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "This feature is currently under maintenance!",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#DB3022",
+                      });
                     }}
                   ></span>
                 </div>

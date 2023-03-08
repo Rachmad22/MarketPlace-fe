@@ -53,7 +53,13 @@
 }
 
 .activeColor {
-  border-style: solid;
+  border-style: dashed;
   border-color: #DB3022;
-  border-width: 4px;
+  border-width: 3px;
+}
+
+.activeColorBlack {
+  border-style: dashed;
+  border-color: black;
+  border-width: 3px;
 }
