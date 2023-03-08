@@ -193,7 +193,7 @@ const MyBag = () => {
         Swal.fire({
           title: "Product deleted successfully",
           icon: "success",
-          confirmButtonText: "Okay",
+          confirmButtonText: "OK",
           confirmButtonColor: "#DB3022",
         });
         setTimeout(() => {
@@ -206,7 +206,7 @@ const MyBag = () => {
           title: err.response.data.message,
           text: "Please try again later",
           icon: "error",
-          confirmButtonText: "Okay",
+          confirmButtonText: "OK",
           confirmButtonColor: "#DB3022",
         });
       });
@@ -277,8 +277,12 @@ const MyBag = () => {
                         className={`form-check-label ${styles.label}`}
                         for="flexCheckChecked"
                       >
-                        Select all items{" "}
-                        <span>({orderProduct?.length} items selected)</span>
+                        Select all product{orderProduct?.length > 1 ? "s" : ""}{" "}
+                        <span>
+                          ({orderProduct?.length} product
+                          {orderProduct?.length > 1 ? "s" : ""}{" "}
+                          {!selectAllOrder ? "not selected" : "selected"})
+                        </span>
                       </label>
                     </div>
                   </div>
@@ -307,7 +311,7 @@ const MyBag = () => {
                                 title: "Cancelled",
                                 text: "Your product remains in the cart",
                                 icon: "error",
-                                confirmButtonText: "Okay",
+                                confirmButtonText: "OK",
                                 confirmButtonColor: "#DB3022",
                               });
                             }
@@ -503,7 +507,7 @@ const MyBag = () => {
                             title: "Error",
                             text: "At least you should have 1 item checkout!",
                             icon: "error",
-                            confirmButtonText: "Okay",
+                            confirmButtonText: "OK",
                             confirmButtonColor: "#DB3022",
                           });
                         } else {

@@ -333,14 +333,16 @@ const DetailProduct = (props) => {
                 >
                   {isLoading ? "Loading..." : "Add bag"}
                 </button>
-                <Link href="/order/checkout">
-                  <button
-                    className={`btn ${styles.buyNow}`}
-                    style={{ width: "250px" }}
-                  >
-                    Buy now
-                  </button>
-                </Link>
+                <button
+                  className={`btn ${styles.buyNow}`}
+                  style={{ width: "250px" }}
+                  onClick={() => {
+                    addToCart();
+                    router.replace("/order");
+                  }}
+                >
+                  Buy now
+                </button>
               </div>
             </div>
           </div>
