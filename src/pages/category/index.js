@@ -12,8 +12,6 @@ const Category = (props) => {
     categories: { data },
   } = props;
 
-  console.log(data);
-
   return (
     <div>
       <Head>
@@ -23,7 +21,7 @@ const Category = (props) => {
       <main>
         <div className="container">
           <div>
-            <nav className={`mt-5 ${styles.breadcrumb}`}>
+            <nav className={styles.breadcrumb} style={{ paddingTop: "125px" }}>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link href="/" style={{ color: "grey" }}>
@@ -35,8 +33,8 @@ const Category = (props) => {
             </nav>
           </div>
           <div className="mt-5">
-            <h1>Categories</h1>
-            <div className="row mt-5 mb-5">
+            <h1 className="mb-4">Categories</h1>
+            <div className="row mt-5 pb-5">
               {data?.map((item, key) => {
                 return (
                   <React.Fragment key={key}>

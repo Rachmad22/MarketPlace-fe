@@ -244,7 +244,10 @@ const MyBag = () => {
       </Head>
       <Navbar />
 
-      <main className={styles.main} style={{paddingTop: "130px", paddingBottom: "50px"}}>
+      <main
+        className={styles.main}
+        style={{ paddingTop: "110px", paddingBottom: "50px" }}
+      >
         <div className="container">
           <div className={styles.content}>
             <h2>My Bag</h2>

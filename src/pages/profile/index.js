@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 export default function MyProfile(props) {
   const { profile, address, myOrder } = props;
   const router = useRouter();
-  // console.log(profile?.data?.[0])
 
   // data from redux
   const data = useSelector((state) => state.profile);
@@ -775,7 +774,6 @@ export default function MyProfile(props) {
                       );
                     })}
                   </div>
-
                 </div>
               </div>
             </section>
@@ -872,7 +870,6 @@ export default function MyProfile(props) {
                   <div>
                     {order === 0 &&
                       allItems.map((item, key) => {
-                        console.log(allItems);
                         return (
                           <>
                             <div

@@ -152,7 +152,6 @@ export default function Checkout() {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log(dataCheckouts);
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/users/${data.profile.payload.id}`,
@@ -204,7 +203,10 @@ export default function Checkout() {
       </Head>
       <Navbar />
 
-      <main className={styles.main} style={{paddingTop: "130px", paddingBottom: "50px"}}>
+      <main
+        className={styles.main}
+        style={{ paddingTop: "130px", paddingBottom: "50px" }}
+      >
         <div className="container">
           <div className={styles.content}>
             <h2>Checkout</h2>

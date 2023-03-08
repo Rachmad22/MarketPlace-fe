@@ -20,7 +20,6 @@ const DetailProduct = (props) => {
   } = props;
 
   const dataProduct = product[0];
-  console.log(dataProduct);
   const dataStore = store[0];
   const router = useRouter();
   const {
@@ -49,7 +48,6 @@ const DetailProduct = (props) => {
   const increaseQuantity = () => {
     const plus = quantity + 1;
     setQuantity(plus);
-    console.log(imageSelected);
   };
 
   const addToCart = () => {
@@ -101,10 +99,13 @@ const DetailProduct = (props) => {
         <title>{dataProduct?.product_name} | Blanja</title>
       </Head>
       <Navbar />
-      <main style={{ paddingTop: "100px", paddingBottom: "50px" }}>
-        <div className="container">
+      <main style={{ paddingTop: "120px", paddingBottom: "50px" }}>
+        <div
+          className="container bg-white pb-4 pt-4"
+          style={{ borderRadius: "10px" }}
+        >
           <div>
-            <nav className={`mt-5 ${styles.breadcrumb}`}>
+            <nav className={`ms-3 ${styles.breadcrumb}`}>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link href="/" style={{ color: "grey" }}>
@@ -123,7 +124,7 @@ const DetailProduct = (props) => {
             </nav>
           </div>
           <div className="mt-5 d-flex">
-            <div className="me-5">
+            <div className="me-5 ms-3">
               <div>
                 <img
                   className={styles.bigPhoto}
@@ -270,12 +271,12 @@ const DetailProduct = (props) => {
                 </div>
                 <div className="ms-5">
                   <p>Quantity</p>
-                  <div className="d-flex" style={{ marginTop: "-15px" }}>
+                  <div className="d-flex gap-2" style={{ marginTop: "-15px" }}>
                     <button
                       type="button"
                       className="btn"
                       onClick={decreaseQuantity}
-                      style={{ background: "white" }}
+                      style={{ background: "#DB3022", color: "white" }}
                     >
                       -
                     </button>
@@ -284,6 +285,7 @@ const DetailProduct = (props) => {
                       type="button"
                       className="btn"
                       onClick={increaseQuantity}
+                      style={{ background: "#DB3022", color: "white" }}
                     >
                       +
                     </button>
@@ -318,7 +320,7 @@ const DetailProduct = (props) => {
               </div>
             </div>
           </div>
-          <div className="mt-5">
+          <div className="mt-5 ms-3">
             <h2>Product Information</h2>
             <div className="mt-4">
               <h4>Condition</h4>

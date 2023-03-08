@@ -31,7 +31,7 @@ const CategoryType = (props) => {
       <main>
         <div className="container">
           <div>
-            <nav className={`mt-5 ${styles.breadcrumb}`}>
+            <nav className={styles.breadcrumb} style={{ paddingTop: "125px" }}>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link href="/" style={{ color: "grey" }}>
@@ -69,7 +69,9 @@ const CategoryType = (props) => {
               })}
 
               {dataProduct.length === 0 ? (
-                <h3 className="mb-5 mt-3">Product not found</h3>
+                <h3 className="mt-3" style={{ paddingBottom: "6.6rem" }}>
+                  Product not found
+                </h3>
               ) : null}
             </div>
           </div>

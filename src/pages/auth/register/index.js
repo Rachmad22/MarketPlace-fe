@@ -22,7 +22,7 @@ const Register = () => {
 
   const router = useRouter();
 
-  const profile = useSelector((state) => state.profile)
+  const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
     const isLogin = profile?.profile?.payload;
@@ -63,7 +63,7 @@ const Register = () => {
         <div className="container">
           <div
             className="d-flex justify-content-center"
-            style={{ marginTop: "2.5rem" }}
+            style={{ paddingTop: "50px" }}
           >
             <div>
               <div>

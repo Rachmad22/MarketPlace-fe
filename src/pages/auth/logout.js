@@ -21,12 +21,12 @@ const Logout = () => {
   }, []);
 
   useState(() => {
-
     setTimeout(() => {
       dispatch(profile.setProfile(null));
       dispatch(profile.setToken(null));
-      deleteCookie("profile")
-      deleteCookie("token")
+
+      deleteCookie("profile");
+      deleteCookie("token");
       router.replace("/");
     }, 1500);
   }, []);

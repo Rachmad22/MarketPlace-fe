@@ -25,7 +25,7 @@ const Home = (props) => {
         <title>Home | Blanja</title>
       </Head>
       <Navbar />
-      <main className={styles.main} style={{marginTop: "90px"}}>
+      <main className={styles.main} style={{ marginTop: "90px" }}>
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-xs-3">
@@ -119,7 +119,7 @@ const Home = (props) => {
           <p className="mb-4" style={{ color: "#9B9B9B" }}>
             Find clothes that are trending recently
           </p>
-          <div className="row" style={{ gap: "3.5rem" }}>
+          <div className="row" style={{ gap: "2.8rem" }}>
             {products?.data?.map((item, key) => {
               return (
                 <React.Fragment key={key}>
