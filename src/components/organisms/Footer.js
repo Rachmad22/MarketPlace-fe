@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <>
 
-      <div className={`mt-5 ${styles.main}`}>
+      <div className={` ${styles.main}`}>
         <div class="container text-center">
           <div class="row align-items-center">
             <div class="col-2">

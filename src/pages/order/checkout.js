@@ -204,7 +204,7 @@ export default function Checkout() {
       </Head>
       <Navbar />
 
-      <main className={styles.main}>
+      <main className={styles.main} style={{paddingTop: "130px", paddingBottom: "50px"}}>
         <div className="container">
           <div className={styles.content}>
             <h2>Checkout</h2>
@@ -313,7 +313,7 @@ export default function Checkout() {
                                             for="name"
                                             className="form-label"
                                           >
-                                            Recipient's name
+                                            Recipient&apos;s name
                                           </label>
                                           <input
                                             className="form-control"
@@ -329,7 +329,7 @@ export default function Checkout() {
                                             for="phone"
                                             className="form-label"
                                           >
-                                            Recipient's phone number
+                                            Recipient&apos;s phone number
                                           </label>
                                           <input
                                             className="form-control"

@@ -195,7 +195,7 @@ const Navbar = () => {
               </div>
             </div>
             {!data?.profile?.payload ? (
-              <div className="col-4">
+              <div className="col-3">
                 <Link href="/auth/register">
                   <button className={`btn ${styles.login}`}>Register</button>
                 </Link>
@@ -204,7 +204,7 @@ const Navbar = () => {
                 </Link>
               </div>
             ) : (
-              <div className="col-4">
+              <div className="col-3">
                 <div className="d-flex align-items-center">
                   <Link href={"/order"}>
                     <button className="btn">

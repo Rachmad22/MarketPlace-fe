@@ -101,7 +101,7 @@ const DetailProduct = (props) => {
         <title>{dataProduct?.product_name} | Blanja</title>
       </Head>
       <Navbar />
-      <main style={{ marginTop: "140px" }}>
+      <main style={{ paddingTop: "100px", paddingBottom: "50px" }}>
         <div className="container">
           <div>
             <nav className={`mt-5 ${styles.breadcrumb}`}>
@@ -499,7 +499,7 @@ const DetailProduct = (props) => {
                   You&apos;ve never seen it before!
                 </p>
               </div>
-              <div className="row" style={{ gap: "3.5rem" }}>
+              <div className="row" style={{ gap: "2.8rem" }}>
                 {products?.data?.map((item, key) => {
                   return (
                     <React.Fragment key={key}>

@@ -649,7 +649,7 @@ export default function MyProfile(props) {
                                 <div className="row">
                                   <div className="col-6">
                                     <label for="name" className="form-label">
-                                      Recipient's name
+                                      Recipient&apos;s name
                                     </label>
                                     <input
                                       className="form-control"
@@ -662,7 +662,7 @@ export default function MyProfile(props) {
                                   </div>
                                   <div className="col-6">
                                     <label for="phone" className="form-label">
-                                      Recipient's phone number
+                                      Recipient&apos;s phone number
                                     </label>
                                     <input
                                       className="form-control"

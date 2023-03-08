@@ -244,8 +244,8 @@ const MyBag = () => {
       </Head>
       <Navbar />
 
-      <main className={styles.main}>
-        <div className="container" style={{ marginTop: "120px" }}>
+      <main className={styles.main} style={{paddingTop: "130px", paddingBottom: "50px"}}>
+        <div className="container">
           <div className={styles.content}>
             <h2>My Bag</h2>
             <div className={`row ${styles.bot}`}>
