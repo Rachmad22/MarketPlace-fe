@@ -775,6 +775,7 @@ export default function MyProfile(props) {
                       );
                     })}
                   </div>
+
                 </div>
               </div>
             </section>
