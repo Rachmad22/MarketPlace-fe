@@ -96,8 +96,8 @@ export const getServerSideProps = async (context) => {
     props: {
       product: convert,
     },
+    revalidate: 10,
   };
-  revalidate: 10;
 };
 
 export default CategoryType;

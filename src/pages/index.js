@@ -173,8 +173,8 @@ export const getStaticProps = async (context) => {
       categories: convertCategories,
       products: convertProducts,
     },
+    revalidate: 10,
   };
-  revalidate: 3600;
 };
 
 export default Home;

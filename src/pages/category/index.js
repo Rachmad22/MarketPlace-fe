@@ -80,8 +80,8 @@ export const getStaticProps = async (context) => {
     props: {
       categories: convert,
     },
+    revalidate: 10,
   };
-  revalidate: 10;
 };
 
 export default Category;
