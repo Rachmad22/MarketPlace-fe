@@ -8,6 +8,8 @@ import Footer from "@/components/organisms/Footer";
 import { useSelector } from "react-redux";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
+import Error from 'next/error'
+
 
 export default function MyProfile(props) {
   const { profile, address, myOrder } = props;
@@ -105,7 +107,7 @@ export default function MyProfile(props) {
 
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       };
@@ -1227,3 +1229,5 @@ export async function getServerSideProps({ req, res }) {
     },
   };
 }
+
+

@@ -39,13 +39,13 @@ const Navbar = () => {
                 <button
                   className={`btn ${styles.sort}`}
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
+                  data-bs-target="#exampleModalsort"
                 >
                   <img src={sort.src} />
                 </button>
                 <div
                   class="modal fade"
-                  id="exampleModal"
+                  id="exampleModalsort"
                   tabindex="-1"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
