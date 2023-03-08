@@ -307,14 +307,24 @@ const DetailProduct = (props) => {
                 </div>
               </div>
               <div className="d-flex">
-                <Link href="/chat">
-                  <button
-                    className={`btn ${styles.chat} me-1`}
-                    style={{ width: "150px" }}
-                  >
-                    Chat
-                  </button>
-                </Link>
+                <button
+                  className={`btn ${styles.chat} me-1`}
+                  style={{ width: "150px" }}
+                  disabled={isLoading}
+                  onClick={() => {
+                    setIsLoading(true);
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "This feature is currently under maintenance!",
+                      confirmButtonText: "OK",
+                      confirmButtonColor: "#DB3022",
+                    });
+                    setIsLoading(false);
+                  }}
+                >
+                  {isLoading ? "Loading..." : "Chat"}
+                </button>
                 <button
                   className={`btn ${styles.chat} me-2`}
                   style={{ width: "150px" }}

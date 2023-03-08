@@ -416,10 +416,7 @@ const MyBag = () => {
                       </div>
                       <div class="col">
                         <div class="row">
-                          <div
-                            className="d-flex"
-                            style={{ marginTop: "-15px" }}
-                          >
+                          <div className="d-flex">
                             <button
                               type="button"
                               className="btn"
@@ -429,12 +426,21 @@ const MyBag = () => {
                                   orderProduct?.[key]?.orders_id
                                 );
                               }}
-                              style={{ background: "white" }}
+                              style={{
+                                background: "#DB3022",
+                                color: "white",
+                                height: "35px",
+                                width: "35px",
+                                paddingTop: "3px",
+                                paddingLeft: "12px",
+                              }}
                               disabled={isLoading}
                             >
                               -
                             </button>
-                            <p className="mt-3">{item?.qty}</p>
+                            <p className="mx-2" style={{ marginTop: "5px" }}>
+                              {item?.qty}
+                            </p>
                             <button
                               type="button"
                               className="btn"
@@ -445,6 +451,14 @@ const MyBag = () => {
                                 );
                               }}
                               disabled={isLoading}
+                              style={{
+                                background: "#DB3022",
+                                color: "white",
+                                height: "35px",
+                                width: "35px",
+                                paddingTop: "3px",
+                                paddingLeft: "12px",
+                              }}
                             >
                               +
                             </button>
