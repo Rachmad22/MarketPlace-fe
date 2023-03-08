@@ -219,7 +219,7 @@ const DetailProduct = (props) => {
                   ></span>
                 </div>
               </div>
-              <div className="d-flex mb-5">
+              <div className="d-flex" style={{ marginBottom: "30px" }}>
                 <div>
                   <p className="me-5">Size</p>
                   <div>
@@ -271,21 +271,31 @@ const DetailProduct = (props) => {
                 </div>
                 <div className="ms-5">
                   <p>Quantity</p>
-                  <div className="d-flex gap-2" style={{ marginTop: "-15px" }}>
+                  <div className="d-flex gap-2">
                     <button
                       type="button"
                       className="btn"
                       onClick={decreaseQuantity}
-                      style={{ background: "#DB3022", color: "white" }}
+                      style={{
+                        background: "#DB3022",
+                        color: "white",
+                        height: "35px",
+                        width: "35px",
+                      }}
                     >
                       -
                     </button>
-                    <p className="mt-3">{quantity}</p>
+                    <p style={{ marginTop: "5px" }}>{quantity}</p>
                     <button
                       type="button"
                       className="btn"
                       onClick={increaseQuantity}
-                      style={{ background: "#DB3022", color: "white" }}
+                      style={{
+                        background: "#DB3022",
+                        color: "white",
+                        height: "35px",
+                        width: "35px",
+                      }}
                     >
                       +
                     </button>
