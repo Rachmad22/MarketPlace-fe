@@ -152,6 +152,7 @@ export default function Checkout() {
         Authorization: `Bearer ${token}`,
       },
     };
+    console.log(dataCheckouts);
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/users/${data.profile.payload.id}`,

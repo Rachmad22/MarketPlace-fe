@@ -216,27 +216,73 @@ const Navbar = () => {
                 <button className="btn">
                   <img src={mail.src} />
                 </button>
-                <Link
-                  href={
-                    data?.profile?.payload?.role
-                      ? "/profile"
-                      : "/profile/seller"
-                  }
-                >
-                  <button className="btn">
+
+                <div class="dropdown">
+                  <button
+                    className="btn"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {/* <Link
+                    href={
+                      data?.profile?.payload?.role
+                        ? "/profile"
+                        : "/profile/seller"
+                    }
+                  > */}
                     <img
                       src={
                         data?.profile?.payload?.photo ||
                         "https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg"
                       }
                       style={{
-                        width: "50px",
-                        height: "50px",
+                        width: "40px",
+                        height: "40px",
                         borderRadius: "50%",
                       }}
                     />
+                    {/* </Link> */}
                   </button>
-                </Link>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <Link
+                        href={
+                          "/profile"
+                          // data?.profile?.payload?.role
+                          //   ? "/profile"
+                          //   : "/profile/seller"
+                        }
+                      >
+                        <button class="dropdown-item">Profile</button>
+                      </Link>
+                    </li>
+                    {!data?.profile?.payload?.role && (
+                      <li>
+                        <Link href={"/profile/seller"}>
+                          <button class="dropdown-item" href="#">
+                            Store
+                          </button>
+                        </Link>
+                      </li>
+                    )}
+                    {/* <li>
+                      <Link href={
+                        "/profile/seller"
+                      }>
+                        <button class="dropdown-item" href="#">
+                          Store
+                        </button>
+                      </Link>
+                    </li> */}
+                    <li>
+                      <Link href={"/auth/logout"}>
+                        <button class="dropdown-item" href="#">
+                          Logout
+                        </button>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             )}
           </div>

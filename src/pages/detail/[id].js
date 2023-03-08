@@ -101,7 +101,7 @@ const DetailProduct = (props) => {
         <title>{dataProduct?.product_name} | Blanja</title>
       </Head>
       <Navbar />
-      <main style={{marginTop: "140px"}}>
+      <main style={{ marginTop: "140px" }}>
         <div className="container">
           <div>
             <nav className={`mt-5 ${styles.breadcrumb}`}>
@@ -116,7 +116,9 @@ const DetailProduct = (props) => {
                     Category
                   </Link>
                 </li>
-                <li className="breadcrumb-item active">T-Shirt</li>
+                <li className="breadcrumb-item active">
+                  {dataProduct?.category_name}
+                </li>
               </ol>
             </nav>
           </div>
@@ -305,7 +307,7 @@ const DetailProduct = (props) => {
                 >
                   {isLoading ? "Loading..." : "Add bag"}
                 </button>
-                <Link href="/order">
+                <Link href="/order/checkout">
                   <button
                     className={`btn ${styles.buyNow}`}
                     style={{ width: "250px" }}

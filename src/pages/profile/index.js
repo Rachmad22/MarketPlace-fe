@@ -1187,6 +1187,7 @@ export default function MyProfile(props) {
 export async function getServerSideProps({ req, res }) {
   // get data from cookie
   const token = getCookie("token", { req, res });
+  // console.log(getCookie("profile"));
   const id = JSON.parse(getCookie("profile", { req, res })).id;
 
   const config = {
