@@ -22,10 +22,11 @@ const Login = () => {
   const router = useRouter();
 
   const data = useSelector((state) => state.login);
-  const profile = useSelector((state) => state.profile)
+
+  const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
-    const isLogin = profile?.profile?.payload;
+    const isLogin = profile.profile.payload;
     if (isLogin) {
       router.replace("/");
     }

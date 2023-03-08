@@ -20,7 +20,6 @@ const DetailProduct = (props) => {
   } = props;
 
   const dataProduct = product[0];
-  console.log(dataProduct);
   const dataStore = store[0];
   const router = useRouter();
   const {
@@ -49,7 +48,6 @@ const DetailProduct = (props) => {
   const increaseQuantity = () => {
     const plus = quantity + 1;
     setQuantity(plus);
-    console.log(imageSelected);
   };
 
   const addToCart = () => {
