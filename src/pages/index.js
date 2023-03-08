@@ -137,7 +137,7 @@ const Home = (props) => {
           <p className="mb-4" style={{ color: "#9B9B9B" }}>
             You&apos;ve never seen it before
           </p>
-          <div className="row" style={{ gap: "3.5rem" }}>
+          <div className="row" style={{ gap: "2.8rem" }}>
             {products?.data?.map((item, key) => {
               return (
                 <React.Fragment key={key}>
