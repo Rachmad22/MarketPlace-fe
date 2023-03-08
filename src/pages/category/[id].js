@@ -29,9 +29,12 @@ const CategoryType = (props) => {
       </Head>
       <Navbar />
       <main>
-        <div className="container" style={{ paddingBottom: "55px" }}>
+        <div
+          className="container"
+          style={{ paddingTop: "125px", paddingBottom: "55px" }}
+        >
           <div>
-            <nav className={styles.breadcrumb} style={{ paddingTop: "125px" }}>
+            <nav className={styles.breadcrumb}>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
                   <Link href="/" style={{ color: "grey" }}>
