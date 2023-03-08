@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "@/styles/pages/Profile.module.scss";
 import Link from "next/link";
 import axios from "axios";
@@ -10,8 +10,9 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 
 export default function MyProfile(props) {
-  const { address, myOrder } = props;
+  const { profile, address, myOrder } = props;
   const router = useRouter();
+  // console.log(profile?.data?.[0])
 
   // data from redux
   const data = useSelector((state) => state.profile);
@@ -41,19 +42,21 @@ export default function MyProfile(props) {
   const [isError, setIsError] = React.useState(false);
   const [success, setSuccess] = React.useState(null);
   const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isErrorAdd, setIsErrorAdd] = React.useState(false);
+  const [isSuccessAdd, setIsSuccessAdd] = React.useState(false);
 
   // state for sidebar menu
-  const [isAccount, setIsAccount] = React.useState(false);
+  const [isAccount, setIsAccount] = React.useState(true);
   const [isAddress, setIsAddress] = React.useState(false);
   const [allAddress, setAllAddress] = React.useState(address?.data);
   const [isOrder, setIsOrder] = React.useState(false);
   const [allItems, setAllItems] = React.useState(myOrder?.data);
 
   // data redux
-  const token = data.token.payload;
-  const profileUser = data.profile.payload;
-  const id = data.profile.payload.id;
-  const role = profileUser?.role;
+  const token = data?.token?.payload;
+  const profileUser = data?.profile?.payload;
+  const id = profileUser?.id;
+  // const role = profileUser?.role
 
   // edit profile
   const handleEdit = async () => {
@@ -116,19 +119,19 @@ export default function MyProfile(props) {
           city,
           postal_code,
           recipient_phone_number,
-          is_primary: false,
+          is_primary: true,
           user_id: id,
         },
         config
       );
       setIsLoading(false);
       setError(null);
-      setIsSuccess(true);
+      setIsSuccessAdd(true);
 
       setSuccess(add?.data?.message);
     } catch (error) {
       setIsLoading(false);
-      setIsError(true);
+      setIsErrorAdd(true);
       setError(
         error?.response?.data?.message ?? "Something wrong in our server"
       );
@@ -151,7 +154,7 @@ export default function MyProfile(props) {
                   <Link href="#">
                     <img
                       src={
-                        profileUser?.photo ||
+                        profile?.data?.[0]?.photo ||
                         `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`
                       }
                       alt="profile"
@@ -160,7 +163,7 @@ export default function MyProfile(props) {
                   </Link>
 
                   <div className="m-2">
-                    <h5>{profileUser?.name}</h5>
+                    <h5>{profile?.data?.[0]?.name?.toLocaleUpperCase()}</h5>
                     <div className="text-secondary">
                       <span
                         data-bs-toggle="modal"
@@ -340,7 +343,7 @@ export default function MyProfile(props) {
                                 type="text"
                                 class={`form-control ${style.in}`}
                                 id="exampleInputName"
-                                placeholder={profileUser?.name}
+                                placeholder={profile?.data?.[0]?.name}
                                 onChange={(event) =>
                                   setName(event.target.value)
                                 }
@@ -364,7 +367,7 @@ export default function MyProfile(props) {
                                 class={`form-control ${style.in}`}
                                 id="exampleInputEmail1"
                                 aria-describedby="emailHelp"
-                                placeholder={profileUser?.email}
+                                placeholder={profile?.data?.[0]?.email}
                                 onChange={(event) =>
                                   setEmail(event.target.value)
                                 }
@@ -387,7 +390,7 @@ export default function MyProfile(props) {
                                 type="number"
                                 class={`form-control phone ${style.in}`}
                                 id="exampleFormControlInput1"
-                                placeholder={profileUser?.phone_number}
+                                placeholder={profile?.data?.[0]?.phone_number}
                                 onChange={(event) =>
                                   setPhone_number(event.target.value)
                                 }
@@ -477,7 +480,7 @@ export default function MyProfile(props) {
                       <div className={style.border}>
                         <img
                           src={
-                            profileUser?.photo ||
+                            profile?.data?.[0]?.photo ||
                             `https://st2.depositphotos.com/1006318/5909/v/600/depositphotos_59095493-stock-illustration-profile-icon-male-avatar.jpg`
                           }
                           alt="profile"
@@ -602,7 +605,7 @@ export default function MyProfile(props) {
                             <div className="row">
                               <div className="col-12">
                                 <div class="mb-3">
-                                  {isSuccess ? (
+                                  {isSuccessAdd ? (
                                     <div className="d-flex justify-content-center">
                                       <div
                                         className="alert alert-success d-flex justify-content-center"
@@ -614,7 +617,7 @@ export default function MyProfile(props) {
                                     </div>
                                   ) : null}
 
-                                  {isError ? (
+                                  {isErrorAdd ? (
                                     <div className="d-flex justify-content-center">
                                       <div
                                         className="alert alert-danger d-flex justify-content-center"
@@ -734,7 +737,7 @@ export default function MyProfile(props) {
                       </div>
                     </div>
 
-                    {allAddress.map((item, key) => {
+                    {allAddress?.map((item, key) => {
                       return (
                         <React.Fragment key={key}>
                           <div className="mt-2">
@@ -868,6 +871,7 @@ export default function MyProfile(props) {
                   <div>
                     {order === 0 &&
                       allItems.map((item, key) => {
+                        console.log(allItems);
                         return (
                           <>
                             <div
@@ -1187,7 +1191,6 @@ export default function MyProfile(props) {
 export async function getServerSideProps({ req, res }) {
   // get data from cookie
   const token = getCookie("token", { req, res });
-  // console.log(getCookie("profile"));
   const id = JSON.parse(getCookie("profile", { req, res })).id;
 
   const config = {
@@ -1195,6 +1198,14 @@ export async function getServerSideProps({ req, res }) {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  // get detail user
+  const profile = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
+    config
+  );
+  const convertData = profile?.data;
+
   // get all address
   const address = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/addresses/users/${id}`,
@@ -1208,11 +1219,11 @@ export async function getServerSideProps({ req, res }) {
     config
   );
 
-  const convertOrder = myOrder.data;
-  console.log(convertOrder);
+  const convertOrder = myOrder?.data;
 
   return {
     props: {
+      profile: convertData,
       address: convertAddress,
       myOrder: convertOrder,
     },
