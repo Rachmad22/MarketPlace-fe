@@ -50,11 +50,18 @@ npm install
 <center>
   <table>
     <tr>
-      <th>PM/QA/DevOps</th>
-      <th>Backend</th>
+      <th>PM/Frontend</th>
+      <th>Frontend/DevOps</th>
       <th>Frontend</th>
+      <th>Backend</th>
     </tr>
     <tr>
+      <td align="center">
+        <a href="https://github.com/khdrali">
+          <img width="150" style="background-size: contain;" src="https://avatars.githubusercontent.com/u/108776197?v=4" alt="Ali"><br/>
+          <b>Khaidar Ali</b>
+        </a>
+      </td>
       <td align="center">
         <a href="https://github.com/Rachmad22">
           <img width="150" style="background-size: contain;" src="https://avatars.githubusercontent.com/u/116181515?v=4" alt="Rachmad"><br/>
@@ -68,9 +75,9 @@ npm install
         </a>
       </td>
       <td align="center">
-        <a href="https://github.com/MaulanaIsmail26">
-          <img width="150" src="https://avatars.githubusercontent.com/u/120068001?v=4" alt="Maulana"><br/>
-          <b>Maulana Ismail</b>
+        <a href="https://github.com/alviandooo">
+          <img width="150" src="https://avatars.githubusercontent.com/u/64725884?v=4" alt="Restu"><br/>
+          <b>Restu Alviando</b>
         </a>
       </td>
     </tr>
