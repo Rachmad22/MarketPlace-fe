@@ -1,38 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
 
-## Getting Started
+  <h3 align="center">Blanja</h3>
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## ✏️ About
+Blanja is a website-based online marketplace application that enables users to shop and sell online. Blanja is developed using ExpressJS for the backend and NextJS for the frontend.
+
+## 🔖Build With
+
+- [Next Js](https://nextjs.org/)
+- [Axios](https://www.npmjs.com/package/axios)
+- [Bootstrap](https://www.npmjs.com/package/bootstrap)
+- [Sweetalert](https://www.npmjs.com/package/sweetalert)
+
+## 💻 How To Install?
+
+- Clone This Repo
+
+```
+git clone https://github.com/Rachmad22/MarketPlace-fe.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Install Module
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Type ` npm start` To Start Website
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Screenshot
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Login Page | Register Page |
+| ------------- | ------------- |
+| ![Login](https://user-images.githubusercontent.com/116181515/230873677-dca74d3d-aed9-429f-87f9-cb0dc2bd50b5.jpg) | ![Register](https://user-images.githubusercontent.com/116181515/230873812-8a3ae1b4-0f33-4165-9168-95379718ac0f.jpg) |
 
-## Learn More
+| Home Page  | Detail Page |
+| ------------- | ------------- |
+| ![Landing](https://user-images.githubusercontent.com/116181515/230873952-5d6b0388-6ba5-43d9-ac5b-58601654e2d5.jpg) | ![Detail Page](https://user-images.githubusercontent.com/116181515/230874370-8f52850c-e415-442b-af0a-a313e2998fb3.jpg) |
 
-To learn more about Next.js, take a look at the following resources:
+## Link
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Backend](https://github.com/Rachmad22/MarketPlace-be)
+- [Visit Project](https://blanja-0013.vercel.app/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contributor
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<center>
+  <table>
+    <tr>
+      <th>PM/Frontend</th>
+      <th>Frontend/DevOps</th>
+      <th>Frontend</th>
+      <th>Backend</th>
+    </tr>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/khdrali">
+          <img width="150" style="background-size: contain;" src="https://avatars.githubusercontent.com/u/108776197?v=4" alt="Ali"><br/>
+          <b>Khaidar Ali</b>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/Rachmad22">
+          <img width="150" style="background-size: contain;" src="https://avatars.githubusercontent.com/u/116181515?v=4" alt="Rachmad"><br/>
+          <b>Rachmad NH</b>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/rydhralbar">
+          <img width="150" src="https://avatars.githubusercontent.com/u/108503678?v=4" alt="Riyadh"><br/>
+          <b>Ryadh R Albar</b>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/alviandooo">
+          <img width="150" src="https://avatars.githubusercontent.com/u/64725884?v=4" alt="Restu"><br/>
+          <b>Restu Alviando</b>
+        </a>
+      </td>
+    </tr>
+  </table>
+</center>
